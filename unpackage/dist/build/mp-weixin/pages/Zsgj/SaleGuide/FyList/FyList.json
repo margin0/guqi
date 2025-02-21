@@ -1,0 +1,19 @@
+{
+  "navigationBarTitleText": "分佣跟踪",
+  "navigationBarBackgroundColor": "#C0272C",
+  "titleNView": {
+    "buttons": [
+      {
+        "type": "none",
+        "text": "返回",
+        "float": "left",
+        "color": "#ffffff",
+        "fontSize": "30rpx"
+      }
+    ]
+  },
+  "usingComponents": {
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
+    "uni-search-bar": "/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar"
+  }
+}

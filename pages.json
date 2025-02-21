@@ -1,0 +1,260 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// #ifdef MP
+		{
+			"path": "pages/Customize/Customize",
+			//"path": "pages/GoodsDetails/GoodsDetails",
+			"style": {
+				// #ifdef APP-PLUS
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false //去掉当前页的顶部导航栏
+				},
+				"navigationBarTextStyle": "white",
+				// #endif
+				// #ifdef MP
+				"navigationBarTitleText": "定制",
+				"navigationBarBackgroundColor": "#0e252d",
+				// #endif
+				"h5": {
+					"titleNView": false
+				}
+			}
+		},
+		// #endif
+		
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Login/Login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		//-----------定制----------开始
+		{
+			"path": "pages/Customize/ProductIntroduce",
+			"style": {
+				"navigationBarTitleText": "产品介绍",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Customize/ProjectDetails",
+			"style": {
+				"navigationBarTitleText": "项目介绍",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Customize/SignUp/SignUp",
+			"style": {
+				"navigationBarTitleText": "报名",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Customize/SignUp/SignSucess",
+			"style": {
+				"navigationBarTitleText": "报名",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Customize/Book/Book",
+			"style": {
+				"navigationBarTitleText": "预订",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Customize/Book/BuyAgreement",
+			"style": {
+				"navigationBarTitleText": "古奇威士忌购买协议",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		//-----------定制----------结束
+		
+		//-----------古奇----------开始
+		{
+			"path": "pages/Guqi/Guqi",
+			"style": {
+				"navigationBarTitleText": "古奇",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Guqi/GuqiDetails/GuqiDetails",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		//-----------古奇----------结束
+		
+		//-----------我的----------开始
+		{
+			"path": "pages/Mine/Mine",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Mine/Help/HelpList",
+			"style": {
+				"navigationBarTitleText": "客服咨询",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Mine/MyYt/MyYt",
+			"style": {
+				"navigationBarTitleText": "我的原桶",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Mine/MyOrderList/MyOrderList",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/Mine/MyOrderList/MyOrderListDetails",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		//-----------我的----------结束
+		
+		
+		{
+			"path": "pages/OrderDetails/OrderDetails",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/ConfirmOrder/ConfirmOrder",
+			"style": {
+				"navigationBarTitleText": "填写订单",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/CashierDesk/CashierDesk",
+			"style": {
+				"navigationBarTitleText": "确认付款",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/PayResult/PayResult",
+			"style": {
+				"navigationBarTitleText": "支付成功",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/MyOrderList/MyOrderList",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"navigationBarBackgroundColor": "#0e252d"
+				// "enablePullDownRefresh": true,
+				// "onReachBottomDistance":150
+			}
+		}
+		// , {
+		// 	"path": "pages/OrderDetails/OrderDetails",
+		// 	"style": {
+		// 		"navigationBarTitleText": "订单详情",
+		// 		"navigationBarBackgroundColor": "#0e252d",
+		// 	}
+		// }
+		, {
+			"path": "pages/AddressList/AddressList",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/AddressEdit/AddressEdit",
+			"style": {
+				"navigationBarTitleText": "编辑地址",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/InvoiceList/InvoiceList",
+			"style": {
+				"navigationBarTitleText": "发票抬头",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/InvoiceEdit/InvoiceEdit",
+			"style": {
+				"navigationBarTitleText": "发票抬头",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/InvoiceList/InvoiceDetails/InvoiceDetails",
+			"style": {
+				"navigationBarTitleText": "查看发票",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
+		{
+			"path": "pages/GoodsDetails/GoodsDetails",
+			"style": {
+				"navigationBarTitleText": "古奇威士忌",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "古奇威士忌",
+		"navigationBarBackgroundColor": "#0e252d",
+		"backgroundColor": "#0e252d",
+		"backgroundColorTop": "#0e252d",
+		"titleNView": true // 去除App、H5的顶部导航 false
+	},
+	  "tabBar": {
+			"position": "bottom",
+			"color": "#fff",
+			"selectedColor": "#EDBA7A",
+			"borderStyle": "white",
+			"backgroundColor": "#0e252d",
+			"custom":false,
+			"list": [
+				
+				{
+					"pagePath": "pages/Guqi/Guqi",
+					"text": "古奇",
+					"iconPath": "/static/tabbar/guqi.png",
+					"selectedIconPath": "/static/tabbar/guqi-s.png"
+				},
+				{
+					"pagePath": "pages/Customize/Customize",
+					"text": "定制",
+					"iconPath": "/static/tabbar/jiutong.png",
+					"selectedIconPath": "/static/tabbar/jiutong-s.png"
+				},
+				{
+					"pagePath": "pages/Mine/Mine",
+					"text": "我的",
+					"iconPath": "/static/tabbar/my.png",
+					"selectedIconPath": "/static/tabbar/my-s.png"
+				}
+			]
+		}
+}

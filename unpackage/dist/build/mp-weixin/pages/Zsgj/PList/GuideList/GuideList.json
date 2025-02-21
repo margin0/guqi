@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "导游列表",
+  "navigationBarBackgroundColor": "#C0272C",
+  "usingComponents": {
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
+    "uni-search-bar": "/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar"
+  }
+}

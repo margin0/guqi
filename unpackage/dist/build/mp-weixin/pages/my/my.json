@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "古井工厂直营店",
+  "navigationBarBackgroundColor": "#C0272C",
+  "usingComponents": {
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons"
+  }
+}

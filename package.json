@@ -1,0 +1,77 @@
+{
+	"id": "mall-greeen",
+	"name": "古奇威士忌",
+	"displayName": "古奇威士忌",
+	"version": "0.01",
+	"description": "古奇威士忌",
+	"keywords": [
+		"古奇威士忌",
+		"威士忌",
+		"古井",
+		"古奇"
+	],
+	"dcloudext": {
+		"category": [
+			"uni-app前端",
+			"uni-app前端项目"
+		]
+	},
+	"uni-app": {
+		"scripts": {
+			"dev": {
+				"title": "古奇小程序——开发版",
+				"env": {
+					"ENV_TYPE": "dev",
+					"UNI_PLATFORM": "mp-weixin",
+					"VUE_APP_BASE_URL": "https://bpmdev.gujing.cn"
+				}
+			},
+			"test": {
+				"title": "古奇小程序——测试版",
+				"env": {
+					"ENV_TYPE": "test",
+					"UNI_PLATFORM": "mp-weixin",
+					"VUE_APP_BASE_URL": "https://bpmcs.gujing.cn/apps_ba"
+				}
+			},
+			"pro": {
+				"title": "古奇小程序——正式版",
+				"env": {
+					"ENV_TYPE": "prod",
+					"UNI_PLATFORM": "mp-weixin",
+					"VUE_APP_BASE_URL": "https://www.gujing.cn/apps_ba"
+				}
+			},
+			"h5dev": {
+				"title": "h5——开发版",
+				"browser": "chrome",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"ENV_TYPE": "dev",
+					"VUE_APP_BASE_URL": "https://bpmdev.gujing.cn"
+				}
+			},
+			"h5test": {
+				"title": "h5——测试版",
+				"browser": "chrome",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"ENV_TYPE": "test",
+					"VUE_APP_BASE_URL": "https://bpmcs.gujing.cn/apps_ba"
+				}
+			},
+			"h5prod": {
+				"title": "h5——生产版",
+				"browser": "chrome",
+				"env": {
+					"UNI_PLATFORM": "h5",
+					"ENV_TYPE": "prod",
+					"VUE_APP_BASE_URL": "https://www.gujing.cn/apps_ba"
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"vconsole": "^3.15.1"
+	}
+}
