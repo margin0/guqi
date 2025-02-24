@@ -2,6 +2,7 @@
   "navigationBarTitleText": "古奇",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
-    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging"
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
+    "tabbar": "/components/Tabbar/tabbar"
   }
 }

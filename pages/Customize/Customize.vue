@@ -58,9 +58,12 @@
 			</view>
 			<uni-icons class="popClose" type="close" size="40" @click="close" color="#fff" style="font-weight: 100;"></uni-icons>
 		</uni-popup>
+		 <!-- 自定义 tabbar -->
+		  <Tabbar></Tabbar>
 	</view>
 </template>
 <script>
+	import Tabbar from "@/components/Tabbar/tabbar.vue"
 	import {
 		queryUserAddressList,
 		factorydirect_order,
@@ -78,8 +81,13 @@
 
 	import cityPicker from '@/uni_modules/piaoyi-cityPicker/components/piaoyi-cityPicker/piaoyi-cityPicker'
 	export default {
+		components: {
+		   Tabbar
+		 },
+				
 		data() {
 			return {
+				
 				orderType: '', //订单状态：待付款、待发货、待收货、已完成、已取消
 				list: [{
 						name: "波本桶",
@@ -184,6 +192,7 @@
 			//this.toggle('center');
 		},
 		methods: {
+			
 			toggle(type) {
 				this.type = type
 				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性

@@ -1,5 +1,7 @@
 <template>
 	<view class="page">
+		<!-- 自定义 tabbar -->
+		   <Tabbar></Tabbar>
 		<!-- 用户头部 -->
 		<view class="hearder" @click="login">
 			<view class="avatar">
@@ -63,10 +65,15 @@
 </template>
 
 <script>
+	import Tabbar from "@/components/Tabbar/tabbar.vue"
 	import {
 		queryUserInfo,queryUserOpenid
 	} from '@/api/api.js';
 	export default {
+		components: {
+		   Tabbar
+		 },
+			
 		data() {
 			return {
 				isHotline: false,
@@ -77,7 +84,8 @@
 					avatarUrl:'/static/unlogin.png',
 					nickName:'注册/登录',
 					mobile:''
-				}
+				},
+				tabbarIndex: 2,
 			};
 		},
 		onLoad(){

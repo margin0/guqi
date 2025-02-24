@@ -2,39 +2,54 @@
 	import {
 		queryUserOpenid,home
 	} from '@/api/api.js';
+
 	export default {
-		onLaunch: function(option) {
-			// #ifdef H5
-			// var script = document.createElement('script');
-			// script.src = "https://www.gujing.cn/commons/js/aws.mobile.api.js";
-			// document.body.appendChild(script);
+		globalData: {
+		    currentTabIndex: 1 ,// 初始选中的 tab 索引
+			isPhoneX: false  //申明全局变量
+		  },
+		onLaunch: function () {
+		    let self = this;
+		    // 获取系统信息  
+		 //    wx.getSystemInfo({ // 重点！！！
+		 //      success: (res) => {
+		 //        console.log('getSystemInfo')
+		 //        console.log(res)
+		 //        if(res.safeArea.top > 20){
+		 //          self.globalData.isPhoneX = true;
+		 //        }
+		 //      }
+			// })
+			uni.getSystemInfo({
+				success: (res) => {
+				  // 获取成功后的设备信息
+					console.log(`设备型号：${res.model}, 操作系统：${res.system}, 屏幕尺寸：${res.screenWidth}x${res.screenHeight}`)
+					if(res.model.includes('iPhone')){
+						self.globalData.isPhoneX = true;
+					}
+				},
+				fail: (err) => {
+				  console.error('获取设备信息失败：', err);
+				}
+			  });
 			
-			/*
-			GUIDE( value:"1"),//导购  f7a26231-bdbf-4d58-aadb-befef3045365
-			TOUR_GUIDE( value:"2"),//导游  166a8f1f-034b-4456-a10c-a87a7a7a43de
-			TOUR GUIDE1( value:"3"),// 厂方人员  35b0f487-34c4-412d-b38e-46a5bca965e7
-			? ?TOUR GUIDE2( value: "4");// 大客户
-			*/
-			// console.log("awsWebview.isMobileAWSApp"+awsWebview.isMobileAWSApp())
-			// if(awsWebview.isMobileAWSApp()){
-			//   awsWebview.hideTitle()
-			// }
-			// #endif
-		},
+			
+	   },
 		onShow: function() {
 			// setTimeout(()=>{
 			//   uni.hideTabBar()  
 			// },100)
 			// 在uniapp中调用静默授权的函数
-
+         console.log('~~~~~~~~~~~~~~~~~App onShow~~~~~~~~~~~~~~~~~~~~~~~~'+this.globalData.isPhoneX);
 		},
 		onHide: function() {
-			console.log('App Hide');
+			console.log('~~~~~~~~~~~~~~~~~App Hide~~~~~~~~~~~~~~~~~~~~~~~~');
 		}
+		
 	};
 </script>
 
-<style>
+<style  lang="scss">
 	/*每个页面公共css */
 	@import 'colorui/main.css';
 	@import 'colorui/icon.css';
@@ -68,5 +83,7 @@
 	.page{
 		font-family: 'my-font' my-font !important;
 		background-color: $baseBackgroundColor;
+		// padding-bottom: constant(safe-area-inset-bottom);//兼容 iOS < 11.2
+		// padding-bottom: env(safe-area-inset-bottom); //兼容 iOS >= 11.2 
 	}
 </style>

@@ -39,14 +39,21 @@
 				</view>
 			</view>
 		</z-paging>
+		<!-- 自定义 tabbar -->
+		 <Tabbar></Tabbar>
 	</view>
 </template>
 
 <script>
+	import Tabbar from "@/components/Tabbar/tabbar.vue"
 	import {
 		queryOrderListForUser,updateOrderStatusForUser
 	} from '@/api/api.js';
 	export default {
+		components: {
+		   Tabbar 
+		 },
+			
 		data() {
 			return {
 				orderType: '威士忌知识', // 当前选中的订单状态
@@ -65,6 +72,7 @@
 			// this.queryList(1,10)
 		},
 		methods: {
+		
 			queryList(pageNo, pageSize) {
 				// 组件加载时会自动触发此方法，因此默认页面加载时会自动触发，无需手动调用
 				// 这里的pageNo和pageSize会自动计算好，直接传给服务器即可

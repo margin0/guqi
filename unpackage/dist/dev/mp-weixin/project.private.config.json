@@ -19,5 +19,9 @@
         }
       ]
     }
+  },
+  "projectname": "古奇威士忌",
+  "setting": {
+    "compileHotReLoad": true
   }
 }
