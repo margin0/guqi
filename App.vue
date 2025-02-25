@@ -81,9 +81,15 @@
 		width: 100%;
 	}
 	.page{
-		font-family: 'my-font' my-font !important;
+		font-family: 'my-font' !important;
 		background-color: $baseBackgroundColor;
 		// padding-bottom: constant(safe-area-inset-bottom);//兼容 iOS < 11.2
 		// padding-bottom: env(safe-area-inset-bottom); //兼容 iOS >= 11.2 
 	}
+	/* 全局使用 iconfont 字体库 */
+	body {
+	  font-family: 'iconfont';
+	}
+	
+	
 </style>

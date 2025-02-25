@@ -56,6 +56,7 @@
 }
 .page.data-v-289db5ac {
   background-color: #0e252d;
+  font-family: 'iconfont';
 }
 .goldenFont.data-v-289db5ac {
   background-image: linear-gradient(to right, #edba7a, #b38b50);

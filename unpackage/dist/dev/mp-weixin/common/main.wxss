@@ -4509,6 +4509,7 @@ scroll-view.cu-steps .cu-item {
 }
 .page {
   background-color: #0e252d;
+  font-family: 'iconfont';
 }
 .goldenFont {
   background-image: linear-gradient(to right, #edba7a, #b38b50);
@@ -4539,7 +4540,11 @@ page {
   width: 100%;
 }
 .page {
-  font-family: 'my-font' my-font !important;
+  font-family: 'my-font' !important;
   background-color: #0e252d;
+}
+/* 全局使用 iconfont 字体库 */
+page {
+  font-family: 'iconfont';
 }
 
