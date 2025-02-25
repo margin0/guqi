@@ -1,7 +1,8 @@
 {
-  "navigationBarTitleText": "古奇",
+  "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
+    "language-switcher": "/components/LanguageSwitcher/LanguageSwitcher",
     "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
     "tabbar": "/components/Tabbar/tabbar"
   }

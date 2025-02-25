@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的原桶",
+  "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
     "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging"

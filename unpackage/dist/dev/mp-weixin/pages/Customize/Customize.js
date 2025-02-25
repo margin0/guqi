@@ -236,10 +236,10 @@ var _default = (_components$data$comp = {
 }, (0, _defineProperty2.default)(_components$data$comp, "components", {
   cityPicker: _piaoyiCityPicker.default
 }), (0, _defineProperty2.default)(_components$data$comp, "onShow", function onShow() {
-  // const title = this.$t('pageTitles.Customize');
-  // uni.setNavigationBarTitle({
-  // 	title
-  // });
+  var title = this.$t('pageTitles.Customize');
+  uni.setNavigationBarTitle({
+    title: title
+  });
   var that = this;
   // wx.login({
   // 	success(res) {

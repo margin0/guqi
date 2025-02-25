@@ -1,5 +1,6 @@
 <template>
 	<view class="page pages">
+		<LanguageSwitcher />
 		<z-paging ref="paging" v-model="dataList" @query="queryList">
 			<!-- 需要固定在顶部不滚动的view放在slot="top"的view中，如果需要跟着滚动，则不要设置slot="top" -->
 			<!-- 注意！此处的z-tabs为独立的组件，可替换为第三方的tabs -->
@@ -45,13 +46,14 @@
 </template>
 
 <script>
+	import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher.vue';
 	import Tabbar from "@/components/Tabbar/tabbar.vue"
 	import {
 		queryOrderListForUser,updateOrderStatusForUser
 	} from '@/api/api.js';
 	export default {
 		components: {
-		   Tabbar 
+		   Tabbar,LanguageSwitcher
 		 },
 			
 		data() {
@@ -70,6 +72,10 @@
 		},
 		onShow(){
 			// this.queryList(1,10)
+			const title = this.$t('pageTitles.Guqi');
+			uni.setNavigationBarTitle({
+				title: title
+			});
 		},
 		methods: {
 		

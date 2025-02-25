@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "报名",
+  "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
     "uni-forms": "/uni_modules/uni-forms/components/uni-forms/uni-forms",

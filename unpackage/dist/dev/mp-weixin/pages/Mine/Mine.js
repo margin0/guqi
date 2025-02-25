@@ -100,6 +100,9 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    LanguageSwitcher: function () {
+      return __webpack_require__.e(/*! import() | components/LanguageSwitcher/LanguageSwitcher */ "components/LanguageSwitcher/LanguageSwitcher").then(__webpack_require__.bind(null, /*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 289))
+    },
     uniIcons: function () {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 303))
     },
@@ -168,6 +171,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _api = __webpack_require__(/*! @/api/api.js */ 30);
+var LanguageSwitcher = function LanguageSwitcher() {
+  __webpack_require__.e(/*! require.ensure | components/LanguageSwitcher/LanguageSwitcher */ "components/LanguageSwitcher/LanguageSwitcher").then((function () {
+    return resolve(__webpack_require__(/*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 289));
+  }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+};
 var Tabbar = function Tabbar() {
   __webpack_require__.e(/*! require.ensure | components/Tabbar/tabbar */ "components/Tabbar/tabbar").then((function () {
     return resolve(__webpack_require__(/*! @/components/Tabbar/tabbar.vue */ 311));
@@ -175,7 +183,8 @@ var Tabbar = function Tabbar() {
 };
 var _default = {
   components: {
-    Tabbar: Tabbar
+    Tabbar: Tabbar,
+    LanguageSwitcher: LanguageSwitcher
   },
   data: function data() {
     return {
@@ -195,6 +204,10 @@ var _default = {
   },
   onLoad: function onLoad() {},
   onShow: function onShow() {
+    var title = this.$t('pageTitles.My');
+    uni.setNavigationBarTitle({
+      title: title
+    });
     var basicData = uni.getStorageSync('basicData') || '{}';
     var data = JSON.parse(basicData);
     this.loginUserInfo = data;

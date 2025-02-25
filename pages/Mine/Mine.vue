@@ -1,5 +1,6 @@
 <template>
 	<view class="page">
+		<LanguageSwitcher />
 		<!-- 自定义 tabbar -->
 		   <Tabbar></Tabbar>
 		<!-- 用户头部 -->
@@ -65,13 +66,14 @@
 </template>
 
 <script>
+	import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher.vue';
 	import Tabbar from "@/components/Tabbar/tabbar.vue"
 	import {
 		queryUserInfo,queryUserOpenid
 	} from '@/api/api.js';
 	export default {
 		components: {
-		   Tabbar
+		   Tabbar,LanguageSwitcher
 		 },
 			
 		data() {
@@ -92,6 +94,10 @@
 			
 		},
 		onShow(){
+			const title = this.$t('pageTitles.My');
+			uni.setNavigationBarTitle({
+				title: title
+			});
 			let basicData = uni.getStorageSync('basicData')||'{}';
 			let data = JSON.parse(basicData);
 			this.loginUserInfo = data;

@@ -142,10 +142,10 @@
 			cityPicker
 		},
 		onShow() {
-			// const title = this.$t('pageTitles.Customize');
-			// uni.setNavigationBarTitle({
-			// 	title
-			// });
+			const title = this.$t('pageTitles.Customize');
+			uni.setNavigationBarTitle({
+				title: title
+			});
 			let that=this;
 			// wx.login({
 			// 	success(res) {

@@ -81,27 +81,19 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.getCurrentIndex()
-  var m1 = _vm.getCurrentIndex()
-  var m2 = _vm.getCurrentIndex()
   var l0 = _vm.__map(_vm.tabBarList, function (item, index) {
     var $orig = _vm.__get_orig(item)
-    var m3 = _vm.$t(item.textKey)
+    var m0 = _vm.$t(item.textKey)
     return {
       $orig: $orig,
-      m3: m3,
+      m0: m0,
     }
   })
-  var m4 = _vm.getCurrentIndex()
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0,
-        m1: m1,
-        m2: m2,
         l0: l0,
-        m4: m4,
       },
     }
   )
@@ -144,7 +136,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _vue = __webpack_require__(/*! vue */ 25);
 //
 //
 //
@@ -172,8 +163,8 @@ var _default = {
       tabBarList: [{
         "pagePath": "pages/Guqi/Guqi",
         "textKey": "tabbar.Guqi",
-        "iconPath": "/static/tabbar/guqi.png",
-        "selectedIconPath": "/static/tabbar/guqi-s.png",
+        "iconPath": "/static/tabbar/qi.png",
+        "selectedIconPath": "/static/tabbar/qi-s.png",
         isRound: false
       }, {
         "pagePath": "pages/Customize/Customize",
@@ -190,24 +181,58 @@ var _default = {
       }]
     };
   },
-  methods: {
-    // 获取当前选中的 tab 索引
-    getCurrentIndex: function getCurrentIndex() {
+  computed: {
+    currentIndex: function currentIndex() {
       return getApp().globalData.currentTabIndex;
-    },
+    }
+  },
+  methods: {
     changeTab: function changeTab(index) {
+      var _this = this;
       getApp().globalData.currentTabIndex = index;
       console.log("选中的下标++++：" + index);
       uni.switchTab({
-        url: '/' + this.tabBarList[index].pagePath
+        url: '/' + this.tabBarList[index].pagePath,
+        success: function success() {
+          _this.$forceUpdate();
+        }
       });
     },
     handleMiddleButtonClick: function handleMiddleButtonClick() {
+      var _this2 = this;
       getApp().globalData.currentTabIndex = 1;
+      console.log("选中的下标++++：" + getApp().globalData.currentTabIndex);
       uni.switchTab({
-        url: '/pages/Customize/Customize'
+        url: '/pages/Customize/Customize',
+        success: function success() {
+          _this2.$forceUpdate();
+        }
       });
     }
+  },
+  watch: {
+    currentIndex: function currentIndex(newVal, oldVal) {
+      var _this3 = this;
+      if (newVal !== oldVal) {
+        this.$nextTick(function () {
+          _this3.$forceUpdate();
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this4 = this;
+    // 监听语言切换事件
+    this.$root.$on('languageChanged', function () {
+      // 手动重置当前选中的 tab 索引
+      var currentIndex = getApp().globalData.currentTabIndex;
+      getApp().globalData.currentTabIndex = null;
+      _this4.$nextTick(function () {
+        getApp().globalData.currentTabIndex = currentIndex;
+        // 语言切换后，更新 tabbar 显示
+        _this4.$forceUpdate();
+      });
+    });
   },
   onLoad: function onLoad() {
     // 获取当前页面路径，设置选中的 tab

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "定制",
+  "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
     "language-switcher": "/components/LanguageSwitcher/LanguageSwitcher",

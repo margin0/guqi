@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "预订",
+  "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#0e252d",
   "usingComponents": {
     "uni-number-box": "/uni_modules/uni-number-box/components/uni-number-box/uni-number-box",

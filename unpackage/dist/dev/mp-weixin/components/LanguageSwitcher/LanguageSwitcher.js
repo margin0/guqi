@@ -125,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -143,7 +143,6 @@ var _default = {
   },
   methods: {
     switchLanguage: function switchLanguage(currentLang) {
-      //const currentLang = this.$i18n.locale;
       if (currentLang === '中文') {
         this.$i18n.locale = 'en';
       } else {
@@ -151,13 +150,32 @@ var _default = {
       }
       // 触发事件通知 tabbar 更新
       this.$emit('languageChanged');
-      // 更新当前选中的 tab
-      var currentIndex = getApp().globalData.currentTabIndex;
-      this.$emit('updateCurrentTabIndex', currentIndex);
+
+      // 获取当前页面路径
+      var pages = getCurrentPages();
+      var currentPage = pages[pages.length - 1];
+      var currentPath = currentPage.route;
+
+      // 根据当前页面路径和语言设置页面标题
+      var pageTitleKey;
+      if (currentPath.includes('Guqi')) {
+        pageTitleKey = 'pageTitles.Guqi';
+      } else if (currentPath.includes('Customize')) {
+        pageTitleKey = 'pageTitles.Customize';
+      } else if (currentPath.includes('Mine')) {
+        pageTitleKey = 'pageTitles.My';
+      }
+      if (pageTitleKey) {
+        var title = this.$t(pageTitleKey);
+        uni.setNavigationBarTitle({
+          title: title
+        });
+      }
     }
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

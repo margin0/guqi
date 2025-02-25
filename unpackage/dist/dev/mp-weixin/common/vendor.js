@@ -23832,7 +23832,7 @@ var _default = {
   "pages": [{
     "path": "pages/Customize/Customize",
     "style": {
-      "navigationBarTitleText": "定制",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d",
       "h5": {
         "titleNView": false
@@ -23841,91 +23841,91 @@ var _default = {
   }, {
     "path": "pages/my/my",
     "style": {
-      "navigationBarTitleText": "我的",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Login/Login",
     "style": {
-      "navigationBarTitleText": "登录",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/ProductIntroduce",
     "style": {
-      "navigationBarTitleText": "产品介绍",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/ProjectDetails",
     "style": {
-      "navigationBarTitleText": "项目介绍",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/SignUp/SignUp",
     "style": {
-      "navigationBarTitleText": "报名",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/SignUp/SignSucess",
     "style": {
-      "navigationBarTitleText": "报名",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/Book/Book",
     "style": {
-      "navigationBarTitleText": "预订",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Customize/Book/BuyAgreement",
     "style": {
-      "navigationBarTitleText": "古奇威士忌购买协议",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Guqi/Guqi",
     "style": {
-      "navigationBarTitleText": "古奇",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Guqi/GuqiDetails/GuqiDetails",
     "style": {
-      "navigationBarTitleText": "详情",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Mine/Mine",
     "style": {
-      "navigationBarTitleText": "我的",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Mine/Help/HelpList",
     "style": {
-      "navigationBarTitleText": "客服咨询",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Mine/MyYt/MyYt",
     "style": {
-      "navigationBarTitleText": "我的原桶",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Mine/MyOrderList/MyOrderList",
     "style": {
-      "navigationBarTitleText": "我的订单",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Mine/MyOrderList/MyOrderListDetails",
     "style": {
-      "navigationBarTitleText": "订单详情",
+      "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
