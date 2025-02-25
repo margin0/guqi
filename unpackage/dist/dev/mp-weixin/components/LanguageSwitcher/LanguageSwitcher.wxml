@@ -1,0 +1,1 @@
+<view class="language-switcher data-v-13fc2224"><text data-event-opts="{{[['tap',[['switchLanguage',[$root.m0]]]]]}}" class="language-text data-v-13fc2224" bindtap="__e">{{$root.m1}}</text></view>

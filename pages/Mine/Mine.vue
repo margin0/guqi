@@ -5,10 +5,10 @@
 		<!-- 用户头部 -->
 		<view class="hearder" @click="login">
 			<view class="avatar">
-				<image :src="loginUserInfo.avatarUrl" mode=""></image>
+				<image :src="loginUserInfo.avatarUrl||'/static/unlogin.png'" mode=""></image>
 			</view>
 			<view class="name">
-				{{loginUserInfo.nickName}}
+				{{loginUserInfo.nickName||'注册/登录'}}
 			</view>	
 			
 		</view>
@@ -92,7 +92,7 @@
 			
 		},
 		onShow(){
-			let basicData = uni.getStorageSync('basicData');
+			let basicData = uni.getStorageSync('basicData')||'{}';
 			let data = JSON.parse(basicData);
 			this.loginUserInfo = data;
 		},
@@ -114,7 +114,7 @@
 				}
 			},
 			queryUserInfo(){
-				let basicData = uni.getStorageSync('basicData');
+				let basicData = uni.getStorageSync('basicData')||'{}';
 				let data = JSON.parse(basicData);
 				queryUserInfo({
 					userOpenid: data.userOpenid,

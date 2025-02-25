@@ -15,13 +15,16 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 __webpack_require__(/*! uni-pages */ 26);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 25));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 27));
+var _vueI18n = _interopRequireDefault(__webpack_require__(/*! vue-i18n */ 35));
+var _zh = _interopRequireDefault(__webpack_require__(/*! ./lang/zh */ 36));
+var _en = _interopRequireDefault(__webpack_require__(/*! ./lang/en */ 37));
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 // @ts-ignore
 wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;
 var DialogBox = function DialogBox() {
   __webpack_require__.e(/*! require.ensure | components/DialogBox/DialogBox */ "components/DialogBox/DialogBox").then((function () {
-    return resolve(__webpack_require__(/*! ./components/DialogBox/DialogBox */ 258));
+    return resolve(__webpack_require__(/*! ./components/DialogBox/DialogBox */ 261));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 // 获取环境变量
@@ -48,21 +51,32 @@ _vue.default.config.productionTip = false;
 // }
 // 全局组件
 _vue.default.component('DialogBox', DialogBox);
+_vue.default.use(_vueI18n.default);
+var i18n = new _vueI18n.default({
+  locale: 'zh',
+  // 默认语言为中文
+  messages: {
+    zh: _zh.default,
+    en: _en.default
+  }
+});
 //mescroll
 var MescrollBody = function MescrollBody() {
   Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-body */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-body")]).then((function () {
-    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 265));
+    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 268));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var MescrollUni = function MescrollUni() {
   Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-uni */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-uni")]).then((function () {
-    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-uni.vue */ 277));
+    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-uni.vue */ 280));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 _vue.default.component('mescroll-body', MescrollBody);
 _vue.default.component('mescroll-uni', MescrollUni);
 _App.default.mpType = 'app';
-var app = new _vue.default(_objectSpread({}, _App.default));
+var app = new _vue.default(_objectSpread(_objectSpread({}, _App.default), {}, {
+  i18n: i18n
+}));
 createApp(app).$mount();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["createApp"]))
 

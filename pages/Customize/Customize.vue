@@ -1,5 +1,6 @@
 <template>
 	<view class="page">
+		<LanguageSwitcher />
 		<!-- 项目介绍 -->
 		<view class="introduce"  @click="goIntroduce()">
 			<image src="../../static/dingzhi.png" mode=""></image>
@@ -64,6 +65,7 @@
 </template>
 <script>
 	import Tabbar from "@/components/Tabbar/tabbar.vue"
+	import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher.vue';
 	import {
 		queryUserAddressList,
 		factorydirect_order,
@@ -82,7 +84,7 @@
 	import cityPicker from '@/uni_modules/piaoyi-cityPicker/components/piaoyi-cityPicker/piaoyi-cityPicker'
 	export default {
 		components: {
-		   Tabbar
+		   Tabbar,LanguageSwitcher
 		 },
 				
 		data() {
@@ -140,6 +142,10 @@
 			cityPicker
 		},
 		onShow() {
+			// const title = this.$t('pageTitles.Customize');
+			// uni.setNavigationBarTitle({
+			// 	title
+			// });
 			let that=this;
 			// wx.login({
 			// 	success(res) {

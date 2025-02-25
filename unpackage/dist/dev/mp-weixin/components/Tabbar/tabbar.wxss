@@ -82,6 +82,12 @@
   justify-content: center;
   color: #fff;
 }
+.tab-bar-item text.data-v-b54f2b38 {
+  color: #fff;
+  /* 确保文字颜色可见 */
+  display: block;
+  /* 确保文字显示 */
+}
 .active.data-v-b54f2b38 {
   color: #EDBA7A !important;
 }

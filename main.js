@@ -2,6 +2,9 @@ import Vue from 'vue';
 import App from './App';
 // 弹出框
 import DialogBox from './components/DialogBox/DialogBox';
+import VueI18n from 'vue-i18n'
+import zh from './lang/zh'
+import en from './lang/en'
 
 // 获取环境变量
 const baseUrl = process.env.VUE_APP_BASE_URL
@@ -30,6 +33,14 @@ Vue.config.productionTip = false
 // }
 // 全局组件
 Vue.component('DialogBox', DialogBox);
+Vue.use(VueI18n)
+const i18n = new VueI18n({
+  locale: 'zh', // 默认语言为中文
+  messages: {
+    zh,
+    en
+  }
+})
 //mescroll
 import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
@@ -39,6 +50,7 @@ Vue.component('mescroll-uni', MescrollUni)
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+	i18n
 })
 app.$mount()
