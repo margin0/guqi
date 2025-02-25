@@ -8,6 +8,9 @@ yarn-error.log*
 .static
 /history/
 /static/
+.unpackage
+/unpackage/
+unpackage/
 static/
 history/
 # Editor directories and files
