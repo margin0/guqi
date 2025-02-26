@@ -329,6 +329,11 @@ var _default = {
     }
   },
   onLoad: function onLoad() {},
+  onShow: function onShow() {
+    uni.setNavigationBarTitle({
+      title: this.$t('Customize.Sign Up')
+    });
+  },
   onReady: function onReady() {
     // 设置自定义表单校验规则，必须在节点渲染完毕后执行
     this.$refs.baseForm.setRules(this.rules);

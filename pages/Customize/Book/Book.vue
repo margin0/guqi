@@ -100,7 +100,7 @@
 		</view>
 		<view class="agree">
 			<radio :checked="isChecked" @click="toggleCheck" style=""/>
-			<text>我已阅读并同意<text class="xy" @click="Agreement">《古奇威士忌购买协议》</text></text>
+			<text><text class="xy" @click="Agreement">{{$t('Customize.Agreement')}}</text></text>
 		</view>
 		<view class="pay-submit">
 			<view class="submit" :style="{ backgroundColor: isChecked ? '#C0272C' : '#ccc' }"  @click="pay(total,'')">支付订金 <text style="margin-left: 10rpx;">￥{{total}}</text></view>
@@ -134,6 +134,9 @@
 			cityPicker
 		},
 		onShow(){
+			uni.setNavigationBarTitle({
+				title: this.$t('Customize.Reservation')
+			});
 			this.queryOrderInfoByOrderNo()
 		},
 		onLoad(option){

@@ -13,8 +13,10 @@ export default {
         switchLanguage(currentLang) {
             if (currentLang === '中文') {
                 this.$i18n.locale = 'en';
+                uni.setLocale('en')
             } else {
                 this.$i18n.locale = 'zh';
+                uni.setLocale('zh')
             }
             // 触发事件通知 tabbar 更新
             this.$emit('languageChanged');

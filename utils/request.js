@@ -28,8 +28,15 @@ const request = function(option){
 	// header.channel="h5";
 	
 	// 加载提示
+	console.log('uni.getLocale()====>'+uni.getLocale());
+	let title = '';
+	if(uni.getLocale()=='en'){
+		title = 'Loading...'
+	}else{
+		title = '加载中...'
+	}
 	uni.showLoading({
-		title: '请求中...'
+		title:title
 	});
     // 返回一个promise
 	return new Promise((resolve,reject)=>{  

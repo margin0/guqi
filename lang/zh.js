@@ -12,10 +12,22 @@ export default {
 		Customize:'定制',
 		My:'我的'
 	},
+	//古奇 Guqi
+	Guqi:{
+		Details:'详情'
+	},
 	//定制页 Customize
 	Customize:{
-		 hello: '你好',
+		'Project Introduction': '项目介绍',
+		'Product Introduction':'产品介绍',
+		'Sign Up':'报名',
+		'Reservation':'预订',
+		'Guqi Whiskey Purchase Agreement':'古奇威士忌购买协议',
+		'Agreement':'我已阅读并同意《古奇威士忌购买协议》',
+	},
+	My:{
+		
 	}
- 
+	
   // 其他中文文本...
 }

@@ -148,6 +148,11 @@
 			}
 		},
 		onLoad() {},
+		onShow(){
+			uni.setNavigationBarTitle({
+				title: this.$t('Customize.Sign Up')
+			});
+		},
 		onReady() {
 			// 设置自定义表单校验规则，必须在节点渲染完毕后执行
 			this.$refs.baseForm.setRules(this.rules)

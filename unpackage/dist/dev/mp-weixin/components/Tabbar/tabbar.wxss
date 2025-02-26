@@ -116,4 +116,18 @@
   width: 64rpx;
   height: 64rpx;
 }
+/* 翻页效果 */
+.slide-enter-active.data-v-b54f2b38, .slide-leave-active.data-v-b54f2b38 {
+  transition: -webkit-transform .8s ease;
+  transition: transform .8s ease;
+  transition: transform .8s ease, -webkit-transform .8s ease;
+}
+.slide-enter.data-v-b54f2b38, .slide-leave-to.data-v-b54f2b38 {
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+.slide-leave.data-v-b54f2b38, .slide-enter-to.data-v-b54f2b38 {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
 

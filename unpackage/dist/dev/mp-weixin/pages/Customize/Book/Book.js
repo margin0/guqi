@@ -125,6 +125,15 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.$t("Customize.Agreement")
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -299,6 +308,9 @@ var _default = {
     cityPicker: cityPicker
   },
   onShow: function onShow() {
+    uni.setNavigationBarTitle({
+      title: this.$t('Customize.Reservation')
+    });
     this.queryOrderInfoByOrderNo();
   },
   onLoad: function onLoad(option) {

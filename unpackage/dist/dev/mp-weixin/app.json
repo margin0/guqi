@@ -48,8 +48,8 @@
       {
         "pagePath": "pages/Guqi/Guqi",
         "text": "古奇",
-        "iconPath": "/static/tabbar/guqi.png",
-        "selectedIconPath": "/static/tabbar/guqi-s.png"
+        "iconPath": "/static/tabbar/qi.png",
+        "selectedIconPath": "/static/tabbar/qi-s.png"
       },
       {
         "pagePath": "pages/Customize/Customize",

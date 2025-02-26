@@ -201,6 +201,11 @@ var _default = {
       orderNo: ''
     };
   },
+  onShow: function onShow() {
+    uni.setNavigationBarTitle({
+      title: this.$t('Customize.Sign Up')
+    });
+  },
   onLoad: function onLoad(option) {
     //this.CountDownData();
     //console.log(option.orderAmount); //打印出上个页面传递的参数。

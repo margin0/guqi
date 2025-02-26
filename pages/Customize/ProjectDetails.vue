@@ -16,7 +16,9 @@
 			
 		},
 		onShow(){
-			
+			uni.setNavigationBarTitle({
+				title: this.$t('Customize.Project Introduction')
+			});
 		},
 		methods: {
 			

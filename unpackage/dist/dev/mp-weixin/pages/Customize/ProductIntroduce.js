@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -162,10 +162,15 @@ var _default = {
     this.status = option.status;
     this.id = option.id;
   },
-  onShow: function onShow() {},
+  onShow: function onShow() {
+    uni.setNavigationBarTitle({
+      title: this.$t('Customize.Product Introduction')
+    });
+  },
   methods: {}
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

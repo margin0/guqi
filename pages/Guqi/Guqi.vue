@@ -76,6 +76,7 @@
 			uni.setNavigationBarTitle({
 				title: title
 			});
+			
 		},
 		methods: {
 		

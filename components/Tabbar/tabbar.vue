@@ -1,20 +1,25 @@
 <template>
-    <view class="custom-tab-bar">
-        <view
-            class="tab-bar-item"
-            v-for="(item, index) in tabBarList"
-            :key="index"
-            :class="{ 'active': currentIndex === index }"
-            @click="changeTab(index)"
-            :style="{ 'padding-bottom': isPhoneX ? '44rpx' : '0rpx', 'height': isPhoneX ? '144rpx' : '100rpx' }"
-        >
-            <image :src="currentIndex === index ? item.selectedIconPath : item.iconPath"></image>
-            <text :class="{ 'active': currentIndex === index }">{{ $t(item.textKey) }}</text>
+    <view>
+        <view class="custom-tab-bar">
+            <view
+                class="tab-bar-item"
+                v-for="(item, index) in tabBarList"
+                :key="index"
+                :class="{ 'active': currentIndex === index }"
+                @click="changeTab(index)"
+                :style="{ 'padding-bottom': isPhoneX ? '44rpx' : '0rpx', 'height': isPhoneX ? '144rpx' : '100rpx' }"
+            >
+                <image :src="currentIndex === index ? item.selectedIconPath : item.iconPath"></image>
+                <text :class="{ 'active': currentIndex === index }">{{ $t(item.textKey) }}</text>
+            </view>
+            <!-- 中间凸出的按钮 -->
+            <view class="middle-button" @click="handleMiddleButtonClick" :style="{ bottom: isPhoneX ? '88rpx' : '44rpx' }">
+                <image :src="currentIndex === 1 ? '/static/tabbar/jiutong-s.png' : '/static/tabbar/jiutong.png'"></image>
+            </view>
         </view>
-        <!-- 中间凸出的按钮 -->
-        <view class="middle-button" @click="handleMiddleButtonClick" :style="{ bottom: isPhoneX ? '88rpx' : '44rpx' }">
-            <image :src="currentIndex === 1 ? '/static/tabbar/jiutong-s.png' : '/static/tabbar/jiutong.png'"></image>
-        </view>
+        <transition name="slide">
+            <router-view></router-view> <!-- 添加过渡效果 -->
+        </transition>
     </view>
 </template>
 
@@ -77,7 +82,7 @@ export default {
     },
     watch: {
         currentIndex(newVal, oldVal) {
-            if (newVal!== oldVal) {
+            if (newVal !== oldVal) {
                 this.$nextTick(() => {
                     this.$forceUpdate();
                 });
@@ -171,5 +176,16 @@ export default {
 .middle-button image {
     width: 64rpx;
     height: 64rpx;
+}
+
+/* 翻页效果 */
+.slide-enter-active, .slide-leave-active {
+    transition: transform .8s ease;
+}
+.slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
+    transform: translateX(100%);
+}
+.slide-leave, .slide-enter-to {
+    transform: translateX(0);
 }
 </style>

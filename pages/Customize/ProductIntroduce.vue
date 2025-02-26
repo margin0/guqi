@@ -24,7 +24,9 @@
 			
 		},
 		onShow(){
-			
+			uni.setNavigationBarTitle({
+				title: this.$t('Customize.Product Introduction')
+			});
 		},
 		methods: {
 			

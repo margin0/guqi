@@ -11343,8 +11343,15 @@ var request = function request(option) {
   // header.channel="h5";
 
   // 加载提示
+  console.log('uni.getLocale()====>' + uni.getLocale());
+  var title = '';
+  if (uni.getLocale() == 'en') {
+    title = 'Loading...';
+  } else {
+    title = '加载中...';
+  }
   uni.showLoading({
-    title: '请求中...'
+    title: title
   });
   // 返回一个promise
   return new Promise(function (resolve, reject) {
@@ -24013,8 +24020,8 @@ var _default = {
     "list": [{
       "pagePath": "pages/Guqi/Guqi",
       "text": "古奇",
-      "iconPath": "/static/tabbar/guqi.png",
-      "selectedIconPath": "/static/tabbar/guqi-s.png"
+      "iconPath": "/static/tabbar/qi.png",
+      "selectedIconPath": "/static/tabbar/qi-s.png"
     }, {
       "pagePath": "pages/Customize/Customize",
       "text": "定制",
@@ -24081,10 +24088,20 @@ var _default = {
     Customize: '定制',
     My: '我的'
   },
+  //古奇 Guqi
+  Guqi: {
+    Details: '详情'
+  },
   //定制页 Customize
   Customize: {
-    hello: '你好'
-  }
+    'Project Introduction': '项目介绍',
+    'Product Introduction': '产品介绍',
+    'Sign Up': '报名',
+    'Reservation': '预订',
+    'Guqi Whiskey Purchase Agreement': '古奇威士忌购买协议',
+    'Agreement': '我已阅读并同意《古奇威士忌购买协议》'
+  },
+  My: {}
 
   // 其他中文文本...
 };
@@ -24111,17 +24128,26 @@ var _default = {
   //页面标题
   pageTitles: {
     Guqi: 'Guqi',
-    Customize: 'Customize',
+    Customize: 'Customization',
     My: 'My'
   },
   tabbar: {
     Guqi: 'Guqi',
-    Customize: 'Customize',
+    Customize: 'Customization',
     My: 'My'
+  },
+  //古奇 Guqi
+  Guqi: {
+    Details: 'Details'
   },
   //定制页 Customize
   Customize: {
-    hello: 'hello'
+    'Project Introduction': 'Project Introduction',
+    'Product Introduction': 'Product Introduction',
+    'Sign Up': 'Sign Up',
+    'Reservation': 'Reservation',
+    'Guqi Whiskey Purchase Agreement': 'Guqi Whiskey Purchase Agreement',
+    'Agreement': 'I have read and agree《Guqi Whiskey Purchase Agreement》' //'Agree':'我已阅读并同意《古奇威士忌购买协议》',
   }
 
   // 其他中文文本...
