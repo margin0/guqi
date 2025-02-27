@@ -101,13 +101,13 @@ var components
 try {
   components = {
     LanguageSwitcher: function () {
-      return __webpack_require__.e(/*! import() | components/LanguageSwitcher/LanguageSwitcher */ "components/LanguageSwitcher/LanguageSwitcher").then(__webpack_require__.bind(null, /*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 289))
+      return __webpack_require__.e(/*! import() | components/LanguageSwitcher/LanguageSwitcher */ "components/LanguageSwitcher/LanguageSwitcher").then(__webpack_require__.bind(null, /*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 217))
     },
     uniPopup: function () {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 296))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 224))
     },
     uniIcons: function () {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 303))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 231))
     },
   }
 } catch (e) {
@@ -177,12 +177,12 @@ var _piaoyiCityPicker = _interopRequireDefault(__webpack_require__(/*! @/uni_mod
 var _components$data$comp;
 var Tabbar = function Tabbar() {
   __webpack_require__.e(/*! require.ensure | components/Tabbar/tabbar */ "components/Tabbar/tabbar").then((function () {
-    return resolve(__webpack_require__(/*! @/components/Tabbar/tabbar.vue */ 311));
+    return resolve(__webpack_require__(/*! @/components/Tabbar/tabbar.vue */ 239));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var LanguageSwitcher = function LanguageSwitcher() {
   __webpack_require__.e(/*! require.ensure | components/LanguageSwitcher/LanguageSwitcher */ "components/LanguageSwitcher/LanguageSwitcher").then((function () {
-    return resolve(__webpack_require__(/*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 289));
+    return resolve(__webpack_require__(/*! @/components/LanguageSwitcher/LanguageSwitcher.vue */ 217));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var _default = (_components$data$comp = {

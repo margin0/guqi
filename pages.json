@@ -22,14 +22,6 @@
 			}
 		},
 		// #endif
-		
-		{
-			"path": "pages/my/my",
-			"style": {
-				"navigationBarTitleText": "",//我的
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		},
 		{
 			"path": "pages/Login/Login",
 			"style": {
@@ -80,6 +72,19 @@
 				"navigationBarBackgroundColor": "#0e252d"
 			}
 		},
+		 {
+			"path": "pages/CashierDesk/CashierDesk",
+			"style": {
+				"navigationBarTitleText": "确认付款",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, {
+			"path": "pages/PayResult/PayResult",
+			"style": {
+				"navigationBarTitleText": "支付成功",
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		}, 
 		//-----------定制----------结束
 		
 		//-----------古奇----------开始
@@ -141,91 +146,9 @@
 				"navigationBarTitleText": "",//支付记录
 				"navigationBarBackgroundColor": "#0e252d"
 			}
-		},
+		}
 		//-----------我的----------结束
 		
-		
-		{
-			"path": "pages/OrderDetails/OrderDetails",
-			"style": {
-				"navigationBarTitleText": "订单详情",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}, {
-			"path": "pages/ConfirmOrder/ConfirmOrder",
-			"style": {
-				"navigationBarTitleText": "填写订单",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}, {
-			"path": "pages/CashierDesk/CashierDesk",
-			"style": {
-				"navigationBarTitleText": "确认付款",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}, {
-			"path": "pages/PayResult/PayResult",
-			"style": {
-				"navigationBarTitleText": "支付成功",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}, {
-			"path": "pages/MyOrderList/MyOrderList",
-			"style": {
-				"navigationBarTitleText": "我的订单",
-				"navigationBarBackgroundColor": "#0e252d"
-				// "enablePullDownRefresh": true,
-				// "onReachBottomDistance":150
-			}
-		}
-		// , {
-		// 	"path": "pages/OrderDetails/OrderDetails",
-		// 	"style": {
-		// 		"navigationBarTitleText": "订单详情",
-		// 		"navigationBarBackgroundColor": "#0e252d",
-		// 	}
-		// }
-		, {
-			"path": "pages/AddressList/AddressList",
-			"style": {
-				"navigationBarTitleText": "收货地址",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}, {
-			"path": "pages/AddressEdit/AddressEdit",
-			"style": {
-				"navigationBarTitleText": "编辑地址",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		},
-		{
-			"path": "pages/InvoiceList/InvoiceList",
-			"style": {
-				"navigationBarTitleText": "发票抬头",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		},
-		{
-			"path": "pages/InvoiceEdit/InvoiceEdit",
-			"style": {
-				"navigationBarTitleText": "发票抬头",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		},
-		{
-			"path": "pages/InvoiceList/InvoiceDetails/InvoiceDetails",
-			"style": {
-				"navigationBarTitleText": "查看发票",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		},
-		{
-			"path": "pages/GoodsDetails/GoodsDetails",
-			"style": {
-				"navigationBarTitleText": "古奇威士忌",
-				"navigationBarBackgroundColor": "#0e252d"
-			}
-		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

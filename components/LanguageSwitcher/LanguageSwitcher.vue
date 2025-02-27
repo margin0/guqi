@@ -13,7 +13,7 @@ export default {
         switchLanguage(currentLang) {
             if (currentLang === '中文') {
                 this.$i18n.locale = 'en';
-                uni.setLocale('en')
+                uni.setLocale('en')//z-paging 需要设置  
             } else {
                 this.$i18n.locale = 'zh';
                 uni.setLocale('zh')

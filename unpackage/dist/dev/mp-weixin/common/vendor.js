@@ -84,6 +84,99 @@ module.exports = _defineProperty, module.exports.__esModule = true, module.expor
 
 /***/ }),
 
+/***/ 114:
+/*!************************************************************!*\
+  !*** D:/mywork/BPM/guqi/utils/leejs_debounced_throttle.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.debounced = debounced;
+exports.throttle = throttle;
+// 使用方法debounced,throttle
+// leeBtnClick: throttle(function () {
+//   //console.log(this)
+//   //console.log("执行需要触发事件得函数方法")
+// }, 3000),
+
+/**
+ * 防抖函数
+ * 1、N秒内的多次触发仅执行最后一次
+ * 2、在不断的触发事件时以最后一次触发为*标准*准进行调用执行
+ * 3、判断连续触发事件的标准为(N秒内触发则重新计算时间直至取最后一次)
+ * @param fn 需要防抖处理的回调函数
+ * @param delay 防抖处理的延迟标准时间
+ * @param immediate 是否默认 立即执行(去除延迟时间影响)
+ */
+function debounced(fn) {
+  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
+  var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var timer = null;
+  return function () {
+    var _arguments = arguments,
+      _this2 = this;
+    if (immediate) {
+      //console.log("立即执行参数 执行一次方法")
+      fn.apply(this, arguments);
+      immediate = false;
+      return;
+    }
+    if (timer) {
+      //console.log("当前正在重复点击，准备重置时间，重新计算后等待N秒触发最后一次事件执行")
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function () {
+      //console.log("进入类启用定时器防抖执行了一次方法咯！！！")
+      clearTimeout(timer);
+      fn.apply(_this2, _arguments);
+    }, delay);
+  };
+}
+
+/**
+ * 节流函数
+ * N秒内仅执行第一次
+ * @param fn 需要节流处理的回调函数
+ * @param delay 节流处理的延迟标准时间
+ * @param immediate 是否默认 立即执行(去除延迟时间影响)
+ */
+function throttle(fn) {
+  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
+  var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  //console.log("进入节流对象")
+  var timer;
+  var status = false; // 是否为重复点击状态
+  return function () {
+    var _this = this;
+    var args = arguments;
+    if (immediate) {
+      //console.log("立即执行参数 执行一次方法")
+      fn.apply(_this, args);
+      immediate = false;
+      return;
+    }
+    if (status) {
+      //console.log("当前点击状态为正在重复点击，请稍等片刻后在点击执行")
+      return;
+    }
+    //console.log("执行节流：当前执行了一次点击方法")
+    fn.apply(_this, args);
+    status = true; // 修改状态
+    timer = setTimeout(function () {
+      //console.log("规定时间到,重置状态，可以重新调用")
+      status = false;
+    }, delay);
+  };
+}
+
+/***/ }),
+
 /***/ 12:
 /*!**************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/toPropertyKey.js ***!
@@ -230,99 +323,6 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
 module.exports = _arrayWithoutHoles, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 194:
-/*!************************************************************!*\
-  !*** D:/mywork/BPM/guqi/utils/leejs_debounced_throttle.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.debounced = debounced;
-exports.throttle = throttle;
-// 使用方法debounced,throttle
-// leeBtnClick: throttle(function () {
-//   //console.log(this)
-//   //console.log("执行需要触发事件得函数方法")
-// }, 3000),
-
-/**
- * 防抖函数
- * 1、N秒内的多次触发仅执行最后一次
- * 2、在不断的触发事件时以最后一次触发为*标准*准进行调用执行
- * 3、判断连续触发事件的标准为(N秒内触发则重新计算时间直至取最后一次)
- * @param fn 需要防抖处理的回调函数
- * @param delay 防抖处理的延迟标准时间
- * @param immediate 是否默认 立即执行(去除延迟时间影响)
- */
-function debounced(fn) {
-  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
-  var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var timer = null;
-  return function () {
-    var _arguments = arguments,
-      _this2 = this;
-    if (immediate) {
-      //console.log("立即执行参数 执行一次方法")
-      fn.apply(this, arguments);
-      immediate = false;
-      return;
-    }
-    if (timer) {
-      //console.log("当前正在重复点击，准备重置时间，重新计算后等待N秒触发最后一次事件执行")
-      clearTimeout(timer);
-    }
-    timer = setTimeout(function () {
-      //console.log("进入类启用定时器防抖执行了一次方法咯！！！")
-      clearTimeout(timer);
-      fn.apply(_this2, _arguments);
-    }, delay);
-  };
-}
-
-/**
- * 节流函数
- * N秒内仅执行第一次
- * @param fn 需要节流处理的回调函数
- * @param delay 节流处理的延迟标准时间
- * @param immediate 是否默认 立即执行(去除延迟时间影响)
- */
-function throttle(fn) {
-  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
-  var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  //console.log("进入节流对象")
-  var timer;
-  var status = false; // 是否为重复点击状态
-  return function () {
-    var _this = this;
-    var args = arguments;
-    if (immediate) {
-      //console.log("立即执行参数 执行一次方法")
-      fn.apply(_this, args);
-      immediate = false;
-      return;
-    }
-    if (status) {
-      //console.log("当前点击状态为正在重复点击，请稍等片刻后在点击执行")
-      return;
-    }
-    //console.log("执行节流：当前执行了一次点击方法")
-    fn.apply(_this, args);
-    status = true; // 修改状态
-    timer = setTimeout(function () {
-      //console.log("规定时间到,重置状态，可以重新调用")
-      status = false;
-    }, delay);
-  };
-}
 
 /***/ }),
 
@@ -2762,6 +2762,1104 @@ module.exports = _iterableToArray, module.exports.__esModule = true, module.expo
 
 /***/ }),
 
+/***/ 201:
+/*!******************************************************************!*\
+  !*** D:/mywork/BPM/guqi/components/mescroll-uni/mescroll-uni.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = MeScroll;
+var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
+/* mescroll
+ * version 1.3.3
+ * 2020-09-15 wenju
+ * https://www.mescroll.com
+ */
+
+function MeScroll(options, isScrollBody) {
+  var me = this;
+  me.version = '1.3.3'; // mescroll版本号
+  me.options = options || {}; // 配置
+  me.isScrollBody = isScrollBody || false; // 滚动区域是否为原生页面滚动; 默认为scroll-view
+
+  me.isDownScrolling = false; // 是否在执行下拉刷新的回调
+  me.isUpScrolling = false; // 是否在执行上拉加载的回调
+  var hasDownCallback = me.options.down && me.options.down.callback; // 是否配置了down的callback
+
+  // 初始化下拉刷新
+  me.initDownScroll();
+  // 初始化上拉加载,则初始化
+  me.initUpScroll();
+
+  // 自动加载
+  setTimeout(function () {
+    // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
+    // 自动触发下拉刷新 (只有配置了down的callback才自动触发下拉刷新)
+    if ((me.optDown.use || me.optDown.native) && me.optDown.auto && hasDownCallback) {
+      if (me.optDown.autoShowLoading) {
+        me.triggerDownScroll(); // 显示下拉进度,执行下拉回调
+      } else {
+        me.optDown.callback && me.optDown.callback(me); // 不显示下拉进度,直接执行下拉回调
+      }
+    }
+    // 自动触发上拉加载
+    if (!me.isUpAutoLoad) {
+      // 部分小程序(头条小程序)emit是异步, 会导致isUpAutoLoad判断有误, 先延时确保先执行down的callback,再执行up的callback
+      setTimeout(function () {
+        me.optUp.use && me.optUp.auto && !me.isUpAutoLoad && me.triggerUpScroll();
+      }, 100);
+    }
+  }, 30); // 需让me.optDown.inited和me.optUp.inited先执行
+}
+
+/* 配置参数:下拉刷新 */
+MeScroll.prototype.extendDownScroll = function (optDown) {
+  // 下拉刷新的配置
+  MeScroll.extend(optDown, {
+    use: true,
+    // 是否启用下拉刷新; 默认true
+    auto: true,
+    // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
+    native: false,
+    // 是否使用系统自带的下拉刷新; 默认false; 仅mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
+    autoShowLoading: false,
+    // 如果设置auto=true(在初始化完毕之后自动执行下拉刷新的回调),那么是否显示下拉刷新的进度; 默认false
+    isLock: false,
+    // 是否锁定下拉刷新,默认false;
+    offset: 80,
+    // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
+    startTop: 100,
+    // scroll-view快速滚动到顶部时,此时的scroll-top可能大于0, 此值用于控制最大的误差
+    inOffsetRate: 1,
+    // 在列表顶部,下拉的距离小于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
+    outOffsetRate: 0.2,
+    // 在列表顶部,下拉的距离大于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
+    bottomOffset: 20,
+    // 当手指touchmove位置在距离body底部20px范围内的时候结束上拉刷新,避免Webview嵌套导致touchend事件不执行
+    minAngle: 45,
+    // 向下滑动最少偏移的角度,取值区间  [0,90];默认45度,即向下滑动的角度大于45度则触发下拉;而小于45度,将不触发下拉,避免与左右滑动的轮播等组件冲突;
+    textInOffset: '下拉刷新',
+    // 下拉的距离在offset范围内的提示文本
+    textOutOffset: '释放更新',
+    // 下拉的距离大于offset范围的提示文本
+    textLoading: '加载中 ...',
+    // 加载中的提示文本
+    textSuccess: '加载成功',
+    // 加载成功的文本
+    textErr: '加载失败',
+    // 加载失败的文本
+    beforeEndDelay: 100,
+    // 延时结束的时长 (显示加载成功/失败的时长)
+    bgColor: "transparent",
+    // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
+    textColor: "gray",
+    // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
+    inited: null,
+    // 下拉刷新初始化完毕的回调
+    inOffset: null,
+    // 下拉的距离进入offset范围内那一刻的回调
+    outOffset: null,
+    // 下拉的距离大于offset那一刻的回调
+    onMoving: null,
+    // 下拉过程中的回调,滑动过程一直在执行; rate下拉区域当前高度与指定距离的比值(inOffset: rate<1; outOffset: rate>=1); downHight当前下拉区域的高度
+    beforeLoading: null,
+    // 准备触发下拉刷新的回调: 如果return true,将不触发showLoading和callback回调; 常用来完全自定义下拉刷新, 参考案例【淘宝 v6.8.0】
+    showLoading: null,
+    // 显示下拉刷新进度的回调
+    afterLoading: null,
+    // 显示下拉刷新进度的回调之后,马上要执行的代码 (如: 在wxs中使用)
+    beforeEndDownScroll: null,
+    // 准备结束下拉的回调. 返回结束下拉的延时执行时间,默认0ms; 常用于结束下拉之前再显示另外一小段动画,才去隐藏下拉刷新的场景, 参考案例【dotJump】
+    endDownScroll: null,
+    // 结束下拉刷新的回调
+    afterEndDownScroll: null,
+    // 结束下拉刷新的回调,马上要执行的代码 (如: 在wxs中使用)
+    callback: function callback(mescroll) {
+      // 下拉刷新的回调;默认重置上拉加载列表为第一页
+      mescroll.resetUpScroll();
+    }
+  });
+};
+
+/* 配置参数:上拉加载 */
+MeScroll.prototype.extendUpScroll = function (optUp) {
+  // 上拉加载的配置
+  MeScroll.extend(optUp, {
+    use: true,
+    // 是否启用上拉加载; 默认true
+    auto: true,
+    // 是否在初始化完毕之后自动执行上拉加载的回调; 默认true
+    isLock: false,
+    // 是否锁定上拉加载,默认false;
+    isBoth: true,
+    // 上拉加载时,如果滑动到列表顶部是否可以同时触发下拉刷新;默认true,两者可同时触发;
+    callback: null,
+    // 上拉加载的回调;function(page,mescroll){ }
+    page: {
+      num: 0,
+      // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
+      size: 10,
+      // 每页数据的数量
+      time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
+    },
+
+    noMoreSize: 5,
+    // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
+    offset: 150,
+    // 距底部多远时,触发upCallback,仅mescroll-uni生效 ( mescroll-body配置的是pages.json的 onReachBottomDistance )
+    textLoading: '加载中 ...',
+    // 加载中的提示文本
+    textNoMore: '-- END --',
+    // 没有更多数据的提示文本
+    bgColor: "transparent",
+    // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
+    textColor: "gray",
+    // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
+    inited: null,
+    // 初始化完毕的回调
+    showLoading: null,
+    // 显示加载中的回调
+    showNoMore: null,
+    // 显示无更多数据的回调
+    hideUpScroll: null,
+    // 隐藏上拉加载的回调
+    errDistance: 60,
+    // endErr的时候需往上滑动一段距离,使其往下滑动时再次触发onReachBottom,仅mescroll-body生效
+    toTop: {
+      // 回到顶部按钮,需配置src才显示
+      src: null,
+      // 图片路径,默认null (绝对路径或网络图)
+      offset: 1000,
+      // 列表滚动多少距离才显示回到顶部按钮,默认1000
+      duration: 300,
+      // 回到顶部的动画时长,默认300ms (当值为0或300则使用系统自带回到顶部,更流畅; 其他值则通过step模拟,部分机型可能不够流畅,所以非特殊情况不建议修改此项)
+      btnClick: null,
+      // 点击按钮的回调
+      onShow: null,
+      // 是否显示的回调
+      zIndex: 9990,
+      // fixed定位z-index值
+      left: null,
+      // 到左边的距离, 默认null. 此项有值时,right不生效. (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+      right: 20,
+      // 到右边的距离, 默认20 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+      bottom: 120,
+      // 到底部的距离, 默认120 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+      safearea: false,
+      // bottom的偏移量是否加上底部安全区的距离, 默认false, 需要适配iPhoneX时使用 (具体的界面如果不配置此项,则取本vue的safearea值)
+      width: 72,
+      // 回到顶部图标的宽度, 默认72 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+      radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
+    },
+
+    empty: {
+      use: true,
+      // 是否显示空布局
+      icon: null,
+      // 图标路径
+      tip: '~ 暂无相关数据 ~',
+      // 提示
+      btnText: '',
+      // 按钮
+      btnClick: null,
+      // 点击按钮的回调
+      onShow: null,
+      // 是否显示的回调
+      fixed: false,
+      // 是否使用fixed定位,默认false; 配置fixed为true,以下的top和zIndex才生效 (transform会使fixed失效,最终会降级为absolute)
+      top: "100rpx",
+      // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
+      zIndex: 99 // fixed定位z-index值
+    },
+
+    onScroll: false // 是否监听滚动事件
+  });
+};
+
+/* 配置参数 */
+MeScroll.extend = function (userOption, defaultOption) {
+  if (!userOption) return defaultOption;
+  for (var key in defaultOption) {
+    if (userOption[key] == null) {
+      var def = defaultOption[key];
+      if (def != null && (0, _typeof2.default)(def) === 'object') {
+        userOption[key] = MeScroll.extend({}, def); // 深度匹配
+      } else {
+        userOption[key] = def;
+      }
+    } else if ((0, _typeof2.default)(userOption[key]) === 'object') {
+      MeScroll.extend(userOption[key], defaultOption[key]); // 深度匹配
+    }
+  }
+
+  return userOption;
+};
+
+/* 简单判断是否配置了颜色 (非透明,非白色) */
+MeScroll.prototype.hasColor = function (color) {
+  if (!color) return false;
+  var c = color.toLowerCase();
+  return c != "#fff" && c != "#ffffff" && c != "transparent" && c != "white";
+};
+
+/* -------初始化下拉刷新------- */
+MeScroll.prototype.initDownScroll = function () {
+  var me = this;
+  // 配置参数
+  me.optDown = me.options.down || {};
+  if (!me.optDown.textColor && me.hasColor(me.optDown.bgColor)) me.optDown.textColor = "#fff"; // 当bgColor有值且textColor未设置,则textColor默认白色
+  me.extendDownScroll(me.optDown);
+
+  // 如果是mescroll-body且配置了native,则禁止自定义的下拉刷新
+  if (me.isScrollBody && me.optDown.native) {
+    me.optDown.use = false;
+  } else {
+    me.optDown.native = false; // 仅mescroll-body支持,mescroll-uni不支持
+  }
+
+  me.downHight = 0; // 下拉区域的高度
+
+  // 在页面中加入下拉布局
+  if (me.optDown.use && me.optDown.inited) {
+    // 初始化完毕的回调
+    setTimeout(function () {
+      // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
+      me.optDown.inited(me);
+    }, 0);
+  }
+};
+
+/* 列表touchstart事件 */
+MeScroll.prototype.touchstartEvent = function (e) {
+  if (!this.optDown.use) return;
+  this.startPoint = this.getPoint(e); // 记录起点
+  this.startTop = this.getScrollTop(); // 记录此时的滚动条位置
+  this.startAngle = 0; // 初始角度
+  this.lastPoint = this.startPoint; // 重置上次move的点
+  this.maxTouchmoveY = this.getBodyHeight() - this.optDown.bottomOffset; // 手指触摸的最大范围(写在touchstart避免body获取高度为0的情况)
+  this.inTouchend = false; // 标记不是touchend
+};
+
+/* 列表touchmove事件 */
+MeScroll.prototype.touchmoveEvent = function (e) {
+  if (!this.optDown.use) return;
+  var me = this;
+  var scrollTop = me.getScrollTop(); // 当前滚动条的距离
+  var curPoint = me.getPoint(e); // 当前点
+
+  var moveY = curPoint.y - me.startPoint.y; // 和起点比,移动的距离,大于0向下拉,小于0向上拉
+
+  // 向下拉 && 在顶部
+  // mescroll-body,直接判定在顶部即可
+  // scroll-view在滚动时不会触发touchmove,当触顶/底/左/右时,才会触发touchmove
+  // scroll-view滚动到顶部时,scrollTop不一定为0,也有可能大于0; 在iOS的APP中scrollTop可能为负数,不一定和startTop相等
+  if (moveY > 0 && (me.isScrollBody && scrollTop <= 0 || !me.isScrollBody && (scrollTop <= 0 || scrollTop <= me.optDown.startTop && scrollTop === me.startTop))) {
+    // 可下拉的条件
+    if (!me.inTouchend && !me.isDownScrolling && !me.optDown.isLock && (!me.isUpScrolling || me.isUpScrolling && me.optUp.isBoth)) {
+      // 下拉的初始角度是否在配置的范围内
+      if (!me.startAngle) me.startAngle = me.getAngle(me.lastPoint, curPoint); // 两点之间的角度,区间 [0,90]
+      if (me.startAngle < me.optDown.minAngle) return; // 如果小于配置的角度,则不往下执行下拉刷新
+
+      // 如果手指的位置超过配置的距离,则提前结束下拉,避免Webview嵌套导致touchend无法触发
+      if (me.maxTouchmoveY > 0 && curPoint.y >= me.maxTouchmoveY) {
+        me.inTouchend = true; // 标记执行touchend
+        me.touchendEvent(); // 提前触发touchend
+        return;
+      }
+      me.preventDefault(e); // 阻止默认事件
+
+      var diff = curPoint.y - me.lastPoint.y; // 和上次比,移动的距离 (大于0向下,小于0向上)
+
+      // 下拉距离  < 指定距离
+      if (me.downHight < me.optDown.offset) {
+        if (me.movetype !== 1) {
+          me.movetype = 1; // 加入标记,保证只执行一次
+          me.isDownEndSuccess = null; // 重置是否加载成功的状态 (wxs执行的是wxs.wxs)
+          me.optDown.inOffset && me.optDown.inOffset(me); // 进入指定距离范围内那一刻的回调,只执行一次
+          me.isMoveDown = true; // 标记下拉区域高度改变,在touchend重置回来
+        }
+
+        me.downHight += diff * me.optDown.inOffsetRate; // 越往下,高度变化越小
+
+        // 指定距离  <= 下拉距离
+      } else {
+        if (me.movetype !== 2) {
+          me.movetype = 2; // 加入标记,保证只执行一次
+          me.optDown.outOffset && me.optDown.outOffset(me); // 下拉超过指定距离那一刻的回调,只执行一次
+          me.isMoveDown = true; // 标记下拉区域高度改变,在touchend重置回来
+        }
+
+        if (diff > 0) {
+          // 向下拉
+          me.downHight += diff * me.optDown.outOffsetRate; // 越往下,高度变化越小
+        } else {
+          // 向上收
+          me.downHight += diff; // 向上收回高度,则向上滑多少收多少高度
+        }
+      }
+
+      me.downHight = Math.round(me.downHight); // 取整
+      var rate = me.downHight / me.optDown.offset; // 下拉区域当前高度与指定距离的比值
+      me.optDown.onMoving && me.optDown.onMoving(me, rate, me.downHight); // 下拉过程中的回调,一直在执行
+    }
+  }
+
+  me.lastPoint = curPoint; // 记录本次移动的点
+};
+
+/* 列表touchend事件 */
+MeScroll.prototype.touchendEvent = function (e) {
+  if (!this.optDown.use) return;
+  // 如果下拉区域高度已改变,则需重置回来
+  if (this.isMoveDown) {
+    if (this.downHight >= this.optDown.offset) {
+      // 符合触发刷新的条件
+      this.triggerDownScroll();
+    } else {
+      // 不符合的话 则重置
+      this.downHight = 0;
+      this.endDownScrollCall(this);
+    }
+    this.movetype = 0;
+    this.isMoveDown = false;
+  } else if (!this.isScrollBody && this.getScrollTop() === this.startTop) {
+    // scroll-view到顶/左/右/底的滑动事件
+    var isScrollUp = this.getPoint(e).y - this.startPoint.y < 0; // 和起点比,移动的距离,大于0向下拉,小于0向上拉
+    // 上滑
+    if (isScrollUp) {
+      // 需检查滑动的角度
+      var angle = this.getAngle(this.getPoint(e), this.startPoint); // 两点之间的角度,区间 [0,90]
+      if (angle > 80) {
+        // 检查并触发上拉
+        this.triggerUpScroll(true);
+      }
+    }
+  }
+};
+
+/* 根据点击滑动事件获取第一个手指的坐标 */
+MeScroll.prototype.getPoint = function (e) {
+  if (!e) {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
+  if (e.touches && e.touches[0]) {
+    return {
+      x: e.touches[0].pageX,
+      y: e.touches[0].pageY
+    };
+  } else if (e.changedTouches && e.changedTouches[0]) {
+    return {
+      x: e.changedTouches[0].pageX,
+      y: e.changedTouches[0].pageY
+    };
+  } else {
+    return {
+      x: e.clientX,
+      y: e.clientY
+    };
+  }
+};
+
+/* 计算两点之间的角度: 区间 [0,90]*/
+MeScroll.prototype.getAngle = function (p1, p2) {
+  var x = Math.abs(p1.x - p2.x);
+  var y = Math.abs(p1.y - p2.y);
+  var z = Math.sqrt(x * x + y * y);
+  var angle = 0;
+  if (z !== 0) {
+    angle = Math.asin(y / z) / Math.PI * 180;
+  }
+  return angle;
+};
+
+/* 触发下拉刷新 */
+MeScroll.prototype.triggerDownScroll = function () {
+  if (this.optDown.beforeLoading && this.optDown.beforeLoading(this)) {
+    //return true则处于完全自定义状态
+  } else {
+    this.showDownScroll(); // 下拉刷新中...
+    !this.optDown.native && this.optDown.callback && this.optDown.callback(this); // 执行回调,联网加载数据
+  }
+};
+
+/* 显示下拉进度布局 */
+MeScroll.prototype.showDownScroll = function () {
+  this.isDownScrolling = true; // 标记下拉中
+  if (this.optDown.native) {
+    uni.startPullDownRefresh(); // 系统自带的下拉刷新
+    this.showDownLoadingCall(0); // 仍触发showLoading,因为上拉加载用到
+  } else {
+    this.downHight = this.optDown.offset; // 更新下拉区域高度
+    this.showDownLoadingCall(this.downHight); // 下拉刷新中...
+  }
+};
+
+MeScroll.prototype.showDownLoadingCall = function (downHight) {
+  this.optDown.showLoading && this.optDown.showLoading(this, downHight); // 下拉刷新中...
+  this.optDown.afterLoading && this.optDown.afterLoading(this, downHight); // 下拉刷新中...触发之后马上要执行的代码
+};
+
+/* 显示系统自带的下拉刷新时需要处理的业务 */
+MeScroll.prototype.onPullDownRefresh = function () {
+  this.isDownScrolling = true; // 标记下拉中
+  this.showDownLoadingCall(0); // 仍触发showLoading,因为上拉加载用到
+  this.optDown.callback && this.optDown.callback(this); // 执行回调,联网加载数据
+};
+
+/* 结束下拉刷新 */
+MeScroll.prototype.endDownScroll = function () {
+  if (this.optDown.native) {
+    // 结束原生下拉刷新
+    this.isDownScrolling = false;
+    this.endDownScrollCall(this);
+    uni.stopPullDownRefresh();
+    return;
+  }
+  var me = this;
+  // 结束下拉刷新的方法
+  var endScroll = function endScroll() {
+    me.downHight = 0;
+    me.isDownScrolling = false;
+    me.endDownScrollCall(me);
+    if (!me.isScrollBody) {
+      me.setScrollHeight(0); // scroll-view重置滚动区域,使数据不满屏时仍可检查触发翻页
+      me.scrollTo(0, 0); // scroll-view需重置滚动条到顶部,避免startTop大于0时,对下拉刷新的影响
+    }
+  };
+  // 结束下拉刷新时的回调
+  var delay = 0;
+  if (me.optDown.beforeEndDownScroll) {
+    delay = me.optDown.beforeEndDownScroll(me); // 结束下拉刷新的延时,单位ms
+    if (me.isDownEndSuccess == null) delay = 0; // 没有执行加载中,则不延时
+  }
+
+  if (typeof delay === 'number' && delay > 0) {
+    setTimeout(endScroll, delay);
+  } else {
+    endScroll();
+  }
+};
+MeScroll.prototype.endDownScrollCall = function () {
+  this.optDown.endDownScroll && this.optDown.endDownScroll(this);
+  this.optDown.afterEndDownScroll && this.optDown.afterEndDownScroll(this);
+};
+
+/* 锁定下拉刷新:isLock=ture,null锁定;isLock=false解锁 */
+MeScroll.prototype.lockDownScroll = function (isLock) {
+  if (isLock == null) isLock = true;
+  this.optDown.isLock = isLock;
+};
+
+/* 锁定上拉加载:isLock=ture,null锁定;isLock=false解锁 */
+MeScroll.prototype.lockUpScroll = function (isLock) {
+  if (isLock == null) isLock = true;
+  this.optUp.isLock = isLock;
+};
+
+/* -------初始化上拉加载------- */
+MeScroll.prototype.initUpScroll = function () {
+  var me = this;
+  // 配置参数
+  me.optUp = me.options.up || {
+    use: false
+  };
+  if (!me.optUp.textColor && me.hasColor(me.optUp.bgColor)) me.optUp.textColor = "#fff"; // 当bgColor有值且textColor未设置,则textColor默认白色
+  me.extendUpScroll(me.optUp);
+  if (me.optUp.use === false) return; // 配置不使用上拉加载时,则不初始化上拉布局
+  me.optUp.hasNext = true; // 如果使用上拉,则默认有下一页
+  me.startNum = me.optUp.page.num + 1; // 记录page开始的页码
+
+  // 初始化完毕的回调
+  if (me.optUp.inited) {
+    setTimeout(function () {
+      // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
+      me.optUp.inited(me);
+    }, 0);
+  }
+};
+
+/*滚动到底部的事件 (仅mescroll-body生效)*/
+MeScroll.prototype.onReachBottom = function () {
+  if (this.isScrollBody && !this.isUpScrolling) {
+    // 只能支持下拉刷新的时候同时可以触发上拉加载,否则滚动到底部就需要上滑一点才能触发onReachBottom
+    if (!this.optUp.isLock && this.optUp.hasNext) {
+      this.triggerUpScroll();
+    }
+  }
+};
+
+/*列表滚动事件 (仅mescroll-body生效)*/
+MeScroll.prototype.onPageScroll = function (e) {
+  if (!this.isScrollBody) return;
+
+  // 更新滚动条的位置 (主要用于判断下拉刷新时,滚动条是否在顶部)
+  this.setScrollTop(e.scrollTop);
+
+  // 顶部按钮的显示隐藏
+  if (e.scrollTop >= this.optUp.toTop.offset) {
+    this.showTopBtn();
+  } else {
+    this.hideTopBtn();
+  }
+};
+
+/*列表滚动事件*/
+MeScroll.prototype.scroll = function (e, onScroll) {
+  // 更新滚动条的位置
+  this.setScrollTop(e.scrollTop);
+  // 更新滚动内容高度
+  this.setScrollHeight(e.scrollHeight);
+
+  // 向上滑还是向下滑动
+  if (this.preScrollY == null) this.preScrollY = 0;
+  this.isScrollUp = e.scrollTop - this.preScrollY > 0;
+  this.preScrollY = e.scrollTop;
+
+  // 上滑 && 检查并触发上拉
+  this.isScrollUp && this.triggerUpScroll(true);
+
+  // 顶部按钮的显示隐藏
+  if (e.scrollTop >= this.optUp.toTop.offset) {
+    this.showTopBtn();
+  } else {
+    this.hideTopBtn();
+  }
+
+  // 滑动监听
+  this.optUp.onScroll && onScroll && onScroll();
+};
+
+/* 触发上拉加载 */
+MeScroll.prototype.triggerUpScroll = function (isCheck) {
+  if (!this.isUpScrolling && this.optUp.use && this.optUp.callback) {
+    // 是否校验在底部; 默认不校验
+    if (isCheck === true) {
+      var canUp = false;
+      // 还有下一页 && 没有锁定 && 不在下拉中
+      if (this.optUp.hasNext && !this.optUp.isLock && !this.isDownScrolling) {
+        if (this.getScrollBottom() <= this.optUp.offset) {
+          // 到底部
+          canUp = true; // 标记可上拉
+        }
+      }
+
+      if (canUp === false) return;
+    }
+    this.showUpScroll(); // 上拉加载中...
+    this.optUp.page.num++; // 预先加一页,如果失败则减回
+    this.isUpAutoLoad = true; // 标记上拉已经自动执行过,避免初始化时多次触发上拉回调
+    this.num = this.optUp.page.num; // 把最新的页数赋值在mescroll上,避免对page的影响
+    this.size = this.optUp.page.size; // 把最新的页码赋值在mescroll上,避免对page的影响
+    this.time = this.optUp.page.time; // 把最新的页码赋值在mescroll上,避免对page的影响
+    this.optUp.callback(this); // 执行回调,联网加载数据
+  }
+};
+
+/* 显示上拉加载中 */
+MeScroll.prototype.showUpScroll = function () {
+  this.isUpScrolling = true; // 标记上拉加载中
+  this.optUp.showLoading && this.optUp.showLoading(this); // 回调
+};
+
+/* 显示上拉无更多数据 */
+MeScroll.prototype.showNoMore = function () {
+  this.optUp.hasNext = false; // 标记无更多数据
+  this.optUp.showNoMore && this.optUp.showNoMore(this); // 回调
+};
+
+/* 隐藏上拉区域**/
+MeScroll.prototype.hideUpScroll = function () {
+  this.optUp.hideUpScroll && this.optUp.hideUpScroll(this); // 回调
+};
+
+/* 结束上拉加载 */
+MeScroll.prototype.endUpScroll = function (isShowNoMore) {
+  if (isShowNoMore != null) {
+    // isShowNoMore=null,不处理下拉状态,下拉刷新的时候调用
+    if (isShowNoMore) {
+      this.showNoMore(); // isShowNoMore=true,显示无更多数据
+    } else {
+      this.hideUpScroll(); // isShowNoMore=false,隐藏上拉加载
+    }
+  }
+
+  this.isUpScrolling = false; // 标记结束上拉加载
+};
+
+/* 重置上拉加载列表为第一页
+ *isShowLoading 是否显示进度布局;
+ * 1.默认null,不传参,则显示上拉加载的进度布局
+ * 2.传参true, 则显示下拉刷新的进度布局
+ * 3.传参false,则不显示上拉和下拉的进度 (常用于静默更新列表数据)
+ */
+MeScroll.prototype.resetUpScroll = function (isShowLoading) {
+  if (this.optUp && this.optUp.use) {
+    var page = this.optUp.page;
+    this.prePageNum = page.num; // 缓存重置前的页码,加载失败可退回
+    this.prePageTime = page.time; // 缓存重置前的时间,加载失败可退回
+    page.num = this.startNum; // 重置为第一页
+    page.time = null; // 重置时间为空
+    if (!this.isDownScrolling && isShowLoading !== false) {
+      // 如果不是下拉刷新触发的resetUpScroll并且不配置列表静默更新,则显示进度;
+      if (isShowLoading == null) {
+        this.removeEmpty(); // 移除空布局
+        this.showUpScroll(); // 不传参,默认显示上拉加载的进度布局
+      } else {
+        this.showDownScroll(); // 传true,显示下拉刷新的进度布局,不清空列表
+      }
+    }
+
+    this.isUpAutoLoad = true; // 标记上拉已经自动执行过,避免初始化时多次触发上拉回调
+    this.num = page.num; // 把最新的页数赋值在mescroll上,避免对page的影响
+    this.size = page.size; // 把最新的页码赋值在mescroll上,避免对page的影响
+    this.time = page.time; // 把最新的页码赋值在mescroll上,避免对page的影响
+    this.optUp.callback && this.optUp.callback(this); // 执行上拉回调
+  }
+};
+
+/* 设置page.num的值 */
+MeScroll.prototype.setPageNum = function (num) {
+  this.optUp.page.num = num - 1;
+};
+
+/* 设置page.size的值 */
+MeScroll.prototype.setPageSize = function (size) {
+  this.optUp.page.size = size;
+};
+
+/* 联网回调成功,结束下拉刷新和上拉加载
+ * dataSize: 当前页的数据量(必传)
+ * totalPage: 总页数(必传)
+ * systime: 服务器时间 (可空)
+ */
+MeScroll.prototype.endByPage = function (dataSize, totalPage, systime) {
+  var hasNext;
+  if (this.optUp.use && totalPage != null) hasNext = this.optUp.page.num < totalPage; // 是否还有下一页
+  this.endSuccess(dataSize, hasNext, systime);
+};
+
+/* 联网回调成功,结束下拉刷新和上拉加载
+ * dataSize: 当前页的数据量(必传)
+ * totalSize: 列表所有数据总数量(必传)
+ * systime: 服务器时间 (可空)
+ */
+MeScroll.prototype.endBySize = function (dataSize, totalSize, systime) {
+  var hasNext;
+  if (this.optUp.use && totalSize != null) {
+    var loadSize = (this.optUp.page.num - 1) * this.optUp.page.size + dataSize; // 已加载的数据总数
+    hasNext = loadSize < totalSize; // 是否还有下一页
+  }
+
+  this.endSuccess(dataSize, hasNext, systime);
+};
+
+/* 联网回调成功,结束下拉刷新和上拉加载
+ * dataSize: 当前页的数据个数(不是所有页的数据总和),用于上拉加载判断是否还有下一页.如果不传,则会判断还有下一页
+ * hasNext: 是否还有下一页,布尔类型;用来解决这个小问题:比如列表共有20条数据,每页加载10条,共2页.如果只根据dataSize判断,则需翻到第三页才会知道无更多数据,如果传了hasNext,则翻到第二页即可显示无更多数据.
+ * systime: 服务器时间(可空);用来解决这个小问题:当准备翻下一页时,数据库新增了几条记录,此时翻下一页,前面的几条数据会和上一页的重复;这里传入了systime,那么upCallback的page.time就会有值,把page.time传给服务器,让后台过滤新加入的那几条记录
+ */
+MeScroll.prototype.endSuccess = function (dataSize, hasNext, systime) {
+  var me = this;
+  // 结束下拉刷新
+  if (me.isDownScrolling) {
+    me.isDownEndSuccess = true;
+    me.endDownScroll();
+  }
+
+  // 结束上拉加载
+  if (me.optUp.use) {
+    var isShowNoMore; // 是否已无更多数据
+    if (dataSize != null) {
+      var pageNum = me.optUp.page.num; // 当前页码
+      var pageSize = me.optUp.page.size; // 每页长度
+      // 如果是第一页
+      if (pageNum === 1) {
+        if (systime) me.optUp.page.time = systime; // 设置加载列表数据第一页的时间
+      }
+
+      if (dataSize < pageSize || hasNext === false) {
+        // 返回的数据不满一页时,则说明已无更多数据
+        me.optUp.hasNext = false;
+        if (dataSize === 0 && pageNum === 1) {
+          // 如果第一页无任何数据且配置了空布局
+          isShowNoMore = false;
+          me.showEmpty();
+        } else {
+          // 总列表数少于配置的数量,则不显示无更多数据
+          var allDataSize = (pageNum - 1) * pageSize + dataSize;
+          if (allDataSize < me.optUp.noMoreSize) {
+            isShowNoMore = false;
+          } else {
+            isShowNoMore = true;
+          }
+          me.removeEmpty(); // 移除空布局
+        }
+      } else {
+        // 还有下一页
+        isShowNoMore = false;
+        me.optUp.hasNext = true;
+        me.removeEmpty(); // 移除空布局
+      }
+    }
+
+    // 隐藏上拉
+    me.endUpScroll(isShowNoMore);
+  }
+};
+
+/* 回调失败,结束下拉刷新和上拉加载 */
+MeScroll.prototype.endErr = function (errDistance) {
+  // 结束下拉,回调失败重置回原来的页码和时间
+  if (this.isDownScrolling) {
+    this.isDownEndSuccess = false;
+    var page = this.optUp.page;
+    if (page && this.prePageNum) {
+      page.num = this.prePageNum;
+      page.time = this.prePageTime;
+    }
+    this.endDownScroll();
+  }
+  // 结束上拉,回调失败重置回原来的页码
+  if (this.isUpScrolling) {
+    this.optUp.page.num--;
+    this.endUpScroll(false);
+    // 如果是mescroll-body,则需往回滚一定距离
+    if (this.isScrollBody && errDistance !== 0) {
+      // 不处理0
+      if (!errDistance) errDistance = this.optUp.errDistance; // 不传,则取默认
+      this.scrollTo(this.getScrollTop() - errDistance, 0); // 往上回滚的距离
+    }
+  }
+};
+
+/* 显示空布局 */
+MeScroll.prototype.showEmpty = function () {
+  this.optUp.empty.use && this.optUp.empty.onShow && this.optUp.empty.onShow(true);
+};
+
+/* 移除空布局 */
+MeScroll.prototype.removeEmpty = function () {
+  this.optUp.empty.use && this.optUp.empty.onShow && this.optUp.empty.onShow(false);
+};
+
+/* 显示回到顶部的按钮 */
+MeScroll.prototype.showTopBtn = function () {
+  if (!this.topBtnShow) {
+    this.topBtnShow = true;
+    this.optUp.toTop.onShow && this.optUp.toTop.onShow(true);
+  }
+};
+
+/* 隐藏回到顶部的按钮 */
+MeScroll.prototype.hideTopBtn = function () {
+  if (this.topBtnShow) {
+    this.topBtnShow = false;
+    this.optUp.toTop.onShow && this.optUp.toTop.onShow(false);
+  }
+};
+
+/* 获取滚动条的位置 */
+MeScroll.prototype.getScrollTop = function () {
+  return this.scrollTop || 0;
+};
+
+/* 记录滚动条的位置 */
+MeScroll.prototype.setScrollTop = function (y) {
+  this.scrollTop = y;
+};
+
+/* 滚动到指定位置 */
+MeScroll.prototype.scrollTo = function (y, t) {
+  this.myScrollTo && this.myScrollTo(y, t); // scrollview需自定义回到顶部方法
+};
+
+/* 自定义scrollTo */
+MeScroll.prototype.resetScrollTo = function (myScrollTo) {
+  this.myScrollTo = myScrollTo;
+};
+
+/* 滚动条到底部的距离 */
+MeScroll.prototype.getScrollBottom = function () {
+  return this.getScrollHeight() - this.getClientHeight() - this.getScrollTop();
+};
+
+/* 计步器
+ star: 开始值
+ end: 结束值
+ callback(step,timer): 回调step值,计步器timer,可自行通过window.clearInterval(timer)结束计步器;
+ t: 计步时长,传0则直接回调end值;不传则默认300ms
+ rate: 周期;不传则默认30ms计步一次
+ * */
+MeScroll.prototype.getStep = function (star, end, callback, t, rate) {
+  var diff = end - star; // 差值
+  if (t === 0 || diff === 0) {
+    callback && callback(end);
+    return;
+  }
+  t = t || 300; // 时长 300ms
+  rate = rate || 30; // 周期 30ms
+  var count = t / rate; // 次数
+  var step = diff / count; // 步长
+  var i = 0; // 计数
+  var timer = setInterval(function () {
+    if (i < count - 1) {
+      star += step;
+      callback && callback(star, timer);
+      i++;
+    } else {
+      callback && callback(end, timer); // 最后一次直接设置end,避免计算误差
+      clearInterval(timer);
+    }
+  }, rate);
+};
+
+/* 滚动容器的高度 */
+MeScroll.prototype.getClientHeight = function (isReal) {
+  var h = this.clientHeight || 0;
+  if (h === 0 && isReal !== true) {
+    // 未获取到容器的高度,可临时取body的高度 (可能会有误差)
+    h = this.getBodyHeight();
+  }
+  return h;
+};
+MeScroll.prototype.setClientHeight = function (h) {
+  this.clientHeight = h;
+};
+
+/* 滚动内容的高度 */
+MeScroll.prototype.getScrollHeight = function () {
+  return this.scrollHeight || 0;
+};
+MeScroll.prototype.setScrollHeight = function (h) {
+  this.scrollHeight = h;
+};
+
+/* body的高度 */
+MeScroll.prototype.getBodyHeight = function () {
+  return this.bodyHeight || 0;
+};
+MeScroll.prototype.setBodyHeight = function (h) {
+  this.bodyHeight = h;
+};
+
+/* 阻止浏览器默认滚动事件 */
+MeScroll.prototype.preventDefault = function (e) {
+  // 小程序不支持e.preventDefault, 已在wxs中禁止
+  // app的bounce只能通过配置pages.json的style.app-plus.bounce为"none"来禁止, 或使用renderjs禁止
+  // cancelable:是否可以被禁用; defaultPrevented:是否已经被禁用
+  if (e && e.cancelable && !e.defaultPrevented) e.preventDefault();
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+
+/***/ 202:
+/*!*************************************************************************!*\
+  !*** D:/mywork/BPM/guqi/components/mescroll-uni/mescroll-uni-option.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+// 全局配置
+// mescroll-body 和 mescroll-uni 通用
+var GlobalOption = {
+  down: {
+    // 其他down的配置参数也可以写,这里只展示了常用的配置:
+    textInOffset: '下拉刷新',
+    // 下拉的距离在offset范围内的提示文本
+    textOutOffset: '释放更新',
+    // 下拉的距离大于offset范围的提示文本
+    textLoading: '加载中 ...',
+    // 加载中的提示文本
+    textSuccess: '加载成功',
+    // 加载成功的文本
+    textErr: '加载失败',
+    // 加载失败的文本
+    beforeEndDelay: 100,
+    // 延时结束的时长 (显示加载成功/失败的时长)
+    offset: 80,
+    // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
+    native: false // 是否使用系统自带的下拉刷新; 默认false; 仅在mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
+  },
+
+  up: {
+    // 其他up的配置参数也可以写,这里只展示了常用的配置:
+    textLoading: '加载中 ...',
+    // 加载中的提示文本
+    textNoMore: '-- END --',
+    // 没有更多数据的提示文本
+    offset: 150,
+    // 距底部多远时,触发upCallback,仅mescroll-uni生效 ( mescroll-body配置的是pages.json的 onReachBottomDistance )
+    toTop: {
+      // 回到顶部按钮,需配置src才显示
+      src: "https://www.mescroll.com/img/mescroll-totop.png",
+      // 图片路径 (建议放入static目录, 如 /static/img/mescroll-totop.png )
+      offset: 1000,
+      // 列表滚动多少距离才显示回到顶部按钮,默认1000px
+      right: 20,
+      // 到右边的距离, 默认20 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
+      bottom: 120,
+      // 到底部的距离, 默认120 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
+      width: 72 // 回到顶部图标的宽度, 默认72 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
+    },
+
+    empty: {
+      use: true,
+      // 是否显示空布局
+      icon: "https://www.mescroll.com/img/mescroll-empty.png",
+      // 图标路径 (建议放入static目录, 如 /static/img/mescroll-empty.png )
+      tip: '~ 空空如也 ~' // 提示
+    }
+  }
+};
+var _default = GlobalOption;
+exports.default = _default;
+
+/***/ }),
+
+/***/ 203:
+/*!****************************************************************!*\
+  !*** D:/mywork/BPM/guqi/components/mescroll-uni/wxs/mixins.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+// 定义在wxs (含renderjs) 逻辑层的数据和方法, 与视图层相互通信
+var WxsMixin = {
+  data: function data() {
+    return {
+      // 传入wxs视图层的数据 (响应式)
+      wxsProp: {
+        optDown: {},
+        // 下拉刷新的配置
+        scrollTop: 0,
+        // 滚动条的距离
+        bodyHeight: 0,
+        // body的高度
+        isDownScrolling: false,
+        // 是否正在下拉刷新中
+        isUpScrolling: false,
+        // 是否正在上拉加载中
+        isScrollBody: true,
+        // 是否为mescroll-body滚动
+        isUpBoth: true,
+        // 上拉加载时,是否同时可以下拉刷新
+        t: 0 // 数据更新的标记 (只有数据更新了,才会触发wxs的Observer)
+      },
+
+      // 标记调用wxs视图层的方法
+      callProp: {
+        callType: '',
+        // 方法名
+        t: 0 // 数据更新的标记 (只有数据更新了,才会触发wxs的Observer)
+      },
+
+      // 不用wxs的平台使用此处的wxsBiz对象,抹平wxs的写法 (微信小程序和APP使用的wxsBiz对象是./wxs/wxs.wxs)
+
+      // 不用renderjs的平台使用此处的renderBiz对象,抹平renderjs的写法 (app 和 h5 使用的renderBiz对象是./wxs/renderjs.js)
+
+      renderBiz: {
+        propObserver: function propObserver() {} // 抹平renderjs的写法
+      }
+    };
+  },
+  methods: {
+    // wxs视图层调用逻辑层的回调
+    wxsCall: function wxsCall(msg) {
+      if (msg.type === 'setWxsProp') {
+        // 更新wxsProp数据 (值改变才触发更新)
+        this.wxsProp = {
+          optDown: this.mescroll.optDown,
+          scrollTop: this.mescroll.getScrollTop(),
+          bodyHeight: this.mescroll.getBodyHeight(),
+          isDownScrolling: this.mescroll.isDownScrolling,
+          isUpScrolling: this.mescroll.isUpScrolling,
+          isUpBoth: this.mescroll.optUp.isBoth,
+          isScrollBody: this.mescroll.isScrollBody,
+          t: Date.now()
+        };
+      } else if (msg.type === 'setLoadType') {
+        // 设置inOffset,outOffset的状态
+        this.downLoadType = msg.downLoadType;
+        // 状态挂载到mescroll对象, 以便在其他组件中使用, 比如<me-video>中
+        this.$set(this.mescroll, 'downLoadType', this.downLoadType);
+        // 重置是否加载成功的状态
+        this.$set(this.mescroll, 'isDownEndSuccess', null);
+      } else if (msg.type === 'triggerDownScroll') {
+        // 主动触发下拉刷新
+        this.mescroll.triggerDownScroll();
+      } else if (msg.type === 'endDownScroll') {
+        // 结束下拉刷新
+        this.mescroll.endDownScroll();
+      } else if (msg.type === 'triggerUpScroll') {
+        // 主动触发上拉加载
+        this.mescroll.triggerUpScroll(true);
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+    // 配置主动触发wxs显示加载进度的回调
+    this.mescroll.optDown.afterLoading = function () {
+      _this.callProp = {
+        callType: "showLoading",
+        t: Date.now()
+      }; // 触发wxs的方法 (值改变才触发更新)
+    };
+    // 配置主动触发wxs隐藏加载进度的回调
+    this.mescroll.optDown.afterEndDownScroll = function () {
+      _this.callProp = {
+        callType: "endDownScroll",
+        t: Date.now()
+      }; // 触发wxs的方法 (值改变才触发更新)
+      var delay = 300 + (_this.mescroll.optDown.beforeEndDelay || 0);
+      setTimeout(function () {
+        if (_this.downLoadType === 4 || _this.downLoadType === 0) {
+          _this.callProp = {
+            callType: "clearTransform",
+            t: Date.now()
+          }; // 触发wxs的方法 (值改变才触发更新)
+        }
+        // 状态挂载到mescroll对象, 以便在其他组件中使用, 比如<me-video>中
+        _this.$set(_this.mescroll, 'downLoadType', _this.downLoadType);
+      }, delay);
+    };
+    // 初始化wxs的数据
+    this.wxsCall({
+      type: 'setWxsProp'
+    });
+  }
+};
+var _default = WxsMixin;
+exports.default = _default;
+
+/***/ }),
+
 /***/ 21:
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
@@ -3326,6 +4424,510 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 module.exports = _classCallCheck, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ 236:
+/*!******************************************************************************************!*\
+  !*** D:/mywork/BPM/guqi/uni_modules/uni-icons/components/uni-icons/uniicons_file_vue.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fontData = void 0;
+var fontData = [{
+  "font_class": "arrow-down",
+  "unicode": "\uE6BE"
+}, {
+  "font_class": "arrow-left",
+  "unicode": "\uE6BC"
+}, {
+  "font_class": "arrow-right",
+  "unicode": "\uE6BB"
+}, {
+  "font_class": "arrow-up",
+  "unicode": "\uE6BD"
+}, {
+  "font_class": "auth",
+  "unicode": "\uE6AB"
+}, {
+  "font_class": "auth-filled",
+  "unicode": "\uE6CC"
+}, {
+  "font_class": "back",
+  "unicode": "\uE6B9"
+}, {
+  "font_class": "bars",
+  "unicode": "\uE627"
+}, {
+  "font_class": "calendar",
+  "unicode": "\uE6A0"
+}, {
+  "font_class": "calendar-filled",
+  "unicode": "\uE6C0"
+}, {
+  "font_class": "camera",
+  "unicode": "\uE65A"
+}, {
+  "font_class": "camera-filled",
+  "unicode": "\uE658"
+}, {
+  "font_class": "cart",
+  "unicode": "\uE631"
+}, {
+  "font_class": "cart-filled",
+  "unicode": "\uE6D0"
+}, {
+  "font_class": "chat",
+  "unicode": "\uE65D"
+}, {
+  "font_class": "chat-filled",
+  "unicode": "\uE659"
+}, {
+  "font_class": "chatboxes",
+  "unicode": "\uE696"
+}, {
+  "font_class": "chatboxes-filled",
+  "unicode": "\uE692"
+}, {
+  "font_class": "chatbubble",
+  "unicode": "\uE697"
+}, {
+  "font_class": "chatbubble-filled",
+  "unicode": "\uE694"
+}, {
+  "font_class": "checkbox",
+  "unicode": "\uE62B"
+}, {
+  "font_class": "checkbox-filled",
+  "unicode": "\uE62C"
+}, {
+  "font_class": "checkmarkempty",
+  "unicode": "\uE65C"
+}, {
+  "font_class": "circle",
+  "unicode": "\uE65B"
+}, {
+  "font_class": "circle-filled",
+  "unicode": "\uE65E"
+}, {
+  "font_class": "clear",
+  "unicode": "\uE66D"
+}, {
+  "font_class": "close",
+  "unicode": "\uE673"
+}, {
+  "font_class": "closeempty",
+  "unicode": "\uE66C"
+}, {
+  "font_class": "cloud-download",
+  "unicode": "\uE647"
+}, {
+  "font_class": "cloud-download-filled",
+  "unicode": "\uE646"
+}, {
+  "font_class": "cloud-upload",
+  "unicode": "\uE645"
+}, {
+  "font_class": "cloud-upload-filled",
+  "unicode": "\uE648"
+}, {
+  "font_class": "color",
+  "unicode": "\uE6CF"
+}, {
+  "font_class": "color-filled",
+  "unicode": "\uE6C9"
+}, {
+  "font_class": "compose",
+  "unicode": "\uE67F"
+}, {
+  "font_class": "contact",
+  "unicode": "\uE693"
+}, {
+  "font_class": "contact-filled",
+  "unicode": "\uE695"
+}, {
+  "font_class": "down",
+  "unicode": "\uE6B8"
+}, {
+  "font_class": "bottom",
+  "unicode": "\uE6B8"
+}, {
+  "font_class": "download",
+  "unicode": "\uE68D"
+}, {
+  "font_class": "download-filled",
+  "unicode": "\uE681"
+}, {
+  "font_class": "email",
+  "unicode": "\uE69E"
+}, {
+  "font_class": "email-filled",
+  "unicode": "\uE69A"
+}, {
+  "font_class": "eye",
+  "unicode": "\uE651"
+}, {
+  "font_class": "eye-filled",
+  "unicode": "\uE66A"
+}, {
+  "font_class": "eye-slash",
+  "unicode": "\uE6B3"
+}, {
+  "font_class": "eye-slash-filled",
+  "unicode": "\uE6B4"
+}, {
+  "font_class": "fire",
+  "unicode": "\uE6A1"
+}, {
+  "font_class": "fire-filled",
+  "unicode": "\uE6C5"
+}, {
+  "font_class": "flag",
+  "unicode": "\uE65F"
+}, {
+  "font_class": "flag-filled",
+  "unicode": "\uE660"
+}, {
+  "font_class": "folder-add",
+  "unicode": "\uE6A9"
+}, {
+  "font_class": "folder-add-filled",
+  "unicode": "\uE6C8"
+}, {
+  "font_class": "font",
+  "unicode": "\uE6A3"
+}, {
+  "font_class": "forward",
+  "unicode": "\uE6BA"
+}, {
+  "font_class": "gear",
+  "unicode": "\uE664"
+}, {
+  "font_class": "gear-filled",
+  "unicode": "\uE661"
+}, {
+  "font_class": "gift",
+  "unicode": "\uE6A4"
+}, {
+  "font_class": "gift-filled",
+  "unicode": "\uE6C4"
+}, {
+  "font_class": "hand-down",
+  "unicode": "\uE63D"
+}, {
+  "font_class": "hand-down-filled",
+  "unicode": "\uE63C"
+}, {
+  "font_class": "hand-up",
+  "unicode": "\uE63F"
+}, {
+  "font_class": "hand-up-filled",
+  "unicode": "\uE63E"
+}, {
+  "font_class": "headphones",
+  "unicode": "\uE630"
+}, {
+  "font_class": "heart",
+  "unicode": "\uE639"
+}, {
+  "font_class": "heart-filled",
+  "unicode": "\uE641"
+}, {
+  "font_class": "help",
+  "unicode": "\uE679"
+}, {
+  "font_class": "help-filled",
+  "unicode": "\uE674"
+}, {
+  "font_class": "home",
+  "unicode": "\uE662"
+}, {
+  "font_class": "home-filled",
+  "unicode": "\uE663"
+}, {
+  "font_class": "image",
+  "unicode": "\uE670"
+}, {
+  "font_class": "image-filled",
+  "unicode": "\uE678"
+}, {
+  "font_class": "images",
+  "unicode": "\uE650"
+}, {
+  "font_class": "images-filled",
+  "unicode": "\uE64B"
+}, {
+  "font_class": "info",
+  "unicode": "\uE669"
+}, {
+  "font_class": "info-filled",
+  "unicode": "\uE649"
+}, {
+  "font_class": "left",
+  "unicode": "\uE6B7"
+}, {
+  "font_class": "link",
+  "unicode": "\uE6A5"
+}, {
+  "font_class": "list",
+  "unicode": "\uE644"
+}, {
+  "font_class": "location",
+  "unicode": "\uE6AE"
+}, {
+  "font_class": "location-filled",
+  "unicode": "\uE6AF"
+}, {
+  "font_class": "locked",
+  "unicode": "\uE66B"
+}, {
+  "font_class": "locked-filled",
+  "unicode": "\uE668"
+}, {
+  "font_class": "loop",
+  "unicode": "\uE633"
+}, {
+  "font_class": "mail-open",
+  "unicode": "\uE643"
+}, {
+  "font_class": "mail-open-filled",
+  "unicode": "\uE63A"
+}, {
+  "font_class": "map",
+  "unicode": "\uE667"
+}, {
+  "font_class": "map-filled",
+  "unicode": "\uE666"
+}, {
+  "font_class": "map-pin",
+  "unicode": "\uE6AD"
+}, {
+  "font_class": "map-pin-ellipse",
+  "unicode": "\uE6AC"
+}, {
+  "font_class": "medal",
+  "unicode": "\uE6A2"
+}, {
+  "font_class": "medal-filled",
+  "unicode": "\uE6C3"
+}, {
+  "font_class": "mic",
+  "unicode": "\uE671"
+}, {
+  "font_class": "mic-filled",
+  "unicode": "\uE677"
+}, {
+  "font_class": "micoff",
+  "unicode": "\uE67E"
+}, {
+  "font_class": "micoff-filled",
+  "unicode": "\uE6B0"
+}, {
+  "font_class": "minus",
+  "unicode": "\uE66F"
+}, {
+  "font_class": "minus-filled",
+  "unicode": "\uE67D"
+}, {
+  "font_class": "more",
+  "unicode": "\uE64D"
+}, {
+  "font_class": "more-filled",
+  "unicode": "\uE64E"
+}, {
+  "font_class": "navigate",
+  "unicode": "\uE66E"
+}, {
+  "font_class": "navigate-filled",
+  "unicode": "\uE67A"
+}, {
+  "font_class": "notification",
+  "unicode": "\uE6A6"
+}, {
+  "font_class": "notification-filled",
+  "unicode": "\uE6C1"
+}, {
+  "font_class": "paperclip",
+  "unicode": "\uE652"
+}, {
+  "font_class": "paperplane",
+  "unicode": "\uE672"
+}, {
+  "font_class": "paperplane-filled",
+  "unicode": "\uE675"
+}, {
+  "font_class": "person",
+  "unicode": "\uE699"
+}, {
+  "font_class": "person-filled",
+  "unicode": "\uE69D"
+}, {
+  "font_class": "personadd",
+  "unicode": "\uE69F"
+}, {
+  "font_class": "personadd-filled",
+  "unicode": "\uE698"
+}, {
+  "font_class": "personadd-filled-copy",
+  "unicode": "\uE6D1"
+}, {
+  "font_class": "phone",
+  "unicode": "\uE69C"
+}, {
+  "font_class": "phone-filled",
+  "unicode": "\uE69B"
+}, {
+  "font_class": "plus",
+  "unicode": "\uE676"
+}, {
+  "font_class": "plus-filled",
+  "unicode": "\uE6C7"
+}, {
+  "font_class": "plusempty",
+  "unicode": "\uE67B"
+}, {
+  "font_class": "pulldown",
+  "unicode": "\uE632"
+}, {
+  "font_class": "pyq",
+  "unicode": "\uE682"
+}, {
+  "font_class": "qq",
+  "unicode": "\uE680"
+}, {
+  "font_class": "redo",
+  "unicode": "\uE64A"
+}, {
+  "font_class": "redo-filled",
+  "unicode": "\uE655"
+}, {
+  "font_class": "refresh",
+  "unicode": "\uE657"
+}, {
+  "font_class": "refresh-filled",
+  "unicode": "\uE656"
+}, {
+  "font_class": "refreshempty",
+  "unicode": "\uE6BF"
+}, {
+  "font_class": "reload",
+  "unicode": "\uE6B2"
+}, {
+  "font_class": "right",
+  "unicode": "\uE6B5"
+}, {
+  "font_class": "scan",
+  "unicode": "\uE62A"
+}, {
+  "font_class": "search",
+  "unicode": "\uE654"
+}, {
+  "font_class": "settings",
+  "unicode": "\uE653"
+}, {
+  "font_class": "settings-filled",
+  "unicode": "\uE6CE"
+}, {
+  "font_class": "shop",
+  "unicode": "\uE62F"
+}, {
+  "font_class": "shop-filled",
+  "unicode": "\uE6CD"
+}, {
+  "font_class": "smallcircle",
+  "unicode": "\uE67C"
+}, {
+  "font_class": "smallcircle-filled",
+  "unicode": "\uE665"
+}, {
+  "font_class": "sound",
+  "unicode": "\uE684"
+}, {
+  "font_class": "sound-filled",
+  "unicode": "\uE686"
+}, {
+  "font_class": "spinner-cycle",
+  "unicode": "\uE68A"
+}, {
+  "font_class": "staff",
+  "unicode": "\uE6A7"
+}, {
+  "font_class": "staff-filled",
+  "unicode": "\uE6CB"
+}, {
+  "font_class": "star",
+  "unicode": "\uE688"
+}, {
+  "font_class": "star-filled",
+  "unicode": "\uE68F"
+}, {
+  "font_class": "starhalf",
+  "unicode": "\uE683"
+}, {
+  "font_class": "trash",
+  "unicode": "\uE687"
+}, {
+  "font_class": "trash-filled",
+  "unicode": "\uE685"
+}, {
+  "font_class": "tune",
+  "unicode": "\uE6AA"
+}, {
+  "font_class": "tune-filled",
+  "unicode": "\uE6CA"
+}, {
+  "font_class": "undo",
+  "unicode": "\uE64F"
+}, {
+  "font_class": "undo-filled",
+  "unicode": "\uE64C"
+}, {
+  "font_class": "up",
+  "unicode": "\uE6B6"
+}, {
+  "font_class": "top",
+  "unicode": "\uE6B6"
+}, {
+  "font_class": "upload",
+  "unicode": "\uE690"
+}, {
+  "font_class": "upload-filled",
+  "unicode": "\uE68E"
+}, {
+  "font_class": "videocam",
+  "unicode": "\uE68C"
+}, {
+  "font_class": "videocam-filled",
+  "unicode": "\uE689"
+}, {
+  "font_class": "vip",
+  "unicode": "\uE6A8"
+}, {
+  "font_class": "vip-filled",
+  "unicode": "\uE6C6"
+}, {
+  "font_class": "wallet",
+  "unicode": "\uE6B1"
+}, {
+  "font_class": "wallet-filled",
+  "unicode": "\uE6C2"
+}, {
+  "font_class": "weibo",
+  "unicode": "\uE68B"
+}, {
+  "font_class": "weixin",
+  "unicode": "\uE691"
+}];
+
+// export const fontData = JSON.parse<IconsDataItem>(fontDataJson)
+exports.fontData = fontData;
 
 /***/ }),
 
@@ -9440,1991 +11042,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 26:
-/*!*************************************!*\
-  !*** D:/mywork/BPM/guqi/pages.json ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 273:
-/*!******************************************************************!*\
-  !*** D:/mywork/BPM/guqi/components/mescroll-uni/mescroll-uni.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = MeScroll;
-var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
-/* mescroll
- * version 1.3.3
- * 2020-09-15 wenju
- * https://www.mescroll.com
- */
-
-function MeScroll(options, isScrollBody) {
-  var me = this;
-  me.version = '1.3.3'; // mescroll版本号
-  me.options = options || {}; // 配置
-  me.isScrollBody = isScrollBody || false; // 滚动区域是否为原生页面滚动; 默认为scroll-view
-
-  me.isDownScrolling = false; // 是否在执行下拉刷新的回调
-  me.isUpScrolling = false; // 是否在执行上拉加载的回调
-  var hasDownCallback = me.options.down && me.options.down.callback; // 是否配置了down的callback
-
-  // 初始化下拉刷新
-  me.initDownScroll();
-  // 初始化上拉加载,则初始化
-  me.initUpScroll();
-
-  // 自动加载
-  setTimeout(function () {
-    // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
-    // 自动触发下拉刷新 (只有配置了down的callback才自动触发下拉刷新)
-    if ((me.optDown.use || me.optDown.native) && me.optDown.auto && hasDownCallback) {
-      if (me.optDown.autoShowLoading) {
-        me.triggerDownScroll(); // 显示下拉进度,执行下拉回调
-      } else {
-        me.optDown.callback && me.optDown.callback(me); // 不显示下拉进度,直接执行下拉回调
-      }
-    }
-    // 自动触发上拉加载
-    if (!me.isUpAutoLoad) {
-      // 部分小程序(头条小程序)emit是异步, 会导致isUpAutoLoad判断有误, 先延时确保先执行down的callback,再执行up的callback
-      setTimeout(function () {
-        me.optUp.use && me.optUp.auto && !me.isUpAutoLoad && me.triggerUpScroll();
-      }, 100);
-    }
-  }, 30); // 需让me.optDown.inited和me.optUp.inited先执行
-}
-
-/* 配置参数:下拉刷新 */
-MeScroll.prototype.extendDownScroll = function (optDown) {
-  // 下拉刷新的配置
-  MeScroll.extend(optDown, {
-    use: true,
-    // 是否启用下拉刷新; 默认true
-    auto: true,
-    // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
-    native: false,
-    // 是否使用系统自带的下拉刷新; 默认false; 仅mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
-    autoShowLoading: false,
-    // 如果设置auto=true(在初始化完毕之后自动执行下拉刷新的回调),那么是否显示下拉刷新的进度; 默认false
-    isLock: false,
-    // 是否锁定下拉刷新,默认false;
-    offset: 80,
-    // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
-    startTop: 100,
-    // scroll-view快速滚动到顶部时,此时的scroll-top可能大于0, 此值用于控制最大的误差
-    inOffsetRate: 1,
-    // 在列表顶部,下拉的距离小于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
-    outOffsetRate: 0.2,
-    // 在列表顶部,下拉的距离大于offset时,改变下拉区域高度比例;值小于1且越接近0,高度变化越小,表现为越往下越难拉
-    bottomOffset: 20,
-    // 当手指touchmove位置在距离body底部20px范围内的时候结束上拉刷新,避免Webview嵌套导致touchend事件不执行
-    minAngle: 45,
-    // 向下滑动最少偏移的角度,取值区间  [0,90];默认45度,即向下滑动的角度大于45度则触发下拉;而小于45度,将不触发下拉,避免与左右滑动的轮播等组件冲突;
-    textInOffset: '下拉刷新',
-    // 下拉的距离在offset范围内的提示文本
-    textOutOffset: '释放更新',
-    // 下拉的距离大于offset范围的提示文本
-    textLoading: '加载中 ...',
-    // 加载中的提示文本
-    textSuccess: '加载成功',
-    // 加载成功的文本
-    textErr: '加载失败',
-    // 加载失败的文本
-    beforeEndDelay: 100,
-    // 延时结束的时长 (显示加载成功/失败的时长)
-    bgColor: "transparent",
-    // 背景颜色 (建议在pages.json中再设置一下backgroundColorTop)
-    textColor: "gray",
-    // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
-    inited: null,
-    // 下拉刷新初始化完毕的回调
-    inOffset: null,
-    // 下拉的距离进入offset范围内那一刻的回调
-    outOffset: null,
-    // 下拉的距离大于offset那一刻的回调
-    onMoving: null,
-    // 下拉过程中的回调,滑动过程一直在执行; rate下拉区域当前高度与指定距离的比值(inOffset: rate<1; outOffset: rate>=1); downHight当前下拉区域的高度
-    beforeLoading: null,
-    // 准备触发下拉刷新的回调: 如果return true,将不触发showLoading和callback回调; 常用来完全自定义下拉刷新, 参考案例【淘宝 v6.8.0】
-    showLoading: null,
-    // 显示下拉刷新进度的回调
-    afterLoading: null,
-    // 显示下拉刷新进度的回调之后,马上要执行的代码 (如: 在wxs中使用)
-    beforeEndDownScroll: null,
-    // 准备结束下拉的回调. 返回结束下拉的延时执行时间,默认0ms; 常用于结束下拉之前再显示另外一小段动画,才去隐藏下拉刷新的场景, 参考案例【dotJump】
-    endDownScroll: null,
-    // 结束下拉刷新的回调
-    afterEndDownScroll: null,
-    // 结束下拉刷新的回调,马上要执行的代码 (如: 在wxs中使用)
-    callback: function callback(mescroll) {
-      // 下拉刷新的回调;默认重置上拉加载列表为第一页
-      mescroll.resetUpScroll();
-    }
-  });
-};
-
-/* 配置参数:上拉加载 */
-MeScroll.prototype.extendUpScroll = function (optUp) {
-  // 上拉加载的配置
-  MeScroll.extend(optUp, {
-    use: true,
-    // 是否启用上拉加载; 默认true
-    auto: true,
-    // 是否在初始化完毕之后自动执行上拉加载的回调; 默认true
-    isLock: false,
-    // 是否锁定上拉加载,默认false;
-    isBoth: true,
-    // 上拉加载时,如果滑动到列表顶部是否可以同时触发下拉刷新;默认true,两者可同时触发;
-    callback: null,
-    // 上拉加载的回调;function(page,mescroll){ }
-    page: {
-      num: 0,
-      // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-      size: 10,
-      // 每页数据的数量
-      time: null // 加载第一页数据服务器返回的时间; 防止用户翻页时,后台新增了数据从而导致下一页数据重复;
-    },
-
-    noMoreSize: 5,
-    // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
-    offset: 150,
-    // 距底部多远时,触发upCallback,仅mescroll-uni生效 ( mescroll-body配置的是pages.json的 onReachBottomDistance )
-    textLoading: '加载中 ...',
-    // 加载中的提示文本
-    textNoMore: '-- END --',
-    // 没有更多数据的提示文本
-    bgColor: "transparent",
-    // 背景颜色 (建议在pages.json中再设置一下backgroundColorBottom)
-    textColor: "gray",
-    // 文本颜色 (当bgColor配置了颜色,而textColor未配置时,则textColor会默认为白色)
-    inited: null,
-    // 初始化完毕的回调
-    showLoading: null,
-    // 显示加载中的回调
-    showNoMore: null,
-    // 显示无更多数据的回调
-    hideUpScroll: null,
-    // 隐藏上拉加载的回调
-    errDistance: 60,
-    // endErr的时候需往上滑动一段距离,使其往下滑动时再次触发onReachBottom,仅mescroll-body生效
-    toTop: {
-      // 回到顶部按钮,需配置src才显示
-      src: null,
-      // 图片路径,默认null (绝对路径或网络图)
-      offset: 1000,
-      // 列表滚动多少距离才显示回到顶部按钮,默认1000
-      duration: 300,
-      // 回到顶部的动画时长,默认300ms (当值为0或300则使用系统自带回到顶部,更流畅; 其他值则通过step模拟,部分机型可能不够流畅,所以非特殊情况不建议修改此项)
-      btnClick: null,
-      // 点击按钮的回调
-      onShow: null,
-      // 是否显示的回调
-      zIndex: 9990,
-      // fixed定位z-index值
-      left: null,
-      // 到左边的距离, 默认null. 此项有值时,right不生效. (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      right: 20,
-      // 到右边的距离, 默认20 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      bottom: 120,
-      // 到底部的距离, 默认120 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      safearea: false,
-      // bottom的偏移量是否加上底部安全区的距离, 默认false, 需要适配iPhoneX时使用 (具体的界面如果不配置此项,则取本vue的safearea值)
-      width: 72,
-      // 回到顶部图标的宽度, 默认72 (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-      radius: "50%" // 圆角, 默认"50%" (支持20, "20rpx", "20px", "20%"格式的值, 其中纯数字则默认单位rpx)
-    },
-
-    empty: {
-      use: true,
-      // 是否显示空布局
-      icon: null,
-      // 图标路径
-      tip: '~ 暂无相关数据 ~',
-      // 提示
-      btnText: '',
-      // 按钮
-      btnClick: null,
-      // 点击按钮的回调
-      onShow: null,
-      // 是否显示的回调
-      fixed: false,
-      // 是否使用fixed定位,默认false; 配置fixed为true,以下的top和zIndex才生效 (transform会使fixed失效,最终会降级为absolute)
-      top: "100rpx",
-      // fixed定位的top值 (完整的单位值,如 "10%"; "100rpx")
-      zIndex: 99 // fixed定位z-index值
-    },
-
-    onScroll: false // 是否监听滚动事件
-  });
-};
-
-/* 配置参数 */
-MeScroll.extend = function (userOption, defaultOption) {
-  if (!userOption) return defaultOption;
-  for (var key in defaultOption) {
-    if (userOption[key] == null) {
-      var def = defaultOption[key];
-      if (def != null && (0, _typeof2.default)(def) === 'object') {
-        userOption[key] = MeScroll.extend({}, def); // 深度匹配
-      } else {
-        userOption[key] = def;
-      }
-    } else if ((0, _typeof2.default)(userOption[key]) === 'object') {
-      MeScroll.extend(userOption[key], defaultOption[key]); // 深度匹配
-    }
-  }
-
-  return userOption;
-};
-
-/* 简单判断是否配置了颜色 (非透明,非白色) */
-MeScroll.prototype.hasColor = function (color) {
-  if (!color) return false;
-  var c = color.toLowerCase();
-  return c != "#fff" && c != "#ffffff" && c != "transparent" && c != "white";
-};
-
-/* -------初始化下拉刷新------- */
-MeScroll.prototype.initDownScroll = function () {
-  var me = this;
-  // 配置参数
-  me.optDown = me.options.down || {};
-  if (!me.optDown.textColor && me.hasColor(me.optDown.bgColor)) me.optDown.textColor = "#fff"; // 当bgColor有值且textColor未设置,则textColor默认白色
-  me.extendDownScroll(me.optDown);
-
-  // 如果是mescroll-body且配置了native,则禁止自定义的下拉刷新
-  if (me.isScrollBody && me.optDown.native) {
-    me.optDown.use = false;
-  } else {
-    me.optDown.native = false; // 仅mescroll-body支持,mescroll-uni不支持
-  }
-
-  me.downHight = 0; // 下拉区域的高度
-
-  // 在页面中加入下拉布局
-  if (me.optDown.use && me.optDown.inited) {
-    // 初始化完毕的回调
-    setTimeout(function () {
-      // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
-      me.optDown.inited(me);
-    }, 0);
-  }
-};
-
-/* 列表touchstart事件 */
-MeScroll.prototype.touchstartEvent = function (e) {
-  if (!this.optDown.use) return;
-  this.startPoint = this.getPoint(e); // 记录起点
-  this.startTop = this.getScrollTop(); // 记录此时的滚动条位置
-  this.startAngle = 0; // 初始角度
-  this.lastPoint = this.startPoint; // 重置上次move的点
-  this.maxTouchmoveY = this.getBodyHeight() - this.optDown.bottomOffset; // 手指触摸的最大范围(写在touchstart避免body获取高度为0的情况)
-  this.inTouchend = false; // 标记不是touchend
-};
-
-/* 列表touchmove事件 */
-MeScroll.prototype.touchmoveEvent = function (e) {
-  if (!this.optDown.use) return;
-  var me = this;
-  var scrollTop = me.getScrollTop(); // 当前滚动条的距离
-  var curPoint = me.getPoint(e); // 当前点
-
-  var moveY = curPoint.y - me.startPoint.y; // 和起点比,移动的距离,大于0向下拉,小于0向上拉
-
-  // 向下拉 && 在顶部
-  // mescroll-body,直接判定在顶部即可
-  // scroll-view在滚动时不会触发touchmove,当触顶/底/左/右时,才会触发touchmove
-  // scroll-view滚动到顶部时,scrollTop不一定为0,也有可能大于0; 在iOS的APP中scrollTop可能为负数,不一定和startTop相等
-  if (moveY > 0 && (me.isScrollBody && scrollTop <= 0 || !me.isScrollBody && (scrollTop <= 0 || scrollTop <= me.optDown.startTop && scrollTop === me.startTop))) {
-    // 可下拉的条件
-    if (!me.inTouchend && !me.isDownScrolling && !me.optDown.isLock && (!me.isUpScrolling || me.isUpScrolling && me.optUp.isBoth)) {
-      // 下拉的初始角度是否在配置的范围内
-      if (!me.startAngle) me.startAngle = me.getAngle(me.lastPoint, curPoint); // 两点之间的角度,区间 [0,90]
-      if (me.startAngle < me.optDown.minAngle) return; // 如果小于配置的角度,则不往下执行下拉刷新
-
-      // 如果手指的位置超过配置的距离,则提前结束下拉,避免Webview嵌套导致touchend无法触发
-      if (me.maxTouchmoveY > 0 && curPoint.y >= me.maxTouchmoveY) {
-        me.inTouchend = true; // 标记执行touchend
-        me.touchendEvent(); // 提前触发touchend
-        return;
-      }
-      me.preventDefault(e); // 阻止默认事件
-
-      var diff = curPoint.y - me.lastPoint.y; // 和上次比,移动的距离 (大于0向下,小于0向上)
-
-      // 下拉距离  < 指定距离
-      if (me.downHight < me.optDown.offset) {
-        if (me.movetype !== 1) {
-          me.movetype = 1; // 加入标记,保证只执行一次
-          me.isDownEndSuccess = null; // 重置是否加载成功的状态 (wxs执行的是wxs.wxs)
-          me.optDown.inOffset && me.optDown.inOffset(me); // 进入指定距离范围内那一刻的回调,只执行一次
-          me.isMoveDown = true; // 标记下拉区域高度改变,在touchend重置回来
-        }
-
-        me.downHight += diff * me.optDown.inOffsetRate; // 越往下,高度变化越小
-
-        // 指定距离  <= 下拉距离
-      } else {
-        if (me.movetype !== 2) {
-          me.movetype = 2; // 加入标记,保证只执行一次
-          me.optDown.outOffset && me.optDown.outOffset(me); // 下拉超过指定距离那一刻的回调,只执行一次
-          me.isMoveDown = true; // 标记下拉区域高度改变,在touchend重置回来
-        }
-
-        if (diff > 0) {
-          // 向下拉
-          me.downHight += diff * me.optDown.outOffsetRate; // 越往下,高度变化越小
-        } else {
-          // 向上收
-          me.downHight += diff; // 向上收回高度,则向上滑多少收多少高度
-        }
-      }
-
-      me.downHight = Math.round(me.downHight); // 取整
-      var rate = me.downHight / me.optDown.offset; // 下拉区域当前高度与指定距离的比值
-      me.optDown.onMoving && me.optDown.onMoving(me, rate, me.downHight); // 下拉过程中的回调,一直在执行
-    }
-  }
-
-  me.lastPoint = curPoint; // 记录本次移动的点
-};
-
-/* 列表touchend事件 */
-MeScroll.prototype.touchendEvent = function (e) {
-  if (!this.optDown.use) return;
-  // 如果下拉区域高度已改变,则需重置回来
-  if (this.isMoveDown) {
-    if (this.downHight >= this.optDown.offset) {
-      // 符合触发刷新的条件
-      this.triggerDownScroll();
-    } else {
-      // 不符合的话 则重置
-      this.downHight = 0;
-      this.endDownScrollCall(this);
-    }
-    this.movetype = 0;
-    this.isMoveDown = false;
-  } else if (!this.isScrollBody && this.getScrollTop() === this.startTop) {
-    // scroll-view到顶/左/右/底的滑动事件
-    var isScrollUp = this.getPoint(e).y - this.startPoint.y < 0; // 和起点比,移动的距离,大于0向下拉,小于0向上拉
-    // 上滑
-    if (isScrollUp) {
-      // 需检查滑动的角度
-      var angle = this.getAngle(this.getPoint(e), this.startPoint); // 两点之间的角度,区间 [0,90]
-      if (angle > 80) {
-        // 检查并触发上拉
-        this.triggerUpScroll(true);
-      }
-    }
-  }
-};
-
-/* 根据点击滑动事件获取第一个手指的坐标 */
-MeScroll.prototype.getPoint = function (e) {
-  if (!e) {
-    return {
-      x: 0,
-      y: 0
-    };
-  }
-  if (e.touches && e.touches[0]) {
-    return {
-      x: e.touches[0].pageX,
-      y: e.touches[0].pageY
-    };
-  } else if (e.changedTouches && e.changedTouches[0]) {
-    return {
-      x: e.changedTouches[0].pageX,
-      y: e.changedTouches[0].pageY
-    };
-  } else {
-    return {
-      x: e.clientX,
-      y: e.clientY
-    };
-  }
-};
-
-/* 计算两点之间的角度: 区间 [0,90]*/
-MeScroll.prototype.getAngle = function (p1, p2) {
-  var x = Math.abs(p1.x - p2.x);
-  var y = Math.abs(p1.y - p2.y);
-  var z = Math.sqrt(x * x + y * y);
-  var angle = 0;
-  if (z !== 0) {
-    angle = Math.asin(y / z) / Math.PI * 180;
-  }
-  return angle;
-};
-
-/* 触发下拉刷新 */
-MeScroll.prototype.triggerDownScroll = function () {
-  if (this.optDown.beforeLoading && this.optDown.beforeLoading(this)) {
-    //return true则处于完全自定义状态
-  } else {
-    this.showDownScroll(); // 下拉刷新中...
-    !this.optDown.native && this.optDown.callback && this.optDown.callback(this); // 执行回调,联网加载数据
-  }
-};
-
-/* 显示下拉进度布局 */
-MeScroll.prototype.showDownScroll = function () {
-  this.isDownScrolling = true; // 标记下拉中
-  if (this.optDown.native) {
-    uni.startPullDownRefresh(); // 系统自带的下拉刷新
-    this.showDownLoadingCall(0); // 仍触发showLoading,因为上拉加载用到
-  } else {
-    this.downHight = this.optDown.offset; // 更新下拉区域高度
-    this.showDownLoadingCall(this.downHight); // 下拉刷新中...
-  }
-};
-
-MeScroll.prototype.showDownLoadingCall = function (downHight) {
-  this.optDown.showLoading && this.optDown.showLoading(this, downHight); // 下拉刷新中...
-  this.optDown.afterLoading && this.optDown.afterLoading(this, downHight); // 下拉刷新中...触发之后马上要执行的代码
-};
-
-/* 显示系统自带的下拉刷新时需要处理的业务 */
-MeScroll.prototype.onPullDownRefresh = function () {
-  this.isDownScrolling = true; // 标记下拉中
-  this.showDownLoadingCall(0); // 仍触发showLoading,因为上拉加载用到
-  this.optDown.callback && this.optDown.callback(this); // 执行回调,联网加载数据
-};
-
-/* 结束下拉刷新 */
-MeScroll.prototype.endDownScroll = function () {
-  if (this.optDown.native) {
-    // 结束原生下拉刷新
-    this.isDownScrolling = false;
-    this.endDownScrollCall(this);
-    uni.stopPullDownRefresh();
-    return;
-  }
-  var me = this;
-  // 结束下拉刷新的方法
-  var endScroll = function endScroll() {
-    me.downHight = 0;
-    me.isDownScrolling = false;
-    me.endDownScrollCall(me);
-    if (!me.isScrollBody) {
-      me.setScrollHeight(0); // scroll-view重置滚动区域,使数据不满屏时仍可检查触发翻页
-      me.scrollTo(0, 0); // scroll-view需重置滚动条到顶部,避免startTop大于0时,对下拉刷新的影响
-    }
-  };
-  // 结束下拉刷新时的回调
-  var delay = 0;
-  if (me.optDown.beforeEndDownScroll) {
-    delay = me.optDown.beforeEndDownScroll(me); // 结束下拉刷新的延时,单位ms
-    if (me.isDownEndSuccess == null) delay = 0; // 没有执行加载中,则不延时
-  }
-
-  if (typeof delay === 'number' && delay > 0) {
-    setTimeout(endScroll, delay);
-  } else {
-    endScroll();
-  }
-};
-MeScroll.prototype.endDownScrollCall = function () {
-  this.optDown.endDownScroll && this.optDown.endDownScroll(this);
-  this.optDown.afterEndDownScroll && this.optDown.afterEndDownScroll(this);
-};
-
-/* 锁定下拉刷新:isLock=ture,null锁定;isLock=false解锁 */
-MeScroll.prototype.lockDownScroll = function (isLock) {
-  if (isLock == null) isLock = true;
-  this.optDown.isLock = isLock;
-};
-
-/* 锁定上拉加载:isLock=ture,null锁定;isLock=false解锁 */
-MeScroll.prototype.lockUpScroll = function (isLock) {
-  if (isLock == null) isLock = true;
-  this.optUp.isLock = isLock;
-};
-
-/* -------初始化上拉加载------- */
-MeScroll.prototype.initUpScroll = function () {
-  var me = this;
-  // 配置参数
-  me.optUp = me.options.up || {
-    use: false
-  };
-  if (!me.optUp.textColor && me.hasColor(me.optUp.bgColor)) me.optUp.textColor = "#fff"; // 当bgColor有值且textColor未设置,则textColor默认白色
-  me.extendUpScroll(me.optUp);
-  if (me.optUp.use === false) return; // 配置不使用上拉加载时,则不初始化上拉布局
-  me.optUp.hasNext = true; // 如果使用上拉,则默认有下一页
-  me.startNum = me.optUp.page.num + 1; // 记录page开始的页码
-
-  // 初始化完毕的回调
-  if (me.optUp.inited) {
-    setTimeout(function () {
-      // 待主线程执行完毕再执行,避免new MeScroll未初始化,在回调获取不到mescroll的实例
-      me.optUp.inited(me);
-    }, 0);
-  }
-};
-
-/*滚动到底部的事件 (仅mescroll-body生效)*/
-MeScroll.prototype.onReachBottom = function () {
-  if (this.isScrollBody && !this.isUpScrolling) {
-    // 只能支持下拉刷新的时候同时可以触发上拉加载,否则滚动到底部就需要上滑一点才能触发onReachBottom
-    if (!this.optUp.isLock && this.optUp.hasNext) {
-      this.triggerUpScroll();
-    }
-  }
-};
-
-/*列表滚动事件 (仅mescroll-body生效)*/
-MeScroll.prototype.onPageScroll = function (e) {
-  if (!this.isScrollBody) return;
-
-  // 更新滚动条的位置 (主要用于判断下拉刷新时,滚动条是否在顶部)
-  this.setScrollTop(e.scrollTop);
-
-  // 顶部按钮的显示隐藏
-  if (e.scrollTop >= this.optUp.toTop.offset) {
-    this.showTopBtn();
-  } else {
-    this.hideTopBtn();
-  }
-};
-
-/*列表滚动事件*/
-MeScroll.prototype.scroll = function (e, onScroll) {
-  // 更新滚动条的位置
-  this.setScrollTop(e.scrollTop);
-  // 更新滚动内容高度
-  this.setScrollHeight(e.scrollHeight);
-
-  // 向上滑还是向下滑动
-  if (this.preScrollY == null) this.preScrollY = 0;
-  this.isScrollUp = e.scrollTop - this.preScrollY > 0;
-  this.preScrollY = e.scrollTop;
-
-  // 上滑 && 检查并触发上拉
-  this.isScrollUp && this.triggerUpScroll(true);
-
-  // 顶部按钮的显示隐藏
-  if (e.scrollTop >= this.optUp.toTop.offset) {
-    this.showTopBtn();
-  } else {
-    this.hideTopBtn();
-  }
-
-  // 滑动监听
-  this.optUp.onScroll && onScroll && onScroll();
-};
-
-/* 触发上拉加载 */
-MeScroll.prototype.triggerUpScroll = function (isCheck) {
-  if (!this.isUpScrolling && this.optUp.use && this.optUp.callback) {
-    // 是否校验在底部; 默认不校验
-    if (isCheck === true) {
-      var canUp = false;
-      // 还有下一页 && 没有锁定 && 不在下拉中
-      if (this.optUp.hasNext && !this.optUp.isLock && !this.isDownScrolling) {
-        if (this.getScrollBottom() <= this.optUp.offset) {
-          // 到底部
-          canUp = true; // 标记可上拉
-        }
-      }
-
-      if (canUp === false) return;
-    }
-    this.showUpScroll(); // 上拉加载中...
-    this.optUp.page.num++; // 预先加一页,如果失败则减回
-    this.isUpAutoLoad = true; // 标记上拉已经自动执行过,避免初始化时多次触发上拉回调
-    this.num = this.optUp.page.num; // 把最新的页数赋值在mescroll上,避免对page的影响
-    this.size = this.optUp.page.size; // 把最新的页码赋值在mescroll上,避免对page的影响
-    this.time = this.optUp.page.time; // 把最新的页码赋值在mescroll上,避免对page的影响
-    this.optUp.callback(this); // 执行回调,联网加载数据
-  }
-};
-
-/* 显示上拉加载中 */
-MeScroll.prototype.showUpScroll = function () {
-  this.isUpScrolling = true; // 标记上拉加载中
-  this.optUp.showLoading && this.optUp.showLoading(this); // 回调
-};
-
-/* 显示上拉无更多数据 */
-MeScroll.prototype.showNoMore = function () {
-  this.optUp.hasNext = false; // 标记无更多数据
-  this.optUp.showNoMore && this.optUp.showNoMore(this); // 回调
-};
-
-/* 隐藏上拉区域**/
-MeScroll.prototype.hideUpScroll = function () {
-  this.optUp.hideUpScroll && this.optUp.hideUpScroll(this); // 回调
-};
-
-/* 结束上拉加载 */
-MeScroll.prototype.endUpScroll = function (isShowNoMore) {
-  if (isShowNoMore != null) {
-    // isShowNoMore=null,不处理下拉状态,下拉刷新的时候调用
-    if (isShowNoMore) {
-      this.showNoMore(); // isShowNoMore=true,显示无更多数据
-    } else {
-      this.hideUpScroll(); // isShowNoMore=false,隐藏上拉加载
-    }
-  }
-
-  this.isUpScrolling = false; // 标记结束上拉加载
-};
-
-/* 重置上拉加载列表为第一页
- *isShowLoading 是否显示进度布局;
- * 1.默认null,不传参,则显示上拉加载的进度布局
- * 2.传参true, 则显示下拉刷新的进度布局
- * 3.传参false,则不显示上拉和下拉的进度 (常用于静默更新列表数据)
- */
-MeScroll.prototype.resetUpScroll = function (isShowLoading) {
-  if (this.optUp && this.optUp.use) {
-    var page = this.optUp.page;
-    this.prePageNum = page.num; // 缓存重置前的页码,加载失败可退回
-    this.prePageTime = page.time; // 缓存重置前的时间,加载失败可退回
-    page.num = this.startNum; // 重置为第一页
-    page.time = null; // 重置时间为空
-    if (!this.isDownScrolling && isShowLoading !== false) {
-      // 如果不是下拉刷新触发的resetUpScroll并且不配置列表静默更新,则显示进度;
-      if (isShowLoading == null) {
-        this.removeEmpty(); // 移除空布局
-        this.showUpScroll(); // 不传参,默认显示上拉加载的进度布局
-      } else {
-        this.showDownScroll(); // 传true,显示下拉刷新的进度布局,不清空列表
-      }
-    }
-
-    this.isUpAutoLoad = true; // 标记上拉已经自动执行过,避免初始化时多次触发上拉回调
-    this.num = page.num; // 把最新的页数赋值在mescroll上,避免对page的影响
-    this.size = page.size; // 把最新的页码赋值在mescroll上,避免对page的影响
-    this.time = page.time; // 把最新的页码赋值在mescroll上,避免对page的影响
-    this.optUp.callback && this.optUp.callback(this); // 执行上拉回调
-  }
-};
-
-/* 设置page.num的值 */
-MeScroll.prototype.setPageNum = function (num) {
-  this.optUp.page.num = num - 1;
-};
-
-/* 设置page.size的值 */
-MeScroll.prototype.setPageSize = function (size) {
-  this.optUp.page.size = size;
-};
-
-/* 联网回调成功,结束下拉刷新和上拉加载
- * dataSize: 当前页的数据量(必传)
- * totalPage: 总页数(必传)
- * systime: 服务器时间 (可空)
- */
-MeScroll.prototype.endByPage = function (dataSize, totalPage, systime) {
-  var hasNext;
-  if (this.optUp.use && totalPage != null) hasNext = this.optUp.page.num < totalPage; // 是否还有下一页
-  this.endSuccess(dataSize, hasNext, systime);
-};
-
-/* 联网回调成功,结束下拉刷新和上拉加载
- * dataSize: 当前页的数据量(必传)
- * totalSize: 列表所有数据总数量(必传)
- * systime: 服务器时间 (可空)
- */
-MeScroll.prototype.endBySize = function (dataSize, totalSize, systime) {
-  var hasNext;
-  if (this.optUp.use && totalSize != null) {
-    var loadSize = (this.optUp.page.num - 1) * this.optUp.page.size + dataSize; // 已加载的数据总数
-    hasNext = loadSize < totalSize; // 是否还有下一页
-  }
-
-  this.endSuccess(dataSize, hasNext, systime);
-};
-
-/* 联网回调成功,结束下拉刷新和上拉加载
- * dataSize: 当前页的数据个数(不是所有页的数据总和),用于上拉加载判断是否还有下一页.如果不传,则会判断还有下一页
- * hasNext: 是否还有下一页,布尔类型;用来解决这个小问题:比如列表共有20条数据,每页加载10条,共2页.如果只根据dataSize判断,则需翻到第三页才会知道无更多数据,如果传了hasNext,则翻到第二页即可显示无更多数据.
- * systime: 服务器时间(可空);用来解决这个小问题:当准备翻下一页时,数据库新增了几条记录,此时翻下一页,前面的几条数据会和上一页的重复;这里传入了systime,那么upCallback的page.time就会有值,把page.time传给服务器,让后台过滤新加入的那几条记录
- */
-MeScroll.prototype.endSuccess = function (dataSize, hasNext, systime) {
-  var me = this;
-  // 结束下拉刷新
-  if (me.isDownScrolling) {
-    me.isDownEndSuccess = true;
-    me.endDownScroll();
-  }
-
-  // 结束上拉加载
-  if (me.optUp.use) {
-    var isShowNoMore; // 是否已无更多数据
-    if (dataSize != null) {
-      var pageNum = me.optUp.page.num; // 当前页码
-      var pageSize = me.optUp.page.size; // 每页长度
-      // 如果是第一页
-      if (pageNum === 1) {
-        if (systime) me.optUp.page.time = systime; // 设置加载列表数据第一页的时间
-      }
-
-      if (dataSize < pageSize || hasNext === false) {
-        // 返回的数据不满一页时,则说明已无更多数据
-        me.optUp.hasNext = false;
-        if (dataSize === 0 && pageNum === 1) {
-          // 如果第一页无任何数据且配置了空布局
-          isShowNoMore = false;
-          me.showEmpty();
-        } else {
-          // 总列表数少于配置的数量,则不显示无更多数据
-          var allDataSize = (pageNum - 1) * pageSize + dataSize;
-          if (allDataSize < me.optUp.noMoreSize) {
-            isShowNoMore = false;
-          } else {
-            isShowNoMore = true;
-          }
-          me.removeEmpty(); // 移除空布局
-        }
-      } else {
-        // 还有下一页
-        isShowNoMore = false;
-        me.optUp.hasNext = true;
-        me.removeEmpty(); // 移除空布局
-      }
-    }
-
-    // 隐藏上拉
-    me.endUpScroll(isShowNoMore);
-  }
-};
-
-/* 回调失败,结束下拉刷新和上拉加载 */
-MeScroll.prototype.endErr = function (errDistance) {
-  // 结束下拉,回调失败重置回原来的页码和时间
-  if (this.isDownScrolling) {
-    this.isDownEndSuccess = false;
-    var page = this.optUp.page;
-    if (page && this.prePageNum) {
-      page.num = this.prePageNum;
-      page.time = this.prePageTime;
-    }
-    this.endDownScroll();
-  }
-  // 结束上拉,回调失败重置回原来的页码
-  if (this.isUpScrolling) {
-    this.optUp.page.num--;
-    this.endUpScroll(false);
-    // 如果是mescroll-body,则需往回滚一定距离
-    if (this.isScrollBody && errDistance !== 0) {
-      // 不处理0
-      if (!errDistance) errDistance = this.optUp.errDistance; // 不传,则取默认
-      this.scrollTo(this.getScrollTop() - errDistance, 0); // 往上回滚的距离
-    }
-  }
-};
-
-/* 显示空布局 */
-MeScroll.prototype.showEmpty = function () {
-  this.optUp.empty.use && this.optUp.empty.onShow && this.optUp.empty.onShow(true);
-};
-
-/* 移除空布局 */
-MeScroll.prototype.removeEmpty = function () {
-  this.optUp.empty.use && this.optUp.empty.onShow && this.optUp.empty.onShow(false);
-};
-
-/* 显示回到顶部的按钮 */
-MeScroll.prototype.showTopBtn = function () {
-  if (!this.topBtnShow) {
-    this.topBtnShow = true;
-    this.optUp.toTop.onShow && this.optUp.toTop.onShow(true);
-  }
-};
-
-/* 隐藏回到顶部的按钮 */
-MeScroll.prototype.hideTopBtn = function () {
-  if (this.topBtnShow) {
-    this.topBtnShow = false;
-    this.optUp.toTop.onShow && this.optUp.toTop.onShow(false);
-  }
-};
-
-/* 获取滚动条的位置 */
-MeScroll.prototype.getScrollTop = function () {
-  return this.scrollTop || 0;
-};
-
-/* 记录滚动条的位置 */
-MeScroll.prototype.setScrollTop = function (y) {
-  this.scrollTop = y;
-};
-
-/* 滚动到指定位置 */
-MeScroll.prototype.scrollTo = function (y, t) {
-  this.myScrollTo && this.myScrollTo(y, t); // scrollview需自定义回到顶部方法
-};
-
-/* 自定义scrollTo */
-MeScroll.prototype.resetScrollTo = function (myScrollTo) {
-  this.myScrollTo = myScrollTo;
-};
-
-/* 滚动条到底部的距离 */
-MeScroll.prototype.getScrollBottom = function () {
-  return this.getScrollHeight() - this.getClientHeight() - this.getScrollTop();
-};
-
-/* 计步器
- star: 开始值
- end: 结束值
- callback(step,timer): 回调step值,计步器timer,可自行通过window.clearInterval(timer)结束计步器;
- t: 计步时长,传0则直接回调end值;不传则默认300ms
- rate: 周期;不传则默认30ms计步一次
- * */
-MeScroll.prototype.getStep = function (star, end, callback, t, rate) {
-  var diff = end - star; // 差值
-  if (t === 0 || diff === 0) {
-    callback && callback(end);
-    return;
-  }
-  t = t || 300; // 时长 300ms
-  rate = rate || 30; // 周期 30ms
-  var count = t / rate; // 次数
-  var step = diff / count; // 步长
-  var i = 0; // 计数
-  var timer = setInterval(function () {
-    if (i < count - 1) {
-      star += step;
-      callback && callback(star, timer);
-      i++;
-    } else {
-      callback && callback(end, timer); // 最后一次直接设置end,避免计算误差
-      clearInterval(timer);
-    }
-  }, rate);
-};
-
-/* 滚动容器的高度 */
-MeScroll.prototype.getClientHeight = function (isReal) {
-  var h = this.clientHeight || 0;
-  if (h === 0 && isReal !== true) {
-    // 未获取到容器的高度,可临时取body的高度 (可能会有误差)
-    h = this.getBodyHeight();
-  }
-  return h;
-};
-MeScroll.prototype.setClientHeight = function (h) {
-  this.clientHeight = h;
-};
-
-/* 滚动内容的高度 */
-MeScroll.prototype.getScrollHeight = function () {
-  return this.scrollHeight || 0;
-};
-MeScroll.prototype.setScrollHeight = function (h) {
-  this.scrollHeight = h;
-};
-
-/* body的高度 */
-MeScroll.prototype.getBodyHeight = function () {
-  return this.bodyHeight || 0;
-};
-MeScroll.prototype.setBodyHeight = function (h) {
-  this.bodyHeight = h;
-};
-
-/* 阻止浏览器默认滚动事件 */
-MeScroll.prototype.preventDefault = function (e) {
-  // 小程序不支持e.preventDefault, 已在wxs中禁止
-  // app的bounce只能通过配置pages.json的style.app-plus.bounce为"none"来禁止, 或使用renderjs禁止
-  // cancelable:是否可以被禁用; defaultPrevented:是否已经被禁用
-  if (e && e.cancelable && !e.defaultPrevented) e.preventDefault();
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-
-/***/ 274:
-/*!*************************************************************************!*\
-  !*** D:/mywork/BPM/guqi/components/mescroll-uni/mescroll-uni-option.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-// 全局配置
-// mescroll-body 和 mescroll-uni 通用
-var GlobalOption = {
-  down: {
-    // 其他down的配置参数也可以写,这里只展示了常用的配置:
-    textInOffset: '下拉刷新',
-    // 下拉的距离在offset范围内的提示文本
-    textOutOffset: '释放更新',
-    // 下拉的距离大于offset范围的提示文本
-    textLoading: '加载中 ...',
-    // 加载中的提示文本
-    textSuccess: '加载成功',
-    // 加载成功的文本
-    textErr: '加载失败',
-    // 加载失败的文本
-    beforeEndDelay: 100,
-    // 延时结束的时长 (显示加载成功/失败的时长)
-    offset: 80,
-    // 在列表顶部,下拉大于80px,松手即可触发下拉刷新的回调
-    native: false // 是否使用系统自带的下拉刷新; 默认false; 仅在mescroll-body生效 (值为true时,还需在pages配置enablePullDownRefresh:true;详请参考mescroll-native的案例)
-  },
-
-  up: {
-    // 其他up的配置参数也可以写,这里只展示了常用的配置:
-    textLoading: '加载中 ...',
-    // 加载中的提示文本
-    textNoMore: '-- END --',
-    // 没有更多数据的提示文本
-    offset: 150,
-    // 距底部多远时,触发upCallback,仅mescroll-uni生效 ( mescroll-body配置的是pages.json的 onReachBottomDistance )
-    toTop: {
-      // 回到顶部按钮,需配置src才显示
-      src: "https://www.mescroll.com/img/mescroll-totop.png",
-      // 图片路径 (建议放入static目录, 如 /static/img/mescroll-totop.png )
-      offset: 1000,
-      // 列表滚动多少距离才显示回到顶部按钮,默认1000px
-      right: 20,
-      // 到右边的距离, 默认20 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
-      bottom: 120,
-      // 到底部的距离, 默认120 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
-      width: 72 // 回到顶部图标的宽度, 默认72 (支持"20rpx", "20px", "20%"格式的值, 纯数字则默认单位rpx)
-    },
-
-    empty: {
-      use: true,
-      // 是否显示空布局
-      icon: "https://www.mescroll.com/img/mescroll-empty.png",
-      // 图标路径 (建议放入static目录, 如 /static/img/mescroll-empty.png )
-      tip: '~ 空空如也 ~' // 提示
-    }
-  }
-};
-var _default = GlobalOption;
-exports.default = _default;
-
-/***/ }),
-
-/***/ 275:
-/*!****************************************************************!*\
-  !*** D:/mywork/BPM/guqi/components/mescroll-uni/wxs/mixins.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-// 定义在wxs (含renderjs) 逻辑层的数据和方法, 与视图层相互通信
-var WxsMixin = {
-  data: function data() {
-    return {
-      // 传入wxs视图层的数据 (响应式)
-      wxsProp: {
-        optDown: {},
-        // 下拉刷新的配置
-        scrollTop: 0,
-        // 滚动条的距离
-        bodyHeight: 0,
-        // body的高度
-        isDownScrolling: false,
-        // 是否正在下拉刷新中
-        isUpScrolling: false,
-        // 是否正在上拉加载中
-        isScrollBody: true,
-        // 是否为mescroll-body滚动
-        isUpBoth: true,
-        // 上拉加载时,是否同时可以下拉刷新
-        t: 0 // 数据更新的标记 (只有数据更新了,才会触发wxs的Observer)
-      },
-
-      // 标记调用wxs视图层的方法
-      callProp: {
-        callType: '',
-        // 方法名
-        t: 0 // 数据更新的标记 (只有数据更新了,才会触发wxs的Observer)
-      },
-
-      // 不用wxs的平台使用此处的wxsBiz对象,抹平wxs的写法 (微信小程序和APP使用的wxsBiz对象是./wxs/wxs.wxs)
-
-      // 不用renderjs的平台使用此处的renderBiz对象,抹平renderjs的写法 (app 和 h5 使用的renderBiz对象是./wxs/renderjs.js)
-
-      renderBiz: {
-        propObserver: function propObserver() {} // 抹平renderjs的写法
-      }
-    };
-  },
-  methods: {
-    // wxs视图层调用逻辑层的回调
-    wxsCall: function wxsCall(msg) {
-      if (msg.type === 'setWxsProp') {
-        // 更新wxsProp数据 (值改变才触发更新)
-        this.wxsProp = {
-          optDown: this.mescroll.optDown,
-          scrollTop: this.mescroll.getScrollTop(),
-          bodyHeight: this.mescroll.getBodyHeight(),
-          isDownScrolling: this.mescroll.isDownScrolling,
-          isUpScrolling: this.mescroll.isUpScrolling,
-          isUpBoth: this.mescroll.optUp.isBoth,
-          isScrollBody: this.mescroll.isScrollBody,
-          t: Date.now()
-        };
-      } else if (msg.type === 'setLoadType') {
-        // 设置inOffset,outOffset的状态
-        this.downLoadType = msg.downLoadType;
-        // 状态挂载到mescroll对象, 以便在其他组件中使用, 比如<me-video>中
-        this.$set(this.mescroll, 'downLoadType', this.downLoadType);
-        // 重置是否加载成功的状态
-        this.$set(this.mescroll, 'isDownEndSuccess', null);
-      } else if (msg.type === 'triggerDownScroll') {
-        // 主动触发下拉刷新
-        this.mescroll.triggerDownScroll();
-      } else if (msg.type === 'endDownScroll') {
-        // 结束下拉刷新
-        this.mescroll.endDownScroll();
-      } else if (msg.type === 'triggerUpScroll') {
-        // 主动触发上拉加载
-        this.mescroll.triggerUpScroll(true);
-      }
-    }
-  },
-  mounted: function mounted() {
-    var _this = this;
-    // 配置主动触发wxs显示加载进度的回调
-    this.mescroll.optDown.afterLoading = function () {
-      _this.callProp = {
-        callType: "showLoading",
-        t: Date.now()
-      }; // 触发wxs的方法 (值改变才触发更新)
-    };
-    // 配置主动触发wxs隐藏加载进度的回调
-    this.mescroll.optDown.afterEndDownScroll = function () {
-      _this.callProp = {
-        callType: "endDownScroll",
-        t: Date.now()
-      }; // 触发wxs的方法 (值改变才触发更新)
-      var delay = 300 + (_this.mescroll.optDown.beforeEndDelay || 0);
-      setTimeout(function () {
-        if (_this.downLoadType === 4 || _this.downLoadType === 0) {
-          _this.callProp = {
-            callType: "clearTransform",
-            t: Date.now()
-          }; // 触发wxs的方法 (值改变才触发更新)
-        }
-        // 状态挂载到mescroll对象, 以便在其他组件中使用, 比如<me-video>中
-        _this.$set(_this.mescroll, 'downLoadType', _this.downLoadType);
-      }, delay);
-    };
-    // 初始化wxs的数据
-    this.wxsCall({
-      type: 'setWxsProp'
-    });
-  }
-};
-var _default = WxsMixin;
-exports.default = _default;
-
-/***/ }),
-
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 30:
-/*!*************************************!*\
-  !*** D:/mywork/BPM/guqi/api/api.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.bindAddressForBpm = bindAddressForBpm;
-exports.bindAddressForOrder = bindAddressForOrder;
-exports.confirmCommissionForBpm = confirmCommissionForBpm;
-exports.createOrder = createOrder;
-exports.createUserAddress = createUserAddress;
-exports.createUserInvoice = createUserInvoice;
-exports.deleteUserAddressById = deleteUserAddressById;
-exports.deleteUserInvoiceById = deleteUserInvoiceById;
-exports.home = home;
-exports.list = list;
-exports.openInvoice = openInvoice;
-exports.orderRefundForBpm = orderRefundForBpm;
-exports.queryAdminHomeDate = queryAdminHomeDate;
-exports.queryCommissionInfoForBpm = queryCommissionInfoForBpm;
-exports.queryCommissionListForBpm = queryCommissionListForBpm;
-exports.queryCommodityByCode = queryCommodityByCode;
-exports.queryGuideHomeDate = queryGuideHomeDate;
-exports.queryManagerListForBpm = queryManagerListForBpm;
-exports.queryOrderInfoByOrderNo = queryOrderInfoByOrderNo;
-exports.queryOrderInfoByOrderNoForBpm = queryOrderInfoByOrderNoForBpm;
-exports.queryOrderInvoiceInfo = queryOrderInvoiceInfo;
-exports.queryOrderInvoiceInfoh5 = queryOrderInvoiceInfoh5;
-exports.queryOrderInvoiceList = queryOrderInvoiceList;
-exports.queryOrderListForBpm = queryOrderListForBpm;
-exports.queryOrderListForUser = queryOrderListForUser;
-exports.queryOrgAgency = queryOrgAgency;
-exports.queryTourGuideListForBpm = queryTourGuideListForBpm;
-exports.queryUserAddressList = queryUserAddressList;
-exports.queryUserInfo = queryUserInfo;
-exports.queryUserInvoiceList = queryUserInvoiceList;
-exports.queryUserOpenid = queryUserOpenid;
-exports.registerCommissionForBpm = registerCommissionForBpm;
-exports.toPay = toPay;
-exports.updateOrderInvoiceStatus = updateOrderInvoiceStatus;
-exports.updateOrderStatusForBpm = updateOrderStatusForBpm;
-exports.updateOrderStatusForUser = updateOrderStatusForUser;
-exports.updateUserAddress = updateUserAddress;
-exports.updateUserInvoice = updateUserInvoice;
-var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 31));
-// @/api/index.js
-
-// -----------------小程序开始--------------
-//获取openId api/factorydirect_user/weixin/queryUserOpenid
-function queryUserOpenid(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/queryUserOpenid", params);
-}
-//获取订单数字角标接口 /weixin/queryUserInfo
-function queryUserInfo(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/queryUserInfo", params);
-}
-//微信小程序根据二维码获取商品信息 weixin/queryCommodityByCode
-function queryCommodityByCode(params) {
-  return _request.default.post("/api/factorydirect_commodity/weixin/queryCommodityByCode", params);
-}
-//微信 下单接口 factorydirect_order/weixin/createOrder
-function createOrder(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/createOrder", params);
-}
-//微信 支付接口 /weixin/toPay
-function toPay(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/toPay", params);
-}
-//微信小程序获取用户订单列表
-function queryOrderListForUser(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/queryOrderListForUser", params);
-}
-///微信小程序获取用户订单详情 weixin/queryOrderInfoByOrderNo
-function queryOrderInfoByOrderNo(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/queryOrderInfoByOrderNo", params);
-}
-///微信小程序获取发票详情 /weixin/queryOrderInvoiceInfo
-function queryOrderInvoiceInfo(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/queryOrderInvoiceInfo", params);
-}
-//微信小程序绑定订单地址信息 /bindAddressForOrder
-function bindAddressForOrder(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/bindAddressForOrder", params);
-}
-//微信小程序开票接口 /factorydirect_user/weixin/openInvoice
-function openInvoice(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/openInvoice", params);
-}
-//微信端更改订单状态  weixin/updateOrderStatusForUser orderNo status
-function updateOrderStatusForUser(params) {
-  return _request.default.post("/api/factorydirect_order/weixin/updateOrderStatusForUser", params);
-}
-//创建收货地址 /weixin/createUserAddress
-function createUserAddress(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/createUserAddress", params);
-}
-//修改收货地址 /weixin/updateUserAddress
-function updateUserAddress(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/updateUserAddress", params);
-}
-//删除收货地址 /weixin/deleteUserAddressById
-function deleteUserAddressById(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/deleteUserAddressById", params);
-}
-//获取收货地址列表 queryUserAddressList
-function queryUserAddressList(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/queryUserAddressList", params);
-}
-//获取发票信息列表 factorydirect_user/weixin/queryUserInvoiceList
-function queryUserInvoiceList(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/queryUserInvoiceList", params);
-}
-//新增发票接口 factorydirect_user/weixin/createUserInvoice
-function createUserInvoice(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/createUserInvoice", params);
-}
-//删除发票接口 factorydirect_user/weixin/deleteUserInvoice
-function deleteUserInvoiceById(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/deleteUserInvoiceById", params);
-}
-//更新发票接口 factorydirect_user/weixin/updateUserInvoice
-function updateUserInvoice(params) {
-  return _request.default.post("/api/factorydirect_user/weixin/updateUserInvoice", params);
-}
-// -----------------小程序结束--------------
-
-// -----------------h5开始--------------
-
-//掌上古井获取用户权限
-function home(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/home", params);
-}
-//掌上古井获取导购首页数据
-function queryGuideHomeDate(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryGuideHomeDate", params);
-}
-//掌上古井获取订单列表
-function queryOrderListForBpm(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderListForBpm", params);
-}
-//掌上古井获取订单列表详情
-function queryOrderInfoByOrderNoForBpm(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInfoByOrderNoForBpm", params);
-}
-//掌上古井修改订单状态(取消订单status：已取消 、确认发货status：待收货)
-function updateOrderStatusForBpm(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/updateOrderStatusForBpm", params);
-}
-//掌上古井设置订单地址信息
-function bindAddressForBpm(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/bindAddressForBpm", params);
-}
-//掌上古井获取厂方人员列表
-function queryManagerListForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/queryManagerListForBpm", params);
-}
-//掌上古井获取导游列表
-function queryTourGuideListForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/queryTourGuideListForBpm", params);
-}
-//掌上古井分佣登记
-function registerCommissionForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/registerCommissionForBpm", params);
-}
-//掌上古井获取分佣列表 
-function queryCommissionListForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/queryCommissionListForBpm", params);
-}
-//掌上古井获取分佣列表 详情
-function queryCommissionInfoForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/queryCommissionInfoForBpm", params);
-}
-//掌上古井获取开票列表
-function queryOrderInvoiceList(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInvoiceList", params);
-}
-//掌上古井获取开票列表详情
-function queryOrderInvoiceInfoh5(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInvoiceInfo", params);
-}
-//掌上古井获取修改开票
-function updateOrderInvoiceStatus(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/updateOrderInvoiceStatus", params);
-}
-//掌上古井获 查询业务点、经销商
-function queryOrgAgency(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/queryOrgAgency", params);
-}
-//掌上古井分佣确认
-function confirmCommissionForBpm(params) {
-  return _request.default.post("/api/factorydirect_commission/h5/confirmCommissionForBpm", params);
-}
-//掌上古井获取大客户首页数据
-function queryAdminHomeDate(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/queryAdminHomeDate", params);
-}
-//掌上古井退款申请
-function orderRefundForBpm(params) {
-  return _request.default.post("/api/factorydirect_h5order/h5/orderRefundForBpm", params);
-}
-// -----------------h5结束--------------
-// 用户注册
-function list(params) {
-  return _request.default.get("/todos", params);
-}
-// -----------------小程序结束--------------
-
-/***/ }),
-
-/***/ 308:
-/*!******************************************************************************************!*\
-  !*** D:/mywork/BPM/guqi/uni_modules/uni-icons/components/uni-icons/uniicons_file_vue.js ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fontData = void 0;
-var fontData = [{
-  "font_class": "arrow-down",
-  "unicode": "\uE6BE"
-}, {
-  "font_class": "arrow-left",
-  "unicode": "\uE6BC"
-}, {
-  "font_class": "arrow-right",
-  "unicode": "\uE6BB"
-}, {
-  "font_class": "arrow-up",
-  "unicode": "\uE6BD"
-}, {
-  "font_class": "auth",
-  "unicode": "\uE6AB"
-}, {
-  "font_class": "auth-filled",
-  "unicode": "\uE6CC"
-}, {
-  "font_class": "back",
-  "unicode": "\uE6B9"
-}, {
-  "font_class": "bars",
-  "unicode": "\uE627"
-}, {
-  "font_class": "calendar",
-  "unicode": "\uE6A0"
-}, {
-  "font_class": "calendar-filled",
-  "unicode": "\uE6C0"
-}, {
-  "font_class": "camera",
-  "unicode": "\uE65A"
-}, {
-  "font_class": "camera-filled",
-  "unicode": "\uE658"
-}, {
-  "font_class": "cart",
-  "unicode": "\uE631"
-}, {
-  "font_class": "cart-filled",
-  "unicode": "\uE6D0"
-}, {
-  "font_class": "chat",
-  "unicode": "\uE65D"
-}, {
-  "font_class": "chat-filled",
-  "unicode": "\uE659"
-}, {
-  "font_class": "chatboxes",
-  "unicode": "\uE696"
-}, {
-  "font_class": "chatboxes-filled",
-  "unicode": "\uE692"
-}, {
-  "font_class": "chatbubble",
-  "unicode": "\uE697"
-}, {
-  "font_class": "chatbubble-filled",
-  "unicode": "\uE694"
-}, {
-  "font_class": "checkbox",
-  "unicode": "\uE62B"
-}, {
-  "font_class": "checkbox-filled",
-  "unicode": "\uE62C"
-}, {
-  "font_class": "checkmarkempty",
-  "unicode": "\uE65C"
-}, {
-  "font_class": "circle",
-  "unicode": "\uE65B"
-}, {
-  "font_class": "circle-filled",
-  "unicode": "\uE65E"
-}, {
-  "font_class": "clear",
-  "unicode": "\uE66D"
-}, {
-  "font_class": "close",
-  "unicode": "\uE673"
-}, {
-  "font_class": "closeempty",
-  "unicode": "\uE66C"
-}, {
-  "font_class": "cloud-download",
-  "unicode": "\uE647"
-}, {
-  "font_class": "cloud-download-filled",
-  "unicode": "\uE646"
-}, {
-  "font_class": "cloud-upload",
-  "unicode": "\uE645"
-}, {
-  "font_class": "cloud-upload-filled",
-  "unicode": "\uE648"
-}, {
-  "font_class": "color",
-  "unicode": "\uE6CF"
-}, {
-  "font_class": "color-filled",
-  "unicode": "\uE6C9"
-}, {
-  "font_class": "compose",
-  "unicode": "\uE67F"
-}, {
-  "font_class": "contact",
-  "unicode": "\uE693"
-}, {
-  "font_class": "contact-filled",
-  "unicode": "\uE695"
-}, {
-  "font_class": "down",
-  "unicode": "\uE6B8"
-}, {
-  "font_class": "bottom",
-  "unicode": "\uE6B8"
-}, {
-  "font_class": "download",
-  "unicode": "\uE68D"
-}, {
-  "font_class": "download-filled",
-  "unicode": "\uE681"
-}, {
-  "font_class": "email",
-  "unicode": "\uE69E"
-}, {
-  "font_class": "email-filled",
-  "unicode": "\uE69A"
-}, {
-  "font_class": "eye",
-  "unicode": "\uE651"
-}, {
-  "font_class": "eye-filled",
-  "unicode": "\uE66A"
-}, {
-  "font_class": "eye-slash",
-  "unicode": "\uE6B3"
-}, {
-  "font_class": "eye-slash-filled",
-  "unicode": "\uE6B4"
-}, {
-  "font_class": "fire",
-  "unicode": "\uE6A1"
-}, {
-  "font_class": "fire-filled",
-  "unicode": "\uE6C5"
-}, {
-  "font_class": "flag",
-  "unicode": "\uE65F"
-}, {
-  "font_class": "flag-filled",
-  "unicode": "\uE660"
-}, {
-  "font_class": "folder-add",
-  "unicode": "\uE6A9"
-}, {
-  "font_class": "folder-add-filled",
-  "unicode": "\uE6C8"
-}, {
-  "font_class": "font",
-  "unicode": "\uE6A3"
-}, {
-  "font_class": "forward",
-  "unicode": "\uE6BA"
-}, {
-  "font_class": "gear",
-  "unicode": "\uE664"
-}, {
-  "font_class": "gear-filled",
-  "unicode": "\uE661"
-}, {
-  "font_class": "gift",
-  "unicode": "\uE6A4"
-}, {
-  "font_class": "gift-filled",
-  "unicode": "\uE6C4"
-}, {
-  "font_class": "hand-down",
-  "unicode": "\uE63D"
-}, {
-  "font_class": "hand-down-filled",
-  "unicode": "\uE63C"
-}, {
-  "font_class": "hand-up",
-  "unicode": "\uE63F"
-}, {
-  "font_class": "hand-up-filled",
-  "unicode": "\uE63E"
-}, {
-  "font_class": "headphones",
-  "unicode": "\uE630"
-}, {
-  "font_class": "heart",
-  "unicode": "\uE639"
-}, {
-  "font_class": "heart-filled",
-  "unicode": "\uE641"
-}, {
-  "font_class": "help",
-  "unicode": "\uE679"
-}, {
-  "font_class": "help-filled",
-  "unicode": "\uE674"
-}, {
-  "font_class": "home",
-  "unicode": "\uE662"
-}, {
-  "font_class": "home-filled",
-  "unicode": "\uE663"
-}, {
-  "font_class": "image",
-  "unicode": "\uE670"
-}, {
-  "font_class": "image-filled",
-  "unicode": "\uE678"
-}, {
-  "font_class": "images",
-  "unicode": "\uE650"
-}, {
-  "font_class": "images-filled",
-  "unicode": "\uE64B"
-}, {
-  "font_class": "info",
-  "unicode": "\uE669"
-}, {
-  "font_class": "info-filled",
-  "unicode": "\uE649"
-}, {
-  "font_class": "left",
-  "unicode": "\uE6B7"
-}, {
-  "font_class": "link",
-  "unicode": "\uE6A5"
-}, {
-  "font_class": "list",
-  "unicode": "\uE644"
-}, {
-  "font_class": "location",
-  "unicode": "\uE6AE"
-}, {
-  "font_class": "location-filled",
-  "unicode": "\uE6AF"
-}, {
-  "font_class": "locked",
-  "unicode": "\uE66B"
-}, {
-  "font_class": "locked-filled",
-  "unicode": "\uE668"
-}, {
-  "font_class": "loop",
-  "unicode": "\uE633"
-}, {
-  "font_class": "mail-open",
-  "unicode": "\uE643"
-}, {
-  "font_class": "mail-open-filled",
-  "unicode": "\uE63A"
-}, {
-  "font_class": "map",
-  "unicode": "\uE667"
-}, {
-  "font_class": "map-filled",
-  "unicode": "\uE666"
-}, {
-  "font_class": "map-pin",
-  "unicode": "\uE6AD"
-}, {
-  "font_class": "map-pin-ellipse",
-  "unicode": "\uE6AC"
-}, {
-  "font_class": "medal",
-  "unicode": "\uE6A2"
-}, {
-  "font_class": "medal-filled",
-  "unicode": "\uE6C3"
-}, {
-  "font_class": "mic",
-  "unicode": "\uE671"
-}, {
-  "font_class": "mic-filled",
-  "unicode": "\uE677"
-}, {
-  "font_class": "micoff",
-  "unicode": "\uE67E"
-}, {
-  "font_class": "micoff-filled",
-  "unicode": "\uE6B0"
-}, {
-  "font_class": "minus",
-  "unicode": "\uE66F"
-}, {
-  "font_class": "minus-filled",
-  "unicode": "\uE67D"
-}, {
-  "font_class": "more",
-  "unicode": "\uE64D"
-}, {
-  "font_class": "more-filled",
-  "unicode": "\uE64E"
-}, {
-  "font_class": "navigate",
-  "unicode": "\uE66E"
-}, {
-  "font_class": "navigate-filled",
-  "unicode": "\uE67A"
-}, {
-  "font_class": "notification",
-  "unicode": "\uE6A6"
-}, {
-  "font_class": "notification-filled",
-  "unicode": "\uE6C1"
-}, {
-  "font_class": "paperclip",
-  "unicode": "\uE652"
-}, {
-  "font_class": "paperplane",
-  "unicode": "\uE672"
-}, {
-  "font_class": "paperplane-filled",
-  "unicode": "\uE675"
-}, {
-  "font_class": "person",
-  "unicode": "\uE699"
-}, {
-  "font_class": "person-filled",
-  "unicode": "\uE69D"
-}, {
-  "font_class": "personadd",
-  "unicode": "\uE69F"
-}, {
-  "font_class": "personadd-filled",
-  "unicode": "\uE698"
-}, {
-  "font_class": "personadd-filled-copy",
-  "unicode": "\uE6D1"
-}, {
-  "font_class": "phone",
-  "unicode": "\uE69C"
-}, {
-  "font_class": "phone-filled",
-  "unicode": "\uE69B"
-}, {
-  "font_class": "plus",
-  "unicode": "\uE676"
-}, {
-  "font_class": "plus-filled",
-  "unicode": "\uE6C7"
-}, {
-  "font_class": "plusempty",
-  "unicode": "\uE67B"
-}, {
-  "font_class": "pulldown",
-  "unicode": "\uE632"
-}, {
-  "font_class": "pyq",
-  "unicode": "\uE682"
-}, {
-  "font_class": "qq",
-  "unicode": "\uE680"
-}, {
-  "font_class": "redo",
-  "unicode": "\uE64A"
-}, {
-  "font_class": "redo-filled",
-  "unicode": "\uE655"
-}, {
-  "font_class": "refresh",
-  "unicode": "\uE657"
-}, {
-  "font_class": "refresh-filled",
-  "unicode": "\uE656"
-}, {
-  "font_class": "refreshempty",
-  "unicode": "\uE6BF"
-}, {
-  "font_class": "reload",
-  "unicode": "\uE6B2"
-}, {
-  "font_class": "right",
-  "unicode": "\uE6B5"
-}, {
-  "font_class": "scan",
-  "unicode": "\uE62A"
-}, {
-  "font_class": "search",
-  "unicode": "\uE654"
-}, {
-  "font_class": "settings",
-  "unicode": "\uE653"
-}, {
-  "font_class": "settings-filled",
-  "unicode": "\uE6CE"
-}, {
-  "font_class": "shop",
-  "unicode": "\uE62F"
-}, {
-  "font_class": "shop-filled",
-  "unicode": "\uE6CD"
-}, {
-  "font_class": "smallcircle",
-  "unicode": "\uE67C"
-}, {
-  "font_class": "smallcircle-filled",
-  "unicode": "\uE665"
-}, {
-  "font_class": "sound",
-  "unicode": "\uE684"
-}, {
-  "font_class": "sound-filled",
-  "unicode": "\uE686"
-}, {
-  "font_class": "spinner-cycle",
-  "unicode": "\uE68A"
-}, {
-  "font_class": "staff",
-  "unicode": "\uE6A7"
-}, {
-  "font_class": "staff-filled",
-  "unicode": "\uE6CB"
-}, {
-  "font_class": "star",
-  "unicode": "\uE688"
-}, {
-  "font_class": "star-filled",
-  "unicode": "\uE68F"
-}, {
-  "font_class": "starhalf",
-  "unicode": "\uE683"
-}, {
-  "font_class": "trash",
-  "unicode": "\uE687"
-}, {
-  "font_class": "trash-filled",
-  "unicode": "\uE685"
-}, {
-  "font_class": "tune",
-  "unicode": "\uE6AA"
-}, {
-  "font_class": "tune-filled",
-  "unicode": "\uE6CA"
-}, {
-  "font_class": "undo",
-  "unicode": "\uE64F"
-}, {
-  "font_class": "undo-filled",
-  "unicode": "\uE64C"
-}, {
-  "font_class": "up",
-  "unicode": "\uE6B6"
-}, {
-  "font_class": "top",
-  "unicode": "\uE6B6"
-}, {
-  "font_class": "upload",
-  "unicode": "\uE690"
-}, {
-  "font_class": "upload-filled",
-  "unicode": "\uE68E"
-}, {
-  "font_class": "videocam",
-  "unicode": "\uE68C"
-}, {
-  "font_class": "videocam-filled",
-  "unicode": "\uE689"
-}, {
-  "font_class": "vip",
-  "unicode": "\uE6A8"
-}, {
-  "font_class": "vip-filled",
-  "unicode": "\uE6C6"
-}, {
-  "font_class": "wallet",
-  "unicode": "\uE6B1"
-}, {
-  "font_class": "wallet-filled",
-  "unicode": "\uE6C2"
-}, {
-  "font_class": "weibo",
-  "unicode": "\uE68B"
-}, {
-  "font_class": "weixin",
-  "unicode": "\uE691"
-}];
-
-// export const fontData = JSON.parse<IconsDataItem>(fontDataJson)
-exports.fontData = fontData;
-
-/***/ }),
-
-/***/ 31:
-/*!*******************************************!*\
-  !*** D:/mywork/BPM/guqi/utils/request.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-// @/utils/request.js
-
-//小程序判断当前环境
-console.log('****************小程序环境====>' + "test"); //dev test pro
-console.log('小程序接口url=====>' + "https://bpmcs.gujing.cn/apps_ba");
-var baseURL = "https://bpmcs.gujing.cn/apps_ba"; //todos?userId=1
-
-console.log("🚀 🚀 🚀 🚀 " + "development");
-var timeout = 10000;
-// 封装api请求
-var request = function request(option) {
-  // 获取用户传入的url
-  var url = baseURL + option.url;
-
-  // 添加提请求头
-  var header = option.header || {};
-  // if(!!option.needToken){
-  // 	// 添加token 
-  // 	header.Authorization =  'Bearer ' +  uni.getStorageSync('token');  
-  // }
-  // header.source=1;
-  // header.channel="h5";
-
-  // 加载提示
-  //console.log('uni.getLocale()====>'+uni.getLocale());
-  var title = '';
-  if (uni.getLocale() == 'en') {
-    title = 'Loading...';
-  } else {
-    title = '加载中...';
-  }
-  uni.showLoading({
-    title: title
-  });
-  // 返回一个promise
-  return new Promise(function (resolve, reject) {
-    // 发起一个request请求
-    uni.request({
-      url: url,
-      //请求url
-      method: option.method || "GET",
-      //请求方法
-      header: header,
-      //请求头
-      timeout: timeout,
-      data: option.data || option.params,
-      //请求数据
-      success: function success(res) {
-        //debugger
-        // 成功返回结果
-        if (res.data.result == 'ok') {
-          resolve(res.data.data);
-        } else {
-          reject(res);
-        }
-        uni.hideLoading();
-      },
-      fail: function fail(err) {
-        uni.hideLoading();
-        // 失败返回失败结果
-        console.error(err);
-        uni.showModal({
-          title: '提示',
-          content: '系统异常,请稍后再试',
-          showCancel: false
-        });
-        // uni.showToast({
-        // 	title:"系统异常,请稍后再试",
-        // 	icon:'none'
-        // })
-      },
-      complete: function complete() {
-        // 完成 关闭loading
-        uni.hideLoading();
-      }
-    });
-  });
-};
-
-// 定义get简洁方法
-request.get = function (url, data, config) {
-  return request(_objectSpread(_objectSpread({
-    url: url,
-    method: "GET"
-  }, config), {}, {
-    data: data
-  }));
-};
-
-// 定义post简洁方法
-request.post = function (url, data, config) {
-  return request(_objectSpread(_objectSpread({
-    url: url,
-    method: "POST"
-  }, config), {}, {
-    data: data
-  }));
-};
-// 导出请求
-var _default = request;
-exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
-
-/***/ 323:
+/***/ 251:
 /*!************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/@babel/runtime/regenerator/index.js ***!
   \************************************************************************************************/
@@ -11433,12 +11051,12 @@ exports.default = _default;
 
 // TODO(Babel 8): Remove this file.
 
-var runtime = __webpack_require__(/*! @babel/runtime/helpers/regeneratorRuntime */ 324)();
+var runtime = __webpack_require__(/*! @babel/runtime/helpers/regeneratorRuntime */ 252)();
 module.exports = runtime;
 
 /***/ }),
 
-/***/ 324:
+/***/ 252:
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
   \*******************************************************************/
@@ -11760,7 +11378,7 @@ module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.e
 
 /***/ }),
 
-/***/ 325:
+/***/ 253:
 /*!*****************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
   \*****************************************************************/
@@ -11801,7 +11419,7 @@ module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exp
 
 /***/ }),
 
-/***/ 326:
+/***/ 254:
 /*!*********************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-forms/components/uni-forms/validate.js ***!
   \*********************************************************************************/
@@ -11816,11 +11434,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ 327));
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 328));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 330));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ 255));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 256));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 258));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 23));
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 24));
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
@@ -12493,7 +12111,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 327:
+/***/ 255:
 /*!*********************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/inherits.js ***!
   \*********************************************************/
@@ -12521,7 +12139,7 @@ module.exports = _inherits, module.exports.__esModule = true, module.exports["de
 
 /***/ }),
 
-/***/ 328:
+/***/ 256:
 /*!**************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
   \**************************************************************************/
@@ -12529,7 +12147,7 @@ module.exports = _inherits, module.exports.__esModule = true, module.exports["de
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = __webpack_require__(/*! ./typeof.js */ 13)["default"];
-var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized.js */ 329);
+var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized.js */ 257);
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
     return call;
@@ -12542,7 +12160,7 @@ module.exports = _possibleConstructorReturn, module.exports.__esModule = true, m
 
 /***/ }),
 
-/***/ 329:
+/***/ 257:
 /*!**********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
   \**********************************************************************/
@@ -12559,7 +12177,7 @@ module.exports = _assertThisInitialized, module.exports.__esModule = true, modul
 
 /***/ }),
 
-/***/ 330:
+/***/ 258:
 /*!***************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
   \***************************************************************/
@@ -12576,7 +12194,7 @@ module.exports = _getPrototypeOf, module.exports.__esModule = true, module.expor
 
 /***/ }),
 
-/***/ 331:
+/***/ 259:
 /*!******************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-forms/components/uni-forms/utils.js ***!
   \******************************************************************************/
@@ -12912,2456 +12530,18 @@ exports.isEqual = isEqual;
 
 /***/ }),
 
-/***/ 34:
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 26:
+/*!*************************************!*\
+  !*** D:/mywork/BPM/guqi/pages.json ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // fixed by xxxxxx auto components
-  if (components) {
-    if (!options.components) {
-      options.components = {}
-    }
-    var hasOwn = Object.prototype.hasOwnProperty
-    for (var name in components) {
-      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
-        options.components[name] = components[name]
-      }
-    }
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    if(typeof renderjs.beforeCreate === 'function'){
-			renderjs.beforeCreate = [renderjs.beforeCreate]
-		}
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),
 
-/***/ 35:
-/*!****************************************************!*\
-  !*** ./node_modules/vue-i18n/dist/vue-i18n.esm.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/*!
- * vue-i18n v8.28.2 
- * (c) 2022 kazuya kawaguchi
- * Released under the MIT License.
- */
-/*  */
-
-/**
- * constants
- */
-
-var numberFormatKeys = [
-  'compactDisplay',
-  'currency',
-  'currencyDisplay',
-  'currencySign',
-  'localeMatcher',
-  'notation',
-  'numberingSystem',
-  'signDisplay',
-  'style',
-  'unit',
-  'unitDisplay',
-  'useGrouping',
-  'minimumIntegerDigits',
-  'minimumFractionDigits',
-  'maximumFractionDigits',
-  'minimumSignificantDigits',
-  'maximumSignificantDigits'
-];
-
-var dateTimeFormatKeys = [
-  'dateStyle',
-  'timeStyle',
-  'calendar',
-  'localeMatcher',
-  "hour12",
-  "hourCycle",
-  "timeZone",
-  "formatMatcher",
-  'weekday',
-  'era',
-  'year',
-  'month',
-  'day',
-  'hour',
-  'minute',
-  'second',
-  'timeZoneName' ];
-
-/**
- * utilities
- */
-
-function warn (msg, err) {
-  if (typeof console !== 'undefined') {
-    console.warn('[vue-i18n] ' + msg);
-    /* istanbul ignore if */
-    if (err) {
-      console.warn(err.stack);
-    }
-  }
-}
-
-function error (msg, err) {
-  if (typeof console !== 'undefined') {
-    console.error('[vue-i18n] ' + msg);
-    /* istanbul ignore if */
-    if (err) {
-      console.error(err.stack);
-    }
-  }
-}
-
-var isArray = Array.isArray;
-
-function isObject (obj) {
-  return obj !== null && typeof obj === 'object'
-}
-
-function isBoolean (val) {
-  return typeof val === 'boolean'
-}
-
-function isString (val) {
-  return typeof val === 'string'
-}
-
-var toString = Object.prototype.toString;
-var OBJECT_STRING = '[object Object]';
-function isPlainObject (obj) {
-  return toString.call(obj) === OBJECT_STRING
-}
-
-function isNull (val) {
-  return val === null || val === undefined
-}
-
-function isFunction (val) {
-  return typeof val === 'function'
-}
-
-function parseArgs () {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  var locale = null;
-  var params = null;
-  if (args.length === 1) {
-    if (isObject(args[0]) || isArray(args[0])) {
-      params = args[0];
-    } else if (typeof args[0] === 'string') {
-      locale = args[0];
-    }
-  } else if (args.length === 2) {
-    if (typeof args[0] === 'string') {
-      locale = args[0];
-    }
-    /* istanbul ignore if */
-    if (isObject(args[1]) || isArray(args[1])) {
-      params = args[1];
-    }
-  }
-
-  return { locale: locale, params: params }
-}
-
-function looseClone (obj) {
-  return JSON.parse(JSON.stringify(obj))
-}
-
-function remove (arr, item) {
-  if (arr.delete(item)) {
-    return arr
-  }
-}
-
-function arrayFrom (arr) {
-  var ret = [];
-  arr.forEach(function (a) { return ret.push(a); });
-  return ret
-}
-
-function includes (arr, item) {
-  return !!~arr.indexOf(item)
-}
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-function hasOwn (obj, key) {
-  return hasOwnProperty.call(obj, key)
-}
-
-function merge (target) {
-  var arguments$1 = arguments;
-
-  var output = Object(target);
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments$1[i];
-    if (source !== undefined && source !== null) {
-      var key = (void 0);
-      for (key in source) {
-        if (hasOwn(source, key)) {
-          if (isObject(source[key])) {
-            output[key] = merge(output[key], source[key]);
-          } else {
-            output[key] = source[key];
-          }
-        }
-      }
-    }
-  }
-  return output
-}
-
-function looseEqual (a, b) {
-  if (a === b) { return true }
-  var isObjectA = isObject(a);
-  var isObjectB = isObject(b);
-  if (isObjectA && isObjectB) {
-    try {
-      var isArrayA = isArray(a);
-      var isArrayB = isArray(b);
-      if (isArrayA && isArrayB) {
-        return a.length === b.length && a.every(function (e, i) {
-          return looseEqual(e, b[i])
-        })
-      } else if (!isArrayA && !isArrayB) {
-        var keysA = Object.keys(a);
-        var keysB = Object.keys(b);
-        return keysA.length === keysB.length && keysA.every(function (key) {
-          return looseEqual(a[key], b[key])
-        })
-      } else {
-        /* istanbul ignore next */
-        return false
-      }
-    } catch (e) {
-      /* istanbul ignore next */
-      return false
-    }
-  } else if (!isObjectA && !isObjectB) {
-    return String(a) === String(b)
-  } else {
-    return false
-  }
-}
-
-/**
- * Sanitizes html special characters from input strings. For mitigating risk of XSS attacks.
- * @param rawText The raw input from the user that should be escaped.
- */
-function escapeHtml(rawText) {
-  return rawText
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
-
-/**
- * Escapes html tags and special symbols from all provided params which were returned from parseArgs().params.
- * This method performs an in-place operation on the params object.
- *
- * @param {any} params Parameters as provided from `parseArgs().params`.
- *                     May be either an array of strings or a string->any map.
- *
- * @returns The manipulated `params` object.
- */
-function escapeParams(params) {
-  if(params != null) {
-    Object.keys(params).forEach(function (key) {
-      if(typeof(params[key]) == 'string') {
-        params[key] = escapeHtml(params[key]);
-      }
-    });
-  }
-  return params
-}
-
-/*  */
-
-function extend (Vue) {
-  if (!Vue.prototype.hasOwnProperty('$i18n')) {
-    // $FlowFixMe
-    Object.defineProperty(Vue.prototype, '$i18n', {
-      get: function get () { return this._i18n }
-    });
-  }
-
-  Vue.prototype.$t = function (key) {
-    var values = [], len = arguments.length - 1;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
-
-    var i18n = this.$i18n;
-    return i18n._t.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this ].concat( values ))
-  };
-
-  Vue.prototype.$tc = function (key, choice) {
-    var values = [], len = arguments.length - 2;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
-
-    var i18n = this.$i18n;
-    return i18n._tc.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this, choice ].concat( values ))
-  };
-
-  Vue.prototype.$te = function (key, locale) {
-    var i18n = this.$i18n;
-    return i18n._te(key, i18n.locale, i18n._getMessages(), locale)
-  };
-
-  Vue.prototype.$d = function (value) {
-    var ref;
-
-    var args = [], len = arguments.length - 1;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-    return (ref = this.$i18n).d.apply(ref, [ value ].concat( args ))
-  };
-
-  Vue.prototype.$n = function (value) {
-    var ref;
-
-    var args = [], len = arguments.length - 1;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-    return (ref = this.$i18n).n.apply(ref, [ value ].concat( args ))
-  };
-}
-
-/*  */
-
-/**
- * Mixin
- * 
- * If `bridge` mode, empty mixin is returned,
- * else regulary mixin implementation is returned.
- */
-function defineMixin (bridge) {
-  if ( bridge === void 0 ) bridge = false;
-
-  function mounted () {
-    if (this !== this.$root && this.$options.__INTLIFY_META__ && this.$el) {
-      this.$el.setAttribute('data-intlify', this.$options.__INTLIFY_META__);
-    }
-  }
-
-  return bridge
-    ? { mounted: mounted } // delegate `vue-i18n-bridge` mixin implementation
-    : { // regulary 
-    beforeCreate: function beforeCreate () {
-      var options = this.$options;
-      options.i18n = options.i18n || ((options.__i18nBridge || options.__i18n) ? {} : null);
-
-      if (options.i18n) {
-        if (options.i18n instanceof VueI18n) {
-          // init locale messages via custom blocks
-          if ((options.__i18nBridge || options.__i18n)) {
-            try {
-              var localeMessages = options.i18n && options.i18n.messages ? options.i18n.messages : {};
-              var _i18n = options.__i18nBridge || options.__i18n;
-              _i18n.forEach(function (resource) {
-                localeMessages = merge(localeMessages, JSON.parse(resource));
-              });
-              Object.keys(localeMessages).forEach(function (locale) {
-                options.i18n.mergeLocaleMessage(locale, localeMessages[locale]);
-              });
-            } catch (e) {
-              if (true) {
-                error("Cannot parse locale messages via custom blocks.", e);
-              }
-            }
-          }
-          this._i18n = options.i18n;
-          this._i18nWatcher = this._i18n.watchI18nData();
-        } else if (isPlainObject(options.i18n)) {
-          var rootI18n = this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n
-            ? this.$root.$i18n
-            : null;
-          // component local i18n
-          if (rootI18n) {
-            options.i18n.root = this.$root;
-            options.i18n.formatter = rootI18n.formatter;
-            options.i18n.fallbackLocale = rootI18n.fallbackLocale;
-            options.i18n.formatFallbackMessages = rootI18n.formatFallbackMessages;
-            options.i18n.silentTranslationWarn = rootI18n.silentTranslationWarn;
-            options.i18n.silentFallbackWarn = rootI18n.silentFallbackWarn;
-            options.i18n.pluralizationRules = rootI18n.pluralizationRules;
-            options.i18n.preserveDirectiveContent = rootI18n.preserveDirectiveContent;
-          }
-
-          // init locale messages via custom blocks
-          if ((options.__i18nBridge || options.__i18n)) {
-            try {
-              var localeMessages$1 = options.i18n && options.i18n.messages ? options.i18n.messages : {};
-              var _i18n$1 = options.__i18nBridge || options.__i18n;
-              _i18n$1.forEach(function (resource) {
-                localeMessages$1 = merge(localeMessages$1, JSON.parse(resource));
-              });
-              options.i18n.messages = localeMessages$1;
-            } catch (e) {
-              if (true) {
-                warn("Cannot parse locale messages via custom blocks.", e);
-              }
-            }
-          }
-
-          var ref = options.i18n;
-          var sharedMessages = ref.sharedMessages;
-          if (sharedMessages && isPlainObject(sharedMessages)) {
-            options.i18n.messages = merge(options.i18n.messages, sharedMessages);
-          }
-
-          this._i18n = new VueI18n(options.i18n);
-          this._i18nWatcher = this._i18n.watchI18nData();
-
-          if (options.i18n.sync === undefined || !!options.i18n.sync) {
-            this._localeWatcher = this.$i18n.watchLocale();
-          }
-
-          if (rootI18n) {
-            rootI18n.onComponentInstanceCreated(this._i18n);
-          }
-        } else {
-          if (true) {
-            warn("Cannot be interpreted 'i18n' option.");
-          }
-        }
-      } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
-        // root i18n
-        this._i18n = this.$root.$i18n;
-      } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
-        // parent i18n
-        this._i18n = options.parent.$i18n;
-      }
-    },
-
-    beforeMount: function beforeMount () {
-      var options = this.$options;
-      options.i18n = options.i18n || ((options.__i18nBridge || options.__i18n) ? {} : null);
-
-      if (options.i18n) {
-        if (options.i18n instanceof VueI18n) {
-          // init locale messages via custom blocks
-          this._i18n.subscribeDataChanging(this);
-          this._subscribing = true;
-        } else if (isPlainObject(options.i18n)) {
-          this._i18n.subscribeDataChanging(this);
-          this._subscribing = true;
-        } else {
-          if (true) {
-            warn("Cannot be interpreted 'i18n' option.");
-          }
-        }
-      } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
-        this._i18n.subscribeDataChanging(this);
-        this._subscribing = true;
-      } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
-        this._i18n.subscribeDataChanging(this);
-        this._subscribing = true;
-      }
-    },
-
-    mounted: mounted,
-
-    beforeDestroy: function beforeDestroy () {
-      if (!this._i18n) { return }
-
-      var self = this;
-      this.$nextTick(function () {
-        if (self._subscribing) {
-          self._i18n.unsubscribeDataChanging(self);
-          delete self._subscribing;
-        }
-
-        if (self._i18nWatcher) {
-          self._i18nWatcher();
-          self._i18n.destroyVM();
-          delete self._i18nWatcher;
-        }
-
-        if (self._localeWatcher) {
-          self._localeWatcher();
-          delete self._localeWatcher;
-        }
-      });
-    }
-  }
-}
-
-/*  */
-
-var interpolationComponent = {
-  name: 'i18n',
-  functional: true,
-  props: {
-    tag: {
-      type: [String, Boolean, Object],
-      default: 'span'
-    },
-    path: {
-      type: String,
-      required: true
-    },
-    locale: {
-      type: String
-    },
-    places: {
-      type: [Array, Object]
-    }
-  },
-  render: function render (h, ref) {
-    var data = ref.data;
-    var parent = ref.parent;
-    var props = ref.props;
-    var slots = ref.slots;
-
-    var $i18n = parent.$i18n;
-    if (!$i18n) {
-      if (true) {
-        warn('Cannot find VueI18n instance!');
-      }
-      return
-    }
-
-    var path = props.path;
-    var locale = props.locale;
-    var places = props.places;
-    var params = slots();
-    var children = $i18n.i(
-      path,
-      locale,
-      onlyHasDefaultPlace(params) || places
-        ? useLegacyPlaces(params.default, places)
-        : params
-    );
-
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
-    return tag ? h(tag, data, children) : children
-  }
-};
-
-function onlyHasDefaultPlace (params) {
-  var prop;
-  for (prop in params) {
-    if (prop !== 'default') { return false }
-  }
-  return Boolean(prop)
-}
-
-function useLegacyPlaces (children, places) {
-  var params = places ? createParamsFromPlaces(places) : {};
-
-  if (!children) { return params }
-
-  // Filter empty text nodes
-  children = children.filter(function (child) {
-    return child.tag || child.text.trim() !== ''
-  });
-
-  var everyPlace = children.every(vnodeHasPlaceAttribute);
-  if ( true && everyPlace) {
-    warn('`place` attribute is deprecated in next major version. Please switch to Vue slots.');
-  }
-
-  return children.reduce(
-    everyPlace ? assignChildPlace : assignChildIndex,
-    params
-  )
-}
-
-function createParamsFromPlaces (places) {
-  if (true) {
-    warn('`places` prop is deprecated in next major version. Please switch to Vue slots.');
-  }
-
-  return Array.isArray(places)
-    ? places.reduce(assignChildIndex, {})
-    : Object.assign({}, places)
-}
-
-function assignChildPlace (params, child) {
-  if (child.data && child.data.attrs && child.data.attrs.place) {
-    params[child.data.attrs.place] = child;
-  }
-  return params
-}
-
-function assignChildIndex (params, child, index) {
-  params[index] = child;
-  return params
-}
-
-function vnodeHasPlaceAttribute (vnode) {
-  return Boolean(vnode.data && vnode.data.attrs && vnode.data.attrs.place)
-}
-
-/*  */
-
-var numberComponent = {
-  name: 'i18n-n',
-  functional: true,
-  props: {
-    tag: {
-      type: [String, Boolean, Object],
-      default: 'span'
-    },
-    value: {
-      type: Number,
-      required: true
-    },
-    format: {
-      type: [String, Object]
-    },
-    locale: {
-      type: String
-    }
-  },
-  render: function render (h, ref) {
-    var props = ref.props;
-    var parent = ref.parent;
-    var data = ref.data;
-
-    var i18n = parent.$i18n;
-
-    if (!i18n) {
-      if (true) {
-        warn('Cannot find VueI18n instance!');
-      }
-      return null
-    }
-
-    var key = null;
-    var options = null;
-
-    if (isString(props.format)) {
-      key = props.format;
-    } else if (isObject(props.format)) {
-      if (props.format.key) {
-        key = props.format.key;
-      }
-
-      // Filter out number format options only
-      options = Object.keys(props.format).reduce(function (acc, prop) {
-        var obj;
-
-        if (includes(numberFormatKeys, prop)) {
-          return Object.assign({}, acc, ( obj = {}, obj[prop] = props.format[prop], obj ))
-        }
-        return acc
-      }, null);
-    }
-
-    var locale = props.locale || i18n.locale;
-    var parts = i18n._ntp(props.value, locale, key, options);
-
-    var values = parts.map(function (part, index) {
-      var obj;
-
-      var slot = data.scopedSlots && data.scopedSlots[part.type];
-      return slot ? slot(( obj = {}, obj[part.type] = part.value, obj.index = index, obj.parts = parts, obj )) : part.value
-    });
-
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
-    return tag
-      ? h(tag, {
-        attrs: data.attrs,
-        'class': data['class'],
-        staticClass: data.staticClass
-      }, values)
-      : values
-  }
-};
-
-/*  */
-
-function bind (el, binding, vnode) {
-  if (!assert(el, vnode)) { return }
-
-  t(el, binding, vnode);
-}
-
-function update (el, binding, vnode, oldVNode) {
-  if (!assert(el, vnode)) { return }
-
-  var i18n = vnode.context.$i18n;
-  if (localeEqual(el, vnode) &&
-    (looseEqual(binding.value, binding.oldValue) &&
-     looseEqual(el._localeMessage, i18n.getLocaleMessage(i18n.locale)))) { return }
-
-  t(el, binding, vnode);
-}
-
-function unbind (el, binding, vnode, oldVNode) {
-  var vm = vnode.context;
-  if (!vm) {
-    warn('Vue instance does not exists in VNode context');
-    return
-  }
-
-  var i18n = vnode.context.$i18n || {};
-  if (!binding.modifiers.preserve && !i18n.preserveDirectiveContent) {
-    el.textContent = '';
-  }
-  el._vt = undefined;
-  delete el['_vt'];
-  el._locale = undefined;
-  delete el['_locale'];
-  el._localeMessage = undefined;
-  delete el['_localeMessage'];
-}
-
-function assert (el, vnode) {
-  var vm = vnode.context;
-  if (!vm) {
-    warn('Vue instance does not exists in VNode context');
-    return false
-  }
-
-  if (!vm.$i18n) {
-    warn('VueI18n instance does not exists in Vue instance');
-    return false
-  }
-
-  return true
-}
-
-function localeEqual (el, vnode) {
-  var vm = vnode.context;
-  return el._locale === vm.$i18n.locale
-}
-
-function t (el, binding, vnode) {
-  var ref$1, ref$2;
-
-  var value = binding.value;
-
-  var ref = parseValue(value);
-  var path = ref.path;
-  var locale = ref.locale;
-  var args = ref.args;
-  var choice = ref.choice;
-  if (!path && !locale && !args) {
-    warn('value type not supported');
-    return
-  }
-
-  if (!path) {
-    warn('`path` is required in v-t directive');
-    return
-  }
-
-  var vm = vnode.context;
-  if (choice != null) {
-    el._vt = el.textContent = (ref$1 = vm.$i18n).tc.apply(ref$1, [ path, choice ].concat( makeParams(locale, args) ));
-  } else {
-    el._vt = el.textContent = (ref$2 = vm.$i18n).t.apply(ref$2, [ path ].concat( makeParams(locale, args) ));
-  }
-  el._locale = vm.$i18n.locale;
-  el._localeMessage = vm.$i18n.getLocaleMessage(vm.$i18n.locale);
-}
-
-function parseValue (value) {
-  var path;
-  var locale;
-  var args;
-  var choice;
-
-  if (isString(value)) {
-    path = value;
-  } else if (isPlainObject(value)) {
-    path = value.path;
-    locale = value.locale;
-    args = value.args;
-    choice = value.choice;
-  }
-
-  return { path: path, locale: locale, args: args, choice: choice }
-}
-
-function makeParams (locale, args) {
-  var params = [];
-
-  locale && params.push(locale);
-  if (args && (Array.isArray(args) || isPlainObject(args))) {
-    params.push(args);
-  }
-
-  return params
-}
-
-var Vue;
-
-function install (_Vue, options) {
-  if ( options === void 0 ) options = { bridge: false };
-
-  /* istanbul ignore if */
-  if ( true && install.installed && _Vue === Vue) {
-    warn('already installed.');
-    return
-  }
-  install.installed = true;
-
-  Vue = _Vue;
-
-  var version = (Vue.version && Number(Vue.version.split('.')[0])) || -1;
-  /* istanbul ignore if */
-  if ( true && version < 2) {
-    warn(("vue-i18n (" + (install.version) + ") need to use Vue 2.0 or later (Vue: " + (Vue.version) + ")."));
-    return
-  }
-
-  extend(Vue);
-  Vue.mixin(defineMixin(options.bridge));
-  Vue.directive('t', { bind: bind, update: update, unbind: unbind });
-  Vue.component(interpolationComponent.name, interpolationComponent);
-  Vue.component(numberComponent.name, numberComponent);
-
-  // use simple mergeStrategies to prevent i18n instance lose '__proto__'
-  var strats = Vue.config.optionMergeStrategies;
-  strats.i18n = function (parentVal, childVal) {
-    return childVal === undefined
-      ? parentVal
-      : childVal
-  };
-}
-
-/*  */
-
-var BaseFormatter = function BaseFormatter () {
-  this._caches = Object.create(null);
-};
-
-BaseFormatter.prototype.interpolate = function interpolate (message, values) {
-  if (!values) {
-    return [message]
-  }
-  var tokens = this._caches[message];
-  if (!tokens) {
-    tokens = parse(message);
-    this._caches[message] = tokens;
-  }
-  return compile(tokens, values)
-};
-
-
-
-var RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
-var RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
-
-function parse (format) {
-  var tokens = [];
-  var position = 0;
-
-  var text = '';
-  while (position < format.length) {
-    var char = format[position++];
-    if (char === '{') {
-      if (text) {
-        tokens.push({ type: 'text', value: text });
-      }
-
-      text = '';
-      var sub = '';
-      char = format[position++];
-      while (char !== undefined && char !== '}') {
-        sub += char;
-        char = format[position++];
-      }
-      var isClosed = char === '}';
-
-      var type = RE_TOKEN_LIST_VALUE.test(sub)
-        ? 'list'
-        : isClosed && RE_TOKEN_NAMED_VALUE.test(sub)
-          ? 'named'
-          : 'unknown';
-      tokens.push({ value: sub, type: type });
-    } else if (char === '%') {
-      // when found rails i18n syntax, skip text capture
-      if (format[(position)] !== '{') {
-        text += char;
-      }
-    } else {
-      text += char;
-    }
-  }
-
-  text && tokens.push({ type: 'text', value: text });
-
-  return tokens
-}
-
-function compile (tokens, values) {
-  var compiled = [];
-  var index = 0;
-
-  var mode = Array.isArray(values)
-    ? 'list'
-    : isObject(values)
-      ? 'named'
-      : 'unknown';
-  if (mode === 'unknown') { return compiled }
-
-  while (index < tokens.length) {
-    var token = tokens[index];
-    switch (token.type) {
-      case 'text':
-        compiled.push(token.value);
-        break
-      case 'list':
-        compiled.push(values[parseInt(token.value, 10)]);
-        break
-      case 'named':
-        if (mode === 'named') {
-          compiled.push((values)[token.value]);
-        } else {
-          if (true) {
-            warn(("Type of token '" + (token.type) + "' and format of value '" + mode + "' don't match!"));
-          }
-        }
-        break
-      case 'unknown':
-        if (true) {
-          warn("Detect 'unknown' type of token!");
-        }
-        break
-    }
-    index++;
-  }
-
-  return compiled
-}
-
-/*  */
-
-/**
- *  Path parser
- *  - Inspired:
- *    Vue.js Path parser
- */
-
-// actions
-var APPEND = 0;
-var PUSH = 1;
-var INC_SUB_PATH_DEPTH = 2;
-var PUSH_SUB_PATH = 3;
-
-// states
-var BEFORE_PATH = 0;
-var IN_PATH = 1;
-var BEFORE_IDENT = 2;
-var IN_IDENT = 3;
-var IN_SUB_PATH = 4;
-var IN_SINGLE_QUOTE = 5;
-var IN_DOUBLE_QUOTE = 6;
-var AFTER_PATH = 7;
-var ERROR = 8;
-
-var pathStateMachine = [];
-
-pathStateMachine[BEFORE_PATH] = {
-  'ws': [BEFORE_PATH],
-  'ident': [IN_IDENT, APPEND],
-  '[': [IN_SUB_PATH],
-  'eof': [AFTER_PATH]
-};
-
-pathStateMachine[IN_PATH] = {
-  'ws': [IN_PATH],
-  '.': [BEFORE_IDENT],
-  '[': [IN_SUB_PATH],
-  'eof': [AFTER_PATH]
-};
-
-pathStateMachine[BEFORE_IDENT] = {
-  'ws': [BEFORE_IDENT],
-  'ident': [IN_IDENT, APPEND],
-  '0': [IN_IDENT, APPEND],
-  'number': [IN_IDENT, APPEND]
-};
-
-pathStateMachine[IN_IDENT] = {
-  'ident': [IN_IDENT, APPEND],
-  '0': [IN_IDENT, APPEND],
-  'number': [IN_IDENT, APPEND],
-  'ws': [IN_PATH, PUSH],
-  '.': [BEFORE_IDENT, PUSH],
-  '[': [IN_SUB_PATH, PUSH],
-  'eof': [AFTER_PATH, PUSH]
-};
-
-pathStateMachine[IN_SUB_PATH] = {
-  "'": [IN_SINGLE_QUOTE, APPEND],
-  '"': [IN_DOUBLE_QUOTE, APPEND],
-  '[': [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
-  ']': [IN_PATH, PUSH_SUB_PATH],
-  'eof': ERROR,
-  'else': [IN_SUB_PATH, APPEND]
-};
-
-pathStateMachine[IN_SINGLE_QUOTE] = {
-  "'": [IN_SUB_PATH, APPEND],
-  'eof': ERROR,
-  'else': [IN_SINGLE_QUOTE, APPEND]
-};
-
-pathStateMachine[IN_DOUBLE_QUOTE] = {
-  '"': [IN_SUB_PATH, APPEND],
-  'eof': ERROR,
-  'else': [IN_DOUBLE_QUOTE, APPEND]
-};
-
-/**
- * Check if an expression is a literal value.
- */
-
-var literalValueRE = /^\s?(?:true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/;
-function isLiteral (exp) {
-  return literalValueRE.test(exp)
-}
-
-/**
- * Strip quotes from a string
- */
-
-function stripQuotes (str) {
-  var a = str.charCodeAt(0);
-  var b = str.charCodeAt(str.length - 1);
-  return a === b && (a === 0x22 || a === 0x27)
-    ? str.slice(1, -1)
-    : str
-}
-
-/**
- * Determine the type of a character in a keypath.
- */
-
-function getPathCharType (ch) {
-  if (ch === undefined || ch === null) { return 'eof' }
-
-  var code = ch.charCodeAt(0);
-
-  switch (code) {
-    case 0x5B: // [
-    case 0x5D: // ]
-    case 0x2E: // .
-    case 0x22: // "
-    case 0x27: // '
-      return ch
-
-    case 0x5F: // _
-    case 0x24: // $
-    case 0x2D: // -
-      return 'ident'
-
-    case 0x09: // Tab
-    case 0x0A: // Newline
-    case 0x0D: // Return
-    case 0xA0:  // No-break space
-    case 0xFEFF:  // Byte Order Mark
-    case 0x2028:  // Line Separator
-    case 0x2029:  // Paragraph Separator
-      return 'ws'
-  }
-
-  return 'ident'
-}
-
-/**
- * Format a subPath, return its plain form if it is
- * a literal string or number. Otherwise prepend the
- * dynamic indicator (*).
- */
-
-function formatSubPath (path) {
-  var trimmed = path.trim();
-  // invalid leading 0
-  if (path.charAt(0) === '0' && isNaN(path)) { return false }
-
-  return isLiteral(trimmed) ? stripQuotes(trimmed) : '*' + trimmed
-}
-
-/**
- * Parse a string path into an array of segments
- */
-
-function parse$1 (path) {
-  var keys = [];
-  var index = -1;
-  var mode = BEFORE_PATH;
-  var subPathDepth = 0;
-  var c;
-  var key;
-  var newChar;
-  var type;
-  var transition;
-  var action;
-  var typeMap;
-  var actions = [];
-
-  actions[PUSH] = function () {
-    if (key !== undefined) {
-      keys.push(key);
-      key = undefined;
-    }
-  };
-
-  actions[APPEND] = function () {
-    if (key === undefined) {
-      key = newChar;
-    } else {
-      key += newChar;
-    }
-  };
-
-  actions[INC_SUB_PATH_DEPTH] = function () {
-    actions[APPEND]();
-    subPathDepth++;
-  };
-
-  actions[PUSH_SUB_PATH] = function () {
-    if (subPathDepth > 0) {
-      subPathDepth--;
-      mode = IN_SUB_PATH;
-      actions[APPEND]();
-    } else {
-      subPathDepth = 0;
-      if (key === undefined) { return false }
-      key = formatSubPath(key);
-      if (key === false) {
-        return false
-      } else {
-        actions[PUSH]();
-      }
-    }
-  };
-
-  function maybeUnescapeQuote () {
-    var nextChar = path[index + 1];
-    if ((mode === IN_SINGLE_QUOTE && nextChar === "'") ||
-      (mode === IN_DOUBLE_QUOTE && nextChar === '"')) {
-      index++;
-      newChar = '\\' + nextChar;
-      actions[APPEND]();
-      return true
-    }
-  }
-
-  while (mode !== null) {
-    index++;
-    c = path[index];
-
-    if (c === '\\' && maybeUnescapeQuote()) {
-      continue
-    }
-
-    type = getPathCharType(c);
-    typeMap = pathStateMachine[mode];
-    transition = typeMap[type] || typeMap['else'] || ERROR;
-
-    if (transition === ERROR) {
-      return // parse error
-    }
-
-    mode = transition[0];
-    action = actions[transition[1]];
-    if (action) {
-      newChar = transition[2];
-      newChar = newChar === undefined
-        ? c
-        : newChar;
-      if (action() === false) {
-        return
-      }
-    }
-
-    if (mode === AFTER_PATH) {
-      return keys
-    }
-  }
-}
-
-
-
-
-
-var I18nPath = function I18nPath () {
-  this._cache = Object.create(null);
-};
-
-/**
- * External parse that check for a cache hit first
- */
-I18nPath.prototype.parsePath = function parsePath (path) {
-  var hit = this._cache[path];
-  if (!hit) {
-    hit = parse$1(path);
-    if (hit) {
-      this._cache[path] = hit;
-    }
-  }
-  return hit || []
-};
-
-/**
- * Get path value from path string
- */
-I18nPath.prototype.getPathValue = function getPathValue (obj, path) {
-  if (!isObject(obj)) { return null }
-
-  var paths = this.parsePath(path);
-  if (paths.length === 0) {
-    return null
-  } else {
-    var length = paths.length;
-    var last = obj;
-    var i = 0;
-    while (i < length) {
-      var value = last[paths[i]];
-      if (value === undefined || value === null) {
-        return null
-      }
-      last = value;
-      i++;
-    }
-
-    return last
-  }
-};
-
-/*  */
-
-
-
-var htmlTagMatcher = /<\/?[\w\s="/.':;#-\/]+>/;
-var linkKeyMatcher = /(?:@(?:\.[a-zA-Z]+)?:(?:[\w\-_|./]+|\([\w\-_:|./]+\)))/g;
-var linkKeyPrefixMatcher = /^@(?:\.([a-zA-Z]+))?:/;
-var bracketsMatcher = /[()]/g;
-var defaultModifiers = {
-  'upper': function (str) { return str.toLocaleUpperCase(); },
-  'lower': function (str) { return str.toLocaleLowerCase(); },
-  'capitalize': function (str) { return ("" + (str.charAt(0).toLocaleUpperCase()) + (str.substr(1))); }
-};
-
-var defaultFormatter = new BaseFormatter();
-
-var VueI18n = function VueI18n (options) {
-  var this$1 = this;
-  if ( options === void 0 ) options = {};
-
-  // Auto install if it is not done yet and `window` has `Vue`.
-  // To allow users to avoid auto-installation in some cases,
-  // this code should be placed here. See #290
-  /* istanbul ignore if */
-  if (!Vue && typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-  }
-
-  var locale = options.locale || 'en-US';
-  var fallbackLocale = options.fallbackLocale === false
-    ? false
-    : options.fallbackLocale || 'en-US';
-  var messages = options.messages || {};
-  var dateTimeFormats = options.dateTimeFormats || options.datetimeFormats || {};
-  var numberFormats = options.numberFormats || {};
-
-  this._vm = null;
-  this._formatter = options.formatter || defaultFormatter;
-  this._modifiers = options.modifiers || {};
-  this._missing = options.missing || null;
-  this._root = options.root || null;
-  this._sync = options.sync === undefined ? true : !!options.sync;
-  this._fallbackRoot = options.fallbackRoot === undefined
-    ? true
-    : !!options.fallbackRoot;
-  this._fallbackRootWithEmptyString = options.fallbackRootWithEmptyString === undefined
-    ? true
-    : !!options.fallbackRootWithEmptyString;
-  this._formatFallbackMessages = options.formatFallbackMessages === undefined
-    ? false
-    : !!options.formatFallbackMessages;
-  this._silentTranslationWarn = options.silentTranslationWarn === undefined
-    ? false
-    : options.silentTranslationWarn;
-  this._silentFallbackWarn = options.silentFallbackWarn === undefined
-    ? false
-    : !!options.silentFallbackWarn;
-  this._dateTimeFormatters = {};
-  this._numberFormatters = {};
-  this._path = new I18nPath();
-  this._dataListeners = new Set();
-  this._componentInstanceCreatedListener = options.componentInstanceCreatedListener || null;
-  this._preserveDirectiveContent = options.preserveDirectiveContent === undefined
-    ? false
-    : !!options.preserveDirectiveContent;
-  this.pluralizationRules = options.pluralizationRules || {};
-  this._warnHtmlInMessage = options.warnHtmlInMessage || 'off';
-  this._postTranslation = options.postTranslation || null;
-  this._escapeParameterHtml = options.escapeParameterHtml || false;
-
-  if ('__VUE_I18N_BRIDGE__' in options) {
-    this.__VUE_I18N_BRIDGE__ = options.__VUE_I18N_BRIDGE__;
-  }
-
-  /**
-   * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
-   * @param choicesLength {number} an overall amount of available choices
-   * @returns a final choice index
-  */
-  this.getChoiceIndex = function (choice, choicesLength) {
-    var thisPrototype = Object.getPrototypeOf(this$1);
-    if (thisPrototype && thisPrototype.getChoiceIndex) {
-      var prototypeGetChoiceIndex = (thisPrototype.getChoiceIndex);
-      return (prototypeGetChoiceIndex).call(this$1, choice, choicesLength)
-    }
-
-    // Default (old) getChoiceIndex implementation - english-compatible
-    var defaultImpl = function (_choice, _choicesLength) {
-      _choice = Math.abs(_choice);
-
-      if (_choicesLength === 2) {
-        return _choice
-          ? _choice > 1
-            ? 1
-            : 0
-          : 1
-      }
-
-      return _choice ? Math.min(_choice, 2) : 0
-    };
-
-    if (this$1.locale in this$1.pluralizationRules) {
-      return this$1.pluralizationRules[this$1.locale].apply(this$1, [choice, choicesLength])
-    } else {
-      return defaultImpl(choice, choicesLength)
-    }
-  };
-
-
-  this._exist = function (message, key) {
-    if (!message || !key) { return false }
-    if (!isNull(this$1._path.getPathValue(message, key))) { return true }
-    // fallback for flat key
-    if (message[key]) { return true }
-    return false
-  };
-
-  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
-    Object.keys(messages).forEach(function (locale) {
-      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
-    });
-  }
-
-  this._initVM({
-    locale: locale,
-    fallbackLocale: fallbackLocale,
-    messages: messages,
-    dateTimeFormats: dateTimeFormats,
-    numberFormats: numberFormats
-  });
-};
-
-var prototypeAccessors = { vm: { configurable: true },messages: { configurable: true },dateTimeFormats: { configurable: true },numberFormats: { configurable: true },availableLocales: { configurable: true },locale: { configurable: true },fallbackLocale: { configurable: true },formatFallbackMessages: { configurable: true },missing: { configurable: true },formatter: { configurable: true },silentTranslationWarn: { configurable: true },silentFallbackWarn: { configurable: true },preserveDirectiveContent: { configurable: true },warnHtmlInMessage: { configurable: true },postTranslation: { configurable: true },sync: { configurable: true } };
-
-VueI18n.prototype._checkLocaleMessage = function _checkLocaleMessage (locale, level, message) {
-  var paths = [];
-
-  var fn = function (level, locale, message, paths) {
-    if (isPlainObject(message)) {
-      Object.keys(message).forEach(function (key) {
-        var val = message[key];
-        if (isPlainObject(val)) {
-          paths.push(key);
-          paths.push('.');
-          fn(level, locale, val, paths);
-          paths.pop();
-          paths.pop();
-        } else {
-          paths.push(key);
-          fn(level, locale, val, paths);
-          paths.pop();
-        }
-      });
-    } else if (isArray(message)) {
-      message.forEach(function (item, index) {
-        if (isPlainObject(item)) {
-          paths.push(("[" + index + "]"));
-          paths.push('.');
-          fn(level, locale, item, paths);
-          paths.pop();
-          paths.pop();
-        } else {
-          paths.push(("[" + index + "]"));
-          fn(level, locale, item, paths);
-          paths.pop();
-        }
-      });
-    } else if (isString(message)) {
-      var ret = htmlTagMatcher.test(message);
-      if (ret) {
-        var msg = "Detected HTML in message '" + message + "' of keypath '" + (paths.join('')) + "' at '" + locale + "'. Consider component interpolation with '<i18n>' to avoid XSS. See https://bit.ly/2ZqJzkp";
-        if (level === 'warn') {
-          warn(msg);
-        } else if (level === 'error') {
-          error(msg);
-        }
-      }
-    }
-  };
-
-  fn(level, locale, message, paths);
-};
-
-VueI18n.prototype._initVM = function _initVM (data) {
-  var silent = Vue.config.silent;
-  Vue.config.silent = true;
-  this._vm = new Vue({ data: data, __VUE18N__INSTANCE__: true });
-  Vue.config.silent = silent;
-};
-
-VueI18n.prototype.destroyVM = function destroyVM () {
-  this._vm.$destroy();
-};
-
-VueI18n.prototype.subscribeDataChanging = function subscribeDataChanging (vm) {
-  this._dataListeners.add(vm);
-};
-
-VueI18n.prototype.unsubscribeDataChanging = function unsubscribeDataChanging (vm) {
-  remove(this._dataListeners, vm);
-};
-
-VueI18n.prototype.watchI18nData = function watchI18nData () {
-    var this$1 = this;
-  return this._vm.$watch('$data', function () {
-    var listeners = arrayFrom(this$1._dataListeners);
-    var i = listeners.length;
-    while(i--) {
-      Vue.nextTick(function () {
-        listeners[i] && listeners[i].$forceUpdate();
-      });
-    }
-  }, { deep: true })
-};
-
-VueI18n.prototype.watchLocale = function watchLocale (composer) {
-  if (!composer) {
-    /* istanbul ignore if */
-    if (!this._sync || !this._root) { return null }
-    var target = this._vm;
-    return this._root.$i18n.vm.$watch('locale', function (val) {
-      target.$set(target, 'locale', val);
-      target.$forceUpdate();
-    }, { immediate: true })
-  } else {
-    // deal with vue-i18n-bridge
-    if (!this.__VUE_I18N_BRIDGE__) { return null }
-    var self = this;
-    var target$1 = this._vm;
-    return this.vm.$watch('locale', function (val) {
-      target$1.$set(target$1, 'locale', val);
-      if (self.__VUE_I18N_BRIDGE__ && composer) {
-        composer.locale.value = val;
-      }
-      target$1.$forceUpdate();
-    }, { immediate: true })
-  }
-};
-
-VueI18n.prototype.onComponentInstanceCreated = function onComponentInstanceCreated (newI18n) {
-  if (this._componentInstanceCreatedListener) {
-    this._componentInstanceCreatedListener(newI18n, this);
-  }
-};
-
-prototypeAccessors.vm.get = function () { return this._vm };
-
-prototypeAccessors.messages.get = function () { return looseClone(this._getMessages()) };
-prototypeAccessors.dateTimeFormats.get = function () { return looseClone(this._getDateTimeFormats()) };
-prototypeAccessors.numberFormats.get = function () { return looseClone(this._getNumberFormats()) };
-prototypeAccessors.availableLocales.get = function () { return Object.keys(this.messages).sort() };
-
-prototypeAccessors.locale.get = function () { return this._vm.locale };
-prototypeAccessors.locale.set = function (locale) {
-  this._vm.$set(this._vm, 'locale', locale);
-};
-
-prototypeAccessors.fallbackLocale.get = function () { return this._vm.fallbackLocale };
-prototypeAccessors.fallbackLocale.set = function (locale) {
-  this._localeChainCache = {};
-  this._vm.$set(this._vm, 'fallbackLocale', locale);
-};
-
-prototypeAccessors.formatFallbackMessages.get = function () { return this._formatFallbackMessages };
-prototypeAccessors.formatFallbackMessages.set = function (fallback) { this._formatFallbackMessages = fallback; };
-
-prototypeAccessors.missing.get = function () { return this._missing };
-prototypeAccessors.missing.set = function (handler) { this._missing = handler; };
-
-prototypeAccessors.formatter.get = function () { return this._formatter };
-prototypeAccessors.formatter.set = function (formatter) { this._formatter = formatter; };
-
-prototypeAccessors.silentTranslationWarn.get = function () { return this._silentTranslationWarn };
-prototypeAccessors.silentTranslationWarn.set = function (silent) { this._silentTranslationWarn = silent; };
-
-prototypeAccessors.silentFallbackWarn.get = function () { return this._silentFallbackWarn };
-prototypeAccessors.silentFallbackWarn.set = function (silent) { this._silentFallbackWarn = silent; };
-
-prototypeAccessors.preserveDirectiveContent.get = function () { return this._preserveDirectiveContent };
-prototypeAccessors.preserveDirectiveContent.set = function (preserve) { this._preserveDirectiveContent = preserve; };
-
-prototypeAccessors.warnHtmlInMessage.get = function () { return this._warnHtmlInMessage };
-prototypeAccessors.warnHtmlInMessage.set = function (level) {
-    var this$1 = this;
-
-  var orgLevel = this._warnHtmlInMessage;
-  this._warnHtmlInMessage = level;
-  if (orgLevel !== level && (level === 'warn' || level === 'error')) {
-    var messages = this._getMessages();
-    Object.keys(messages).forEach(function (locale) {
-      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
-    });
-  }
-};
-
-prototypeAccessors.postTranslation.get = function () { return this._postTranslation };
-prototypeAccessors.postTranslation.set = function (handler) { this._postTranslation = handler; };
-
-prototypeAccessors.sync.get = function () { return this._sync };
-prototypeAccessors.sync.set = function (val) { this._sync = val; };
-
-VueI18n.prototype._getMessages = function _getMessages () { return this._vm.messages };
-VueI18n.prototype._getDateTimeFormats = function _getDateTimeFormats () { return this._vm.dateTimeFormats };
-VueI18n.prototype._getNumberFormats = function _getNumberFormats () { return this._vm.numberFormats };
-
-VueI18n.prototype._warnDefault = function _warnDefault (locale, key, result, vm, values, interpolateMode) {
-  if (!isNull(result)) { return result }
-  if (this._missing) {
-    var missingRet = this._missing.apply(null, [locale, key, vm, values]);
-    if (isString(missingRet)) {
-      return missingRet
-    }
-  } else {
-    if ( true && !this._isSilentTranslationWarn(key)) {
-      warn(
-        "Cannot translate the value of keypath '" + key + "'. " +
-        'Use the value of keypath as default.'
-      );
-    }
-  }
-
-  if (this._formatFallbackMessages) {
-    var parsedArgs = parseArgs.apply(void 0, values);
-    return this._render(key, interpolateMode, parsedArgs.params, key)
-  } else {
-    return key
-  }
-};
-
-VueI18n.prototype._isFallbackRoot = function _isFallbackRoot (val) {
-  return (this._fallbackRootWithEmptyString? !val : isNull(val)) && !isNull(this._root) && this._fallbackRoot
-};
-
-VueI18n.prototype._isSilentFallbackWarn = function _isSilentFallbackWarn (key) {
-  return this._silentFallbackWarn instanceof RegExp
-    ? this._silentFallbackWarn.test(key)
-    : this._silentFallbackWarn
-};
-
-VueI18n.prototype._isSilentFallback = function _isSilentFallback (locale, key) {
-  return this._isSilentFallbackWarn(key) && (this._isFallbackRoot() || locale !== this.fallbackLocale)
-};
-
-VueI18n.prototype._isSilentTranslationWarn = function _isSilentTranslationWarn (key) {
-  return this._silentTranslationWarn instanceof RegExp
-    ? this._silentTranslationWarn.test(key)
-    : this._silentTranslationWarn
-};
-
-VueI18n.prototype._interpolate = function _interpolate (
-  locale,
-  message,
-  key,
-  host,
-  interpolateMode,
-  values,
-  visitedLinkStack
-) {
-  if (!message) { return null }
-
-  var pathRet = this._path.getPathValue(message, key);
-  if (isArray(pathRet) || isPlainObject(pathRet)) { return pathRet }
-
-  var ret;
-  if (isNull(pathRet)) {
-    /* istanbul ignore else */
-    if (isPlainObject(message)) {
-      ret = message[key];
-      if (!(isString(ret) || isFunction(ret))) {
-        if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
-          warn(("Value of key '" + key + "' is not a string or function !"));
-        }
-        return null
-      }
-    } else {
-      return null
-    }
-  } else {
-    /* istanbul ignore else */
-    if (isString(pathRet) || isFunction(pathRet)) {
-      ret = pathRet;
-    } else {
-      if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
-        warn(("Value of key '" + key + "' is not a string or function!"));
-      }
-      return null
-    }
-  }
-
-  // Check for the existence of links within the translated string
-  if (isString(ret) && (ret.indexOf('@:') >= 0 || ret.indexOf('@.') >= 0)) {
-    ret = this._link(locale, message, ret, host, 'raw', values, visitedLinkStack);
-  }
-
-  return this._render(ret, interpolateMode, values, key)
-};
-
-VueI18n.prototype._link = function _link (
-  locale,
-  message,
-  str,
-  host,
-  interpolateMode,
-  values,
-  visitedLinkStack
-) {
-  var ret = str;
-
-  // Match all the links within the local
-  // We are going to replace each of
-  // them with its translation
-  var matches = ret.match(linkKeyMatcher);
-
-  // eslint-disable-next-line no-autofix/prefer-const
-  for (var idx in matches) {
-    // ie compatible: filter custom array
-    // prototype method
-    if (!matches.hasOwnProperty(idx)) {
-      continue
-    }
-    var link = matches[idx];
-    var linkKeyPrefixMatches = link.match(linkKeyPrefixMatcher);
-    var linkPrefix = linkKeyPrefixMatches[0];
-      var formatterName = linkKeyPrefixMatches[1];
-
-    // Remove the leading @:, @.case: and the brackets
-    var linkPlaceholder = link.replace(linkPrefix, '').replace(bracketsMatcher, '');
-
-    if (includes(visitedLinkStack, linkPlaceholder)) {
-      if (true) {
-        warn(("Circular reference found. \"" + link + "\" is already visited in the chain of " + (visitedLinkStack.reverse().join(' <- '))));
-      }
-      return ret
-    }
-    visitedLinkStack.push(linkPlaceholder);
-
-    // Translate the link
-    var translated = this._interpolate(
-      locale, message, linkPlaceholder, host,
-      interpolateMode === 'raw' ? 'string' : interpolateMode,
-      interpolateMode === 'raw' ? undefined : values,
-      visitedLinkStack
-    );
-
-    if (this._isFallbackRoot(translated)) {
-      if ( true && !this._isSilentTranslationWarn(linkPlaceholder)) {
-        warn(("Fall back to translate the link placeholder '" + linkPlaceholder + "' with root locale."));
-      }
-      /* istanbul ignore if */
-      if (!this._root) { throw Error('unexpected error') }
-      var root = this._root.$i18n;
-      translated = root._translate(
-        root._getMessages(), root.locale, root.fallbackLocale,
-        linkPlaceholder, host, interpolateMode, values
-      );
-    }
-    translated = this._warnDefault(
-      locale, linkPlaceholder, translated, host,
-      isArray(values) ? values : [values],
-      interpolateMode
-    );
-
-    if (this._modifiers.hasOwnProperty(formatterName)) {
-      translated = this._modifiers[formatterName](translated);
-    } else if (defaultModifiers.hasOwnProperty(formatterName)) {
-      translated = defaultModifiers[formatterName](translated);
-    }
-
-    visitedLinkStack.pop();
-
-    // Replace the link with the translated
-    ret = !translated ? ret : ret.replace(link, translated);
-  }
-
-  return ret
-};
-
-VueI18n.prototype._createMessageContext = function _createMessageContext (values, formatter, path, interpolateMode) {
-    var this$1 = this;
-
-  var _list = isArray(values) ? values : [];
-  var _named = isObject(values) ? values : {};
-  var list = function (index) { return _list[index]; };
-  var named = function (key) { return _named[key]; };
-  var messages = this._getMessages();
-  var locale = this.locale;
-
-  return {
-    list: list,
-    named: named,
-    values: values,
-    formatter: formatter,
-    path: path,
-    messages: messages,
-    locale: locale,
-    linked: function (linkedKey) { return this$1._interpolate(locale, messages[locale] || {}, linkedKey, null, interpolateMode, undefined, [linkedKey]); }
-  }
-};
-
-VueI18n.prototype._render = function _render (message, interpolateMode, values, path) {
-  if (isFunction(message)) {
-    return message(
-      this._createMessageContext(values, this._formatter || defaultFormatter, path, interpolateMode)
-    )
-  }
-
-  var ret = this._formatter.interpolate(message, values, path);
-
-  // If the custom formatter refuses to work - apply the default one
-  if (!ret) {
-    ret = defaultFormatter.interpolate(message, values, path);
-  }
-
-  // if interpolateMode is **not** 'string' ('row'),
-  // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
-  return interpolateMode === 'string' && !isString(ret) ? ret.join('') : ret
-};
-
-VueI18n.prototype._appendItemToChain = function _appendItemToChain (chain, item, blocks) {
-  var follow = false;
-  if (!includes(chain, item)) {
-    follow = true;
-    if (item) {
-      follow = item[item.length - 1] !== '!';
-      item = item.replace(/!/g, '');
-      chain.push(item);
-      if (blocks && blocks[item]) {
-        follow = blocks[item];
-      }
-    }
-  }
-  return follow
-};
-
-VueI18n.prototype._appendLocaleToChain = function _appendLocaleToChain (chain, locale, blocks) {
-  var follow;
-  var tokens = locale.split('-');
-  do {
-    var item = tokens.join('-');
-    follow = this._appendItemToChain(chain, item, blocks);
-    tokens.splice(-1, 1);
-  } while (tokens.length && (follow === true))
-  return follow
-};
-
-VueI18n.prototype._appendBlockToChain = function _appendBlockToChain (chain, block, blocks) {
-  var follow = true;
-  for (var i = 0; (i < block.length) && (isBoolean(follow)); i++) {
-    var locale = block[i];
-    if (isString(locale)) {
-      follow = this._appendLocaleToChain(chain, locale, blocks);
-    }
-  }
-  return follow
-};
-
-VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLocale) {
-  if (start === '') { return [] }
-
-  if (!this._localeChainCache) {
-    this._localeChainCache = {};
-  }
-
-  var chain = this._localeChainCache[start];
-  if (!chain) {
-    if (!fallbackLocale) {
-      fallbackLocale = this.fallbackLocale;
-    }
-    chain = [];
-
-    // first block defined by start
-    var block = [start];
-
-    // while any intervening block found
-    while (isArray(block)) {
-      block = this._appendBlockToChain(
-        chain,
-        block,
-        fallbackLocale
-      );
-    }
-
-    // last block defined by default
-    var defaults;
-    if (isArray(fallbackLocale)) {
-      defaults = fallbackLocale;
-    } else if (isObject(fallbackLocale)) {
-      /* $FlowFixMe */
-      if (fallbackLocale['default']) {
-        defaults = fallbackLocale['default'];
-      } else {
-        defaults = null;
-      }
-    } else {
-      defaults = fallbackLocale;
-    }
-
-    // convert defaults to array
-    if (isString(defaults)) {
-      block = [defaults];
-    } else {
-      block = defaults;
-    }
-    if (block) {
-      this._appendBlockToChain(
-        chain,
-        block,
-        null
-      );
-    }
-    this._localeChainCache[start] = chain;
-  }
-  return chain
-};
-
-VueI18n.prototype._translate = function _translate (
-  messages,
-  locale,
-  fallback,
-  key,
-  host,
-  interpolateMode,
-  args
-) {
-  var chain = this._getLocaleChain(locale, fallback);
-  var res;
-  for (var i = 0; i < chain.length; i++) {
-    var step = chain[i];
-    res =
-      this._interpolate(step, messages[step], key, host, interpolateMode, args, [key]);
-    if (!isNull(res)) {
-      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to translate the keypath '" + key + "' with '" + step + "' locale."));
-      }
-      return res
-    }
-  }
-  return null
-};
-
-VueI18n.prototype._t = function _t (key, _locale, messages, host) {
-    var ref;
-
-    var values = [], len = arguments.length - 4;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 4 ];
-  if (!key) { return '' }
-
-  var parsedArgs = parseArgs.apply(void 0, values);
-  if(this._escapeParameterHtml) {
-    parsedArgs.params = escapeParams(parsedArgs.params);
-  }
-
-  var locale = parsedArgs.locale || _locale;
-
-  var ret = this._translate(
-    messages, locale, this.fallbackLocale, key,
-    host, 'string', parsedArgs.params
-  );
-  if (this._isFallbackRoot(ret)) {
-    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-      warn(("Fall back to translate the keypath '" + key + "' with root locale."));
-    }
-    /* istanbul ignore if */
-    if (!this._root) { throw Error('unexpected error') }
-    return (ref = this._root).$t.apply(ref, [ key ].concat( values ))
-  } else {
-    ret = this._warnDefault(locale, key, ret, host, values, 'string');
-    if (this._postTranslation && ret !== null && ret !== undefined) {
-      ret = this._postTranslation(ret, key);
-    }
-    return ret
-  }
-};
-
-VueI18n.prototype.t = function t (key) {
-    var ref;
-
-    var values = [], len = arguments.length - 1;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
-  return (ref = this)._t.apply(ref, [ key, this.locale, this._getMessages(), null ].concat( values ))
-};
-
-VueI18n.prototype._i = function _i (key, locale, messages, host, values) {
-  var ret =
-    this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values);
-  if (this._isFallbackRoot(ret)) {
-    if ( true && !this._isSilentTranslationWarn(key)) {
-      warn(("Fall back to interpolate the keypath '" + key + "' with root locale."));
-    }
-    if (!this._root) { throw Error('unexpected error') }
-    return this._root.$i18n.i(key, locale, values)
-  } else {
-    return this._warnDefault(locale, key, ret, host, [values], 'raw')
-  }
-};
-
-VueI18n.prototype.i = function i (key, locale, values) {
-  /* istanbul ignore if */
-  if (!key) { return '' }
-
-  if (!isString(locale)) {
-    locale = this.locale;
-  }
-
-  return this._i(key, locale, this._getMessages(), null, values)
-};
-
-VueI18n.prototype._tc = function _tc (
-  key,
-  _locale,
-  messages,
-  host,
-  choice
-) {
-    var ref;
-
-    var values = [], len = arguments.length - 5;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 5 ];
-  if (!key) { return '' }
-  if (choice === undefined) {
-    choice = 1;
-  }
-
-  var predefined = { 'count': choice, 'n': choice };
-  var parsedArgs = parseArgs.apply(void 0, values);
-  parsedArgs.params = Object.assign(predefined, parsedArgs.params);
-  values = parsedArgs.locale === null ? [parsedArgs.params] : [parsedArgs.locale, parsedArgs.params];
-  return this.fetchChoice((ref = this)._t.apply(ref, [ key, _locale, messages, host ].concat( values )), choice)
-};
-
-VueI18n.prototype.fetchChoice = function fetchChoice (message, choice) {
-  /* istanbul ignore if */
-  if (!message || !isString(message)) { return null }
-  var choices = message.split('|');
-
-  choice = this.getChoiceIndex(choice, choices.length);
-  if (!choices[choice]) { return message }
-  return choices[choice].trim()
-};
-
-VueI18n.prototype.tc = function tc (key, choice) {
-    var ref;
-
-    var values = [], len = arguments.length - 2;
-    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
-  return (ref = this)._tc.apply(ref, [ key, this.locale, this._getMessages(), null, choice ].concat( values ))
-};
-
-VueI18n.prototype._te = function _te (key, locale, messages) {
-    var args = [], len = arguments.length - 3;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 3 ];
-
-  var _locale = parseArgs.apply(void 0, args).locale || locale;
-  return this._exist(messages[_locale], key)
-};
-
-VueI18n.prototype.te = function te (key, locale) {
-  return this._te(key, this.locale, this._getMessages(), locale)
-};
-
-VueI18n.prototype.getLocaleMessage = function getLocaleMessage (locale) {
-  return looseClone(this._vm.messages[locale] || {})
-};
-
-VueI18n.prototype.setLocaleMessage = function setLocaleMessage (locale, message) {
-  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
-    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
-  }
-  this._vm.$set(this._vm.messages, locale, message);
-};
-
-VueI18n.prototype.mergeLocaleMessage = function mergeLocaleMessage (locale, message) {
-  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
-    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
-  }
-  this._vm.$set(this._vm.messages, locale, merge(
-    typeof this._vm.messages[locale] !== 'undefined' && Object.keys(this._vm.messages[locale]).length
-      ? Object.assign({}, this._vm.messages[locale])
-      : {},
-    message
-  ));
-};
-
-VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat (locale) {
-  return looseClone(this._vm.dateTimeFormats[locale] || {})
-};
-
-VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat (locale, format) {
-  this._vm.$set(this._vm.dateTimeFormats, locale, format);
-  this._clearDateTimeFormat(locale, format);
-};
-
-VueI18n.prototype.mergeDateTimeFormat = function mergeDateTimeFormat (locale, format) {
-  this._vm.$set(this._vm.dateTimeFormats, locale, merge(this._vm.dateTimeFormats[locale] || {}, format));
-  this._clearDateTimeFormat(locale, format);
-};
-
-VueI18n.prototype._clearDateTimeFormat = function _clearDateTimeFormat (locale, format) {
-  // eslint-disable-next-line no-autofix/prefer-const
-  for (var key in format) {
-    var id = locale + "__" + key;
-
-    if (!this._dateTimeFormatters.hasOwnProperty(id)) {
-      continue
-    }
-
-    delete this._dateTimeFormatters[id];
-  }
-};
-
-VueI18n.prototype._localizeDateTime = function _localizeDateTime (
-  value,
-  locale,
-  fallback,
-  dateTimeFormats,
-  key,
-  options
-) {
-  var _locale = locale;
-  var formats = dateTimeFormats[_locale];
-
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = dateTimeFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' datetime formats from '" + current + "' datetime formats."));
-      }
-    } else {
-      break
-    }
-  }
-
-  if (isNull(formats) || isNull(formats[key])) {
-    return null
-  } else {
-    var format = formats[key];
-
-    var formatter;
-    if (options) {
-      formatter = new Intl.DateTimeFormat(_locale, Object.assign({}, format, options));
-    } else {
-      var id = _locale + "__" + key;
-      formatter = this._dateTimeFormatters[id];
-      if (!formatter) {
-        formatter = this._dateTimeFormatters[id] = new Intl.DateTimeFormat(_locale, format);
-      }
-    }
-
-    return formatter.format(value)
-  }
-};
-
-VueI18n.prototype._d = function _d (value, locale, key, options) {
-  /* istanbul ignore if */
-  if ( true && !VueI18n.availabilities.dateTimeFormat) {
-    warn('Cannot format a Date value due to not supported Intl.DateTimeFormat.');
-    return ''
-  }
-
-  if (!key) {
-    var dtf = !options ? new Intl.DateTimeFormat(locale) : new Intl.DateTimeFormat(locale, options);
-    return dtf.format(value)
-  }
-
-  var ret =
-    this._localizeDateTime(value, locale, this.fallbackLocale, this._getDateTimeFormats(), key, options);
-  if (this._isFallbackRoot(ret)) {
-    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-      warn(("Fall back to datetime localization of root: key '" + key + "'."));
-    }
-    /* istanbul ignore if */
-    if (!this._root) { throw Error('unexpected error') }
-    return this._root.$i18n.d(value, key, locale)
-  } else {
-    return ret || ''
-  }
-};
-
-VueI18n.prototype.d = function d (value) {
-    var args = [], len = arguments.length - 1;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-  var locale = this.locale;
-  var key = null;
-  var options = null;
-
-  if (args.length === 1) {
-    if (isString(args[0])) {
-      key = args[0];
-    } else if (isObject(args[0])) {
-      if (args[0].locale) {
-        locale = args[0].locale;
-      }
-      if (args[0].key) {
-        key = args[0].key;
-      }
-    }
-
-    options = Object.keys(args[0]).reduce(function (acc, key) {
-        var obj;
-
-      if (includes(dateTimeFormatKeys, key)) {
-        return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
-      }
-      return acc
-    }, null);
-
-  } else if (args.length === 2) {
-    if (isString(args[0])) {
-      key = args[0];
-    }
-    if (isString(args[1])) {
-      locale = args[1];
-    }
-  }
-
-  return this._d(value, locale, key, options)
-};
-
-VueI18n.prototype.getNumberFormat = function getNumberFormat (locale) {
-  return looseClone(this._vm.numberFormats[locale] || {})
-};
-
-VueI18n.prototype.setNumberFormat = function setNumberFormat (locale, format) {
-  this._vm.$set(this._vm.numberFormats, locale, format);
-  this._clearNumberFormat(locale, format);
-};
-
-VueI18n.prototype.mergeNumberFormat = function mergeNumberFormat (locale, format) {
-  this._vm.$set(this._vm.numberFormats, locale, merge(this._vm.numberFormats[locale] || {}, format));
-  this._clearNumberFormat(locale, format);
-};
-
-VueI18n.prototype._clearNumberFormat = function _clearNumberFormat (locale, format) {
-  // eslint-disable-next-line no-autofix/prefer-const
-  for (var key in format) {
-    var id = locale + "__" + key;
-
-    if (!this._numberFormatters.hasOwnProperty(id)) {
-      continue
-    }
-
-    delete this._numberFormatters[id];
-  }
-};
-
-VueI18n.prototype._getNumberFormatter = function _getNumberFormatter (
-  value,
-  locale,
-  fallback,
-  numberFormats,
-  key,
-  options
-) {
-  var _locale = locale;
-  var formats = numberFormats[_locale];
-
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = numberFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' number formats from '" + current + "' number formats."));
-      }
-    } else {
-      break
-    }
-  }
-
-  if (isNull(formats) || isNull(formats[key])) {
-    return null
-  } else {
-    var format = formats[key];
-
-    var formatter;
-    if (options) {
-      // If options specified - create one time number formatter
-      formatter = new Intl.NumberFormat(_locale, Object.assign({}, format, options));
-    } else {
-      var id = _locale + "__" + key;
-      formatter = this._numberFormatters[id];
-      if (!formatter) {
-        formatter = this._numberFormatters[id] = new Intl.NumberFormat(_locale, format);
-      }
-    }
-    return formatter
-  }
-};
-
-VueI18n.prototype._n = function _n (value, locale, key, options) {
-  /* istanbul ignore if */
-  if (!VueI18n.availabilities.numberFormat) {
-    if (true) {
-      warn('Cannot format a Number value due to not supported Intl.NumberFormat.');
-    }
-    return ''
-  }
-
-  if (!key) {
-    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
-    return nf.format(value)
-  }
-
-  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
-  var ret = formatter && formatter.format(value);
-  if (this._isFallbackRoot(ret)) {
-    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-      warn(("Fall back to number localization of root: key '" + key + "'."));
-    }
-    /* istanbul ignore if */
-    if (!this._root) { throw Error('unexpected error') }
-    return this._root.$i18n.n(value, Object.assign({}, { key: key, locale: locale }, options))
-  } else {
-    return ret || ''
-  }
-};
-
-VueI18n.prototype.n = function n (value) {
-    var args = [], len = arguments.length - 1;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-  var locale = this.locale;
-  var key = null;
-  var options = null;
-
-  if (args.length === 1) {
-    if (isString(args[0])) {
-      key = args[0];
-    } else if (isObject(args[0])) {
-      if (args[0].locale) {
-        locale = args[0].locale;
-      }
-      if (args[0].key) {
-        key = args[0].key;
-      }
-
-      // Filter out number format options only
-      options = Object.keys(args[0]).reduce(function (acc, key) {
-          var obj;
-
-        if (includes(numberFormatKeys, key)) {
-          return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
-        }
-        return acc
-      }, null);
-    }
-  } else if (args.length === 2) {
-    if (isString(args[0])) {
-      key = args[0];
-    }
-    if (isString(args[1])) {
-      locale = args[1];
-    }
-  }
-
-  return this._n(value, locale, key, options)
-};
-
-VueI18n.prototype._ntp = function _ntp (value, locale, key, options) {
-  /* istanbul ignore if */
-  if (!VueI18n.availabilities.numberFormat) {
-    if (true) {
-      warn('Cannot format to parts a Number value due to not supported Intl.NumberFormat.');
-    }
-    return []
-  }
-
-  if (!key) {
-    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
-    return nf.formatToParts(value)
-  }
-
-  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
-  var ret = formatter && formatter.formatToParts(value);
-  if (this._isFallbackRoot(ret)) {
-    if ( true && !this._isSilentTranslationWarn(key)) {
-      warn(("Fall back to format number to parts of root: key '" + key + "' ."));
-    }
-    /* istanbul ignore if */
-    if (!this._root) { throw Error('unexpected error') }
-    return this._root.$i18n._ntp(value, locale, key, options)
-  } else {
-    return ret || []
-  }
-};
-
-Object.defineProperties( VueI18n.prototype, prototypeAccessors );
-
-var availabilities;
-// $FlowFixMe
-Object.defineProperty(VueI18n, 'availabilities', {
-  get: function get () {
-    if (!availabilities) {
-      var intlDefined = typeof Intl !== 'undefined';
-      availabilities = {
-        dateTimeFormat: intlDefined && typeof Intl.DateTimeFormat !== 'undefined',
-        numberFormat: intlDefined && typeof Intl.NumberFormat !== 'undefined'
-      };
-    }
-
-    return availabilities
-  }
-});
-
-VueI18n.install = install;
-VueI18n.version = '8.28.2';
-
-/* harmony default export */ __webpack_exports__["default"] = (VueI18n);
-
-
-/***/ }),
-
-/***/ 353:
+/***/ 281:
 /*!************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js ***!
   \************************************************************************************/
@@ -15376,20 +12556,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.uniCloud = exports.default = exports.UniCloudError = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _assertThisInitialized2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ 329));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _assertThisInitialized2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ 257));
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ 5));
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
-var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ 327));
-var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 328));
-var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 330));
-var _wrapNativeSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/wrapNativeSuper */ 354));
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ 255));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 256));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 258));
+var _wrapNativeSuper2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/wrapNativeSuper */ 282));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 23));
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 24));
-var _pages = _interopRequireDefault(__webpack_require__(/*! @/pages.json */ 356));
+var _pages = _interopRequireDefault(__webpack_require__(/*! @/pages.json */ 284));
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e34) { throw _e34; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e35) { didErr = true; err = _e35; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -15900,7 +13080,7 @@ var b = "development" === "development",
   x = true;
 var N = "";
 try {
-  N = (__webpack_require__(/*! uni-stat-config */ 357).default || __webpack_require__(/*! uni-stat-config */ 357)).appid;
+  N = (__webpack_require__(/*! uni-stat-config */ 285).default || __webpack_require__(/*! uni-stat-config */ 285)).appid;
 } catch (e) {}
 var R,
   L = {};
@@ -23762,16 +20942,16 @@ exports.default = Zs;
 
 /***/ }),
 
-/***/ 354:
+/***/ 282:
 /*!****************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/wrapNativeSuper.js ***!
   \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getPrototypeOf = __webpack_require__(/*! ./getPrototypeOf.js */ 330);
+var getPrototypeOf = __webpack_require__(/*! ./getPrototypeOf.js */ 258);
 var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf.js */ 16);
-var isNativeFunction = __webpack_require__(/*! ./isNativeFunction.js */ 355);
+var isNativeFunction = __webpack_require__(/*! ./isNativeFunction.js */ 283);
 var construct = __webpack_require__(/*! ./construct.js */ 15);
 function _wrapNativeSuper(Class) {
   var _cache = typeof Map === "function" ? new Map() : undefined;
@@ -23803,7 +20983,7 @@ module.exports = _wrapNativeSuper, module.exports.__esModule = true, module.expo
 
 /***/ }),
 
-/***/ 355:
+/***/ 283:
 /*!*****************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/isNativeFunction.js ***!
   \*****************************************************************/
@@ -23821,7 +21001,7 @@ module.exports = _isNativeFunction, module.exports.__esModule = true, module.exp
 
 /***/ }),
 
-/***/ 356:
+/***/ 284:
 /*!******************************************************************!*\
   !*** D:/mywork/BPM/guqi/pages.json?{"type":"origin-pages-json"} ***!
   \******************************************************************/
@@ -23844,12 +21024,6 @@ var _default = {
       "h5": {
         "titleNView": false
       }
-    }
-  }, {
-    "path": "pages/my/my",
-    "style": {
-      "navigationBarTitleText": "",
-      "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
     "path": "pages/Login/Login",
@@ -23891,6 +21065,18 @@ var _default = {
     "path": "pages/Customize/Book/BuyAgreement",
     "style": {
       "navigationBarTitleText": "",
+      "navigationBarBackgroundColor": "#0e252d"
+    }
+  }, {
+    "path": "pages/CashierDesk/CashierDesk",
+    "style": {
+      "navigationBarTitleText": "确认付款",
+      "navigationBarBackgroundColor": "#0e252d"
+    }
+  }, {
+    "path": "pages/PayResult/PayResult",
+    "style": {
+      "navigationBarTitleText": "支付成功",
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
@@ -23941,72 +21127,6 @@ var _default = {
       "navigationBarTitleText": "",
       "navigationBarBackgroundColor": "#0e252d"
     }
-  }, {
-    "path": "pages/OrderDetails/OrderDetails",
-    "style": {
-      "navigationBarTitleText": "订单详情",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/ConfirmOrder/ConfirmOrder",
-    "style": {
-      "navigationBarTitleText": "填写订单",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/CashierDesk/CashierDesk",
-    "style": {
-      "navigationBarTitleText": "确认付款",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/PayResult/PayResult",
-    "style": {
-      "navigationBarTitleText": "支付成功",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/MyOrderList/MyOrderList",
-    "style": {
-      "navigationBarTitleText": "我的订单",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/AddressList/AddressList",
-    "style": {
-      "navigationBarTitleText": "收货地址",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/AddressEdit/AddressEdit",
-    "style": {
-      "navigationBarTitleText": "编辑地址",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/InvoiceList/InvoiceList",
-    "style": {
-      "navigationBarTitleText": "发票抬头",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/InvoiceEdit/InvoiceEdit",
-    "style": {
-      "navigationBarTitleText": "发票抬头",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/InvoiceList/InvoiceDetails/InvoiceDetails",
-    "style": {
-      "navigationBarTitleText": "查看发票",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
-  }, {
-    "path": "pages/GoodsDetails/GoodsDetails",
-    "style": {
-      "navigationBarTitleText": "古奇威士忌",
-      "navigationBarBackgroundColor": "#0e252d"
-    }
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
@@ -24045,7 +21165,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 357:
+/***/ 285:
 /*!*****************************************************!*\
   !*** D:/mywork/BPM/guqi/pages.json?{"type":"stat"} ***!
   \*****************************************************/
@@ -24066,9 +21186,40 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 36:
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 30:
 /*!*************************************!*\
-  !*** D:/mywork/BPM/guqi/lang/zh.js ***!
+  !*** D:/mywork/BPM/guqi/api/api.js ***!
   \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -24076,109 +21227,214 @@ exports.default = _default;
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
-var _default = {
-  lang: '中文',
-  //页面标题
-  pageTitles: {
-    Guqi: '古奇',
-    Customize: '定制',
-    My: '我的'
-  },
-  //tabbar 底部的tabbar
-  tabbar: {
-    Guqi: '古奇',
-    Customize: '定制',
-    My: '我的'
-  },
-  //古奇 Guqi
-  Guqi: {
-    orderStatus: {} //订单状态
-  },
+exports.bindAddressForBpm = bindAddressForBpm;
+exports.bindAddressForOrder = bindAddressForOrder;
+exports.confirmCommissionForBpm = confirmCommissionForBpm;
+exports.createOrder = createOrder;
+exports.createUserAddress = createUserAddress;
+exports.createUserInvoice = createUserInvoice;
+exports.deleteUserAddressById = deleteUserAddressById;
+exports.deleteUserInvoiceById = deleteUserInvoiceById;
+exports.home = home;
+exports.list = list;
+exports.openInvoice = openInvoice;
+exports.orderRefundForBpm = orderRefundForBpm;
+exports.queryAdminHomeDate = queryAdminHomeDate;
+exports.queryCommissionInfoForBpm = queryCommissionInfoForBpm;
+exports.queryCommissionListForBpm = queryCommissionListForBpm;
+exports.queryCommodityByCode = queryCommodityByCode;
+exports.queryGuideHomeDate = queryGuideHomeDate;
+exports.queryManagerListForBpm = queryManagerListForBpm;
+exports.queryOrderInfoByOrderNo = queryOrderInfoByOrderNo;
+exports.queryOrderInfoByOrderNoForBpm = queryOrderInfoByOrderNoForBpm;
+exports.queryOrderInvoiceInfo = queryOrderInvoiceInfo;
+exports.queryOrderInvoiceInfoh5 = queryOrderInvoiceInfoh5;
+exports.queryOrderInvoiceList = queryOrderInvoiceList;
+exports.queryOrderListForBpm = queryOrderListForBpm;
+exports.queryOrderListForUser = queryOrderListForUser;
+exports.queryOrgAgency = queryOrgAgency;
+exports.queryTourGuideListForBpm = queryTourGuideListForBpm;
+exports.queryUserAddressList = queryUserAddressList;
+exports.queryUserInfo = queryUserInfo;
+exports.queryUserInvoiceList = queryUserInvoiceList;
+exports.queryUserOpenid = queryUserOpenid;
+exports.registerCommissionForBpm = registerCommissionForBpm;
+exports.toPay = toPay;
+exports.updateOrderInvoiceStatus = updateOrderInvoiceStatus;
+exports.updateOrderStatusForBpm = updateOrderStatusForBpm;
+exports.updateOrderStatusForUser = updateOrderStatusForUser;
+exports.updateUserAddress = updateUserAddress;
+exports.updateUserInvoice = updateUserInvoice;
+var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 31));
+// @/api/index.js
 
-  //定制页 Customize
-  Customize: {
-    'Project Introduction': '项目介绍',
-    'Product Introduction': '产品介绍',
-    'Sign Up': '报名',
-    'Reservation': '预订',
-    'Guqi Whiskey Purchase Agreement': '古奇威士忌购买协议',
-    'Agreement': '我已阅读并同意《古奇威士忌购买协议》'
-  },
-  My: {},
-  //隐私协议 privacy
-  privacy: {
-    title: '用户隐私保护提示',
-    predicate: '使用前请仔细阅读',
-    subdesc: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。',
-    agree: '同意',
-    disagree: '拒绝'
-  }
-};
-exports.default = _default;
+// -----------------小程序开始--------------
+//获取openId api/factorydirect_user/weixin/queryUserOpenid
+function queryUserOpenid(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/queryUserOpenid", params);
+}
+//获取订单数字角标接口 /weixin/queryUserInfo
+function queryUserInfo(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/queryUserInfo", params);
+}
+//微信小程序根据二维码获取商品信息 weixin/queryCommodityByCode
+function queryCommodityByCode(params) {
+  return _request.default.post("/api/factorydirect_commodity/weixin/queryCommodityByCode", params);
+}
+//微信 下单接口 factorydirect_order/weixin/createOrder
+function createOrder(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/createOrder", params);
+}
+//微信 支付接口 /weixin/toPay
+function toPay(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/toPay", params);
+}
+//微信小程序获取用户订单列表
+function queryOrderListForUser(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/queryOrderListForUser", params);
+}
+///微信小程序获取用户订单详情 weixin/queryOrderInfoByOrderNo
+function queryOrderInfoByOrderNo(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/queryOrderInfoByOrderNo", params);
+}
+///微信小程序获取发票详情 /weixin/queryOrderInvoiceInfo
+function queryOrderInvoiceInfo(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/queryOrderInvoiceInfo", params);
+}
+//微信小程序绑定订单地址信息 /bindAddressForOrder
+function bindAddressForOrder(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/bindAddressForOrder", params);
+}
+//微信小程序开票接口 /factorydirect_user/weixin/openInvoice
+function openInvoice(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/openInvoice", params);
+}
+//微信端更改订单状态  weixin/updateOrderStatusForUser orderNo status
+function updateOrderStatusForUser(params) {
+  return _request.default.post("/api/factorydirect_order/weixin/updateOrderStatusForUser", params);
+}
+//创建收货地址 /weixin/createUserAddress
+function createUserAddress(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/createUserAddress", params);
+}
+//修改收货地址 /weixin/updateUserAddress
+function updateUserAddress(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/updateUserAddress", params);
+}
+//删除收货地址 /weixin/deleteUserAddressById
+function deleteUserAddressById(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/deleteUserAddressById", params);
+}
+//获取收货地址列表 queryUserAddressList
+function queryUserAddressList(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/queryUserAddressList", params);
+}
+//获取发票信息列表 factorydirect_user/weixin/queryUserInvoiceList
+function queryUserInvoiceList(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/queryUserInvoiceList", params);
+}
+//新增发票接口 factorydirect_user/weixin/createUserInvoice
+function createUserInvoice(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/createUserInvoice", params);
+}
+//删除发票接口 factorydirect_user/weixin/deleteUserInvoice
+function deleteUserInvoiceById(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/deleteUserInvoiceById", params);
+}
+//更新发票接口 factorydirect_user/weixin/updateUserInvoice
+function updateUserInvoice(params) {
+  return _request.default.post("/api/factorydirect_user/weixin/updateUserInvoice", params);
+}
+// -----------------小程序结束--------------
+
+// -----------------h5开始--------------
+
+//掌上古井获取用户权限
+function home(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/home", params);
+}
+//掌上古井获取导购首页数据
+function queryGuideHomeDate(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryGuideHomeDate", params);
+}
+//掌上古井获取订单列表
+function queryOrderListForBpm(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderListForBpm", params);
+}
+//掌上古井获取订单列表详情
+function queryOrderInfoByOrderNoForBpm(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInfoByOrderNoForBpm", params);
+}
+//掌上古井修改订单状态(取消订单status：已取消 、确认发货status：待收货)
+function updateOrderStatusForBpm(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/updateOrderStatusForBpm", params);
+}
+//掌上古井设置订单地址信息
+function bindAddressForBpm(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/bindAddressForBpm", params);
+}
+//掌上古井获取厂方人员列表
+function queryManagerListForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/queryManagerListForBpm", params);
+}
+//掌上古井获取导游列表
+function queryTourGuideListForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/queryTourGuideListForBpm", params);
+}
+//掌上古井分佣登记
+function registerCommissionForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/registerCommissionForBpm", params);
+}
+//掌上古井获取分佣列表 
+function queryCommissionListForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/queryCommissionListForBpm", params);
+}
+//掌上古井获取分佣列表 详情
+function queryCommissionInfoForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/queryCommissionInfoForBpm", params);
+}
+//掌上古井获取开票列表
+function queryOrderInvoiceList(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInvoiceList", params);
+}
+//掌上古井获取开票列表详情
+function queryOrderInvoiceInfoh5(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryOrderInvoiceInfo", params);
+}
+//掌上古井获取修改开票
+function updateOrderInvoiceStatus(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/updateOrderInvoiceStatus", params);
+}
+//掌上古井获 查询业务点、经销商
+function queryOrgAgency(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/queryOrgAgency", params);
+}
+//掌上古井分佣确认
+function confirmCommissionForBpm(params) {
+  return _request.default.post("/api/factorydirect_commission/h5/confirmCommissionForBpm", params);
+}
+//掌上古井获取大客户首页数据
+function queryAdminHomeDate(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/queryAdminHomeDate", params);
+}
+//掌上古井退款申请
+function orderRefundForBpm(params) {
+  return _request.default.post("/api/factorydirect_h5order/h5/orderRefundForBpm", params);
+}
+// -----------------h5结束--------------
+// 用户注册
+function list(params) {
+  return _request.default.get("/todos", params);
+}
+// -----------------小程序结束--------------
 
 /***/ }),
 
-/***/ 37:
-/*!*************************************!*\
-  !*** D:/mywork/BPM/guqi/lang/en.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  lang: 'EN',
-  //页面标题
-  pageTitles: {
-    Guqi: 'Guqi',
-    Customize: 'Customization',
-    My: 'My'
-  },
-  tabbar: {
-    Guqi: 'Guqi',
-    Customize: 'Customization',
-    My: 'My'
-  },
-  //古奇 Guqi
-  Guqi: {
-    orderStatus: {} //订单状态
-  },
-
-  //定制页 Customize
-  Customize: {
-    'Project Introduction': 'Project Introduction',
-    'Product Introduction': 'Product Introduction',
-    'Sign Up': 'Sign Up',
-    'Reservation': 'Reservation',
-    'Guqi Whiskey Purchase Agreement': 'Guqi Whiskey Purchase Agreement',
-    'Agreement': 'I have read and agree《Guqi Whiskey Purchase Agreement》' //'Agree':'我已阅读并同意《古奇威士忌购买协议》',
-  },
-
-  My: {},
-  //隐私协议 privacy
-  privacy: {
-    title: 'User Privacy Protection Prompt',
-    predicate: 'Before using, please read carefully',
-    subdesc: 'When you click "agree", it means you have understood and agreed to the terms of this agreement, which will have legal effect on you. If you refuse, you will not be able to use this service.',
-    agree: 'Agree',
-    disagree: 'Refuse'
-  }
-};
-exports.default = _default;
-
-/***/ }),
-
-/***/ 377:
+/***/ 305:
 /*!****************************************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-main.js?vue&type=script&lang=js& ***!
   \****************************************************************************************************************/
@@ -24187,14 +21443,14 @@ exports.default = _default;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/babel-loader/lib!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--13-1!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./z-paging-main.js?vue&type=script&lang=js& */ 378);
+/* harmony import */ var _HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/babel-loader/lib!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--13-1!../../../../../../../../安装软件/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./z-paging-main.js?vue&type=script&lang=js& */ 306);
 /* harmony import */ var _HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_13_1_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ 378:
+/***/ 306:
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--13-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-main.js?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -24209,40 +21465,40 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
-var _zPagingStatic = _interopRequireDefault(__webpack_require__(/*! ./z-paging-static */ 379));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 380));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! ./z-paging-utils */ 381));
-var _commonLayout = _interopRequireDefault(__webpack_require__(/*! ./modules/common-layout */ 383));
-var _dataHandle = _interopRequireDefault(__webpack_require__(/*! ./modules/data-handle */ 384));
-var _i18n = _interopRequireDefault(__webpack_require__(/*! ./modules/i18n */ 387));
-var _nvue = _interopRequireDefault(__webpack_require__(/*! ./modules/nvue */ 392));
-var _empty = _interopRequireDefault(__webpack_require__(/*! ./modules/empty */ 393));
-var _refresher = _interopRequireDefault(__webpack_require__(/*! ./modules/refresher */ 394));
-var _loadMore = _interopRequireDefault(__webpack_require__(/*! ./modules/load-more */ 395));
-var _loading = _interopRequireDefault(__webpack_require__(/*! ./modules/loading */ 396));
-var _chatRecordMode = _interopRequireDefault(__webpack_require__(/*! ./modules/chat-record-mode */ 397));
-var _scroller = _interopRequireDefault(__webpack_require__(/*! ./modules/scroller */ 398));
-var _backToTop = _interopRequireDefault(__webpack_require__(/*! ./modules/back-to-top */ 399));
-var _virtualList = _interopRequireDefault(__webpack_require__(/*! ./modules/virtual-list */ 400));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! ./z-paging-enum */ 385));
+var _zPagingStatic = _interopRequireDefault(__webpack_require__(/*! ./z-paging-static */ 307));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 308));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! ./z-paging-utils */ 309));
+var _commonLayout = _interopRequireDefault(__webpack_require__(/*! ./modules/common-layout */ 311));
+var _dataHandle = _interopRequireDefault(__webpack_require__(/*! ./modules/data-handle */ 312));
+var _i18n = _interopRequireDefault(__webpack_require__(/*! ./modules/i18n */ 315));
+var _nvue = _interopRequireDefault(__webpack_require__(/*! ./modules/nvue */ 320));
+var _empty = _interopRequireDefault(__webpack_require__(/*! ./modules/empty */ 321));
+var _refresher = _interopRequireDefault(__webpack_require__(/*! ./modules/refresher */ 322));
+var _loadMore = _interopRequireDefault(__webpack_require__(/*! ./modules/load-more */ 323));
+var _loading = _interopRequireDefault(__webpack_require__(/*! ./modules/loading */ 324));
+var _chatRecordMode = _interopRequireDefault(__webpack_require__(/*! ./modules/chat-record-mode */ 325));
+var _scroller = _interopRequireDefault(__webpack_require__(/*! ./modules/scroller */ 326));
+var _backToTop = _interopRequireDefault(__webpack_require__(/*! ./modules/back-to-top */ 327));
+var _virtualList = _interopRequireDefault(__webpack_require__(/*! ./modules/virtual-list */ 328));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! ./z-paging-enum */ 313));
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var zPagingRefresh = function zPagingRefresh() {
   __webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-refresh */ "uni_modules/z-paging/components/z-paging/components/z-paging-refresh").then((function () {
-    return resolve(__webpack_require__(/*! ../components/z-paging-refresh */ 485));
+    return resolve(__webpack_require__(/*! ../components/z-paging-refresh */ 399));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var zPagingLoadMore = function zPagingLoadMore() {
   __webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-load-more */ "uni_modules/z-paging/components/z-paging/components/z-paging-load-more").then((function () {
-    return resolve(__webpack_require__(/*! ../components/z-paging-load-more */ 492));
+    return resolve(__webpack_require__(/*! ../components/z-paging-load-more */ 406));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var zPagingEmptyView = function zPagingEmptyView() {
   __webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view */ "uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view").then((function () {
-    return resolve(__webpack_require__(/*! ../../z-paging-empty-view/z-paging-empty-view */ 478));
+    return resolve(__webpack_require__(/*! ../../z-paging-empty-view/z-paging-empty-view */ 392));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var systemInfo = uni.getSystemInfoSync();
@@ -24694,7 +21950,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 379:
+/***/ 307:
 /*!*****************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-static.js ***!
   \*****************************************************************************************/
@@ -24724,7 +21980,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 380:
+/***/ 308:
 /*!*******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-constant.js ***!
   \*******************************************************************************************/
@@ -24759,7 +22015,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 381:
+/***/ 309:
 /*!****************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-utils.js ***!
   \****************************************************************************************/
@@ -24775,8 +22031,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _typeof2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/typeof */ 13));
-var _index = _interopRequireDefault(__webpack_require__(/*! ../config/index */ 382));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 380));
+var _index = _interopRequireDefault(__webpack_require__(/*! ../config/index */ 310));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 308));
 // [z-paging]工具类
 
 var storageKey = 'Z-PAGING-REFRESHER-TIME-STORAGE-KEY';
@@ -25064,7 +22320,133 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 382:
+/***/ 31:
+/*!*******************************************!*\
+  !*** D:/mywork/BPM/guqi/utils/request.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+// @/utils/request.js
+
+//小程序判断当前环境
+console.log('****************小程序环境====>' + "test"); //dev test pro
+console.log('小程序接口url=====>' + "https://bpmcs.gujing.cn/apps_ba");
+var baseURL = "https://bpmcs.gujing.cn/apps_ba"; //todos?userId=1
+
+console.log("🚀 🚀 🚀 🚀 " + "development");
+var timeout = 10000;
+// 封装api请求
+var request = function request(option) {
+  // 获取用户传入的url
+  var url = baseURL + option.url;
+
+  // 添加提请求头
+  var header = option.header || {};
+  // if(!!option.needToken){
+  // 	// 添加token 
+  // 	header.Authorization =  'Bearer ' +  uni.getStorageSync('token');  
+  // }
+  // header.source=1;
+  // header.channel="h5";
+
+  // 加载提示
+  //console.log('uni.getLocale()====>'+uni.getLocale());
+  var title = '';
+  if (uni.getLocale() == 'en') {
+    title = 'Loading...';
+  } else {
+    title = '加载中...';
+  }
+  uni.showLoading({
+    title: title
+  });
+  // 返回一个promise
+  return new Promise(function (resolve, reject) {
+    // 发起一个request请求
+    uni.request({
+      url: url,
+      //请求url
+      method: option.method || "GET",
+      //请求方法
+      header: header,
+      //请求头
+      timeout: timeout,
+      data: option.data || option.params,
+      //请求数据
+      success: function success(res) {
+        //debugger
+        // 成功返回结果
+        if (res.data.result == 'ok') {
+          resolve(res.data.data);
+        } else {
+          reject(res);
+        }
+        uni.hideLoading();
+      },
+      fail: function fail(err) {
+        var _uni$showToast;
+        uni.hideLoading();
+        // 失败返回失败结果
+        console.error(err);
+        var title_ = '';
+        var content_ = '';
+        if (uni.getLocale() == 'en') {
+          title_ = 'Tips', content_ = 'System exception, please try again later';
+        } else {
+          title_ = '提示';
+          content_ = '系统异常,请稍后再试';
+        }
+        uni.showToast((_uni$showToast = {
+          title: title_
+        }, (0, _defineProperty2.default)(_uni$showToast, "title", content_), (0, _defineProperty2.default)(_uni$showToast, "icon", 'none'), _uni$showToast));
+      },
+      complete: function complete() {
+        // 完成 关闭loading
+        uni.hideLoading();
+      }
+    });
+  });
+};
+
+// 定义get简洁方法
+request.get = function (url, data, config) {
+  return request(_objectSpread(_objectSpread({
+    url: url,
+    method: "GET"
+  }, config), {}, {
+    data: data
+  }));
+};
+
+// 定义post简洁方法
+request.post = function (url, data, config) {
+  return request(_objectSpread(_objectSpread({
+    url: url,
+    method: "POST"
+  }, config), {}, {
+    data: data
+  }));
+};
+// 导出请求
+var _default = request;
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+
+/***/ 310:
 /*!***********************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/config/index.js ***!
   \***********************************************************************************/
@@ -25084,7 +22466,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 383:
+/***/ 311:
 /*!***********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/common-layout.js ***!
   \***********************************************************************************************/
@@ -25205,7 +22587,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 384:
+/***/ 312:
 /*!*********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/data-handle.js ***!
   \*********************************************************************************************/
@@ -25222,10 +22604,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ 5));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 380));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
-var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 386));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 308));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
+var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 314));
 // [z-paging]数据处理模块
 var _default2 = {
   props: {
@@ -25947,7 +23329,7 @@ exports.default = _default2;
 
 /***/ }),
 
-/***/ 385:
+/***/ 313:
 /*!***************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-enum.js ***!
   \***************************************************************************************/
@@ -26009,7 +23391,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 386:
+/***/ 314:
 /*!**********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor.js ***!
   \**********************************************************************************************/
@@ -26125,7 +23507,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 387:
+/***/ 315:
 /*!**************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/i18n.js ***!
   \**************************************************************************************/
@@ -26141,10 +23523,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _uniI18n = __webpack_require__(/*! @dcloudio/uni-i18n */ 22);
-var _index = _interopRequireDefault(__webpack_require__(/*! ../../i18n/index.js */ 388));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 380));
-var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 386));
+var _index = _interopRequireDefault(__webpack_require__(/*! ../../i18n/index.js */ 316));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 308));
+var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 314));
 // [z-paging]i18n模块
 
 var _initVueI18n = (0, _uniI18n.initVueI18n)(_index.default),
@@ -26264,7 +23646,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 388:
+/***/ 316:
 /*!*********************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/i18n/index.js ***!
   \*********************************************************************************/
@@ -26279,9 +23661,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 389));
-var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 390));
-var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 391));
+var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 317));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 318));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 319));
 var _default = {
   en: _en.default,
   'zh-Hans': _zhHans.default,
@@ -26291,7 +23673,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 389:
+/***/ 317:
 /*!********************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/i18n/en.json ***!
   \********************************************************************************/
@@ -26302,7 +23684,7 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"Pull down to refresh\",
 
 /***/ }),
 
-/***/ 390:
+/***/ 318:
 /*!*************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/i18n/zh-Hans.json ***!
   \*************************************************************************************/
@@ -26313,7 +23695,7 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"继续下拉刷新\",\"
 
 /***/ }),
 
-/***/ 391:
+/***/ 319:
 /*!*************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/i18n/zh-Hant.json ***!
   \*************************************************************************************/
@@ -26324,7 +23706,7 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"繼續下拉重繪\",\"
 
 /***/ }),
 
-/***/ 392:
+/***/ 320:
 /*!**************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/nvue.js ***!
   \**************************************************************************************/
@@ -26339,9 +23721,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 380));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 308));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]nvue独有部分模块
 var _default = {
   props: {},
@@ -26367,7 +23749,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 393:
+/***/ 321:
 /*!***************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/empty.js ***!
   \***************************************************************************************/
@@ -26382,7 +23764,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
 // [z-paging]空数据图view模块
 var _default = {
   props: {
@@ -26530,7 +23912,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 394:
+/***/ 322:
 /*!*******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/refresher.js ***!
   \*******************************************************************************************/
@@ -26545,9 +23927,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 380));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 308));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]下拉刷新view模块
 var _default = {
   props: {
@@ -27208,7 +24590,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 395:
+/***/ 323:
 /*!*******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/load-more.js ***!
   \*******************************************************************************************/
@@ -27223,10 +24605,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]滚动到底部加载更多模块
 var _default = {
   props: {
@@ -27637,7 +25019,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 396:
+/***/ 324:
 /*!*****************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/loading.js ***!
   \*****************************************************************************************/
@@ -27652,8 +25034,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]loading相关模块
 var _default = {
   props: {
@@ -27750,7 +25132,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 397:
+/***/ 325:
 /*!**************************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/chat-record-mode.js ***!
   \**************************************************************************************************/
@@ -27765,7 +25147,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
 // [z-paging]聊天记录模式模块
 var _default = {
   props: {
@@ -27919,7 +25301,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 398:
+/***/ 326:
 /*!******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/scroller.js ***!
   \******************************************************************************************/
@@ -27934,10 +25316,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]scroll相关模块
 var _default = {
   props: {
@@ -28450,7 +25832,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 399:
+/***/ 327:
 /*!*********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/back-to-top.js ***!
   \*********************************************************************************************/
@@ -28465,7 +25847,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
 // [z-paging]点击返回顶部view模块
 var _default = {
   props: {
@@ -28594,23 +25976,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 4:
-/*!**********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 400:
+/***/ 328:
 /*!**********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/z-paging/components/z-paging/js/modules/virtual-list.js ***!
   \**********************************************************************************************/
@@ -28625,11 +25991,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 323));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 325));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 381));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 380));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 385));
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 251));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 253));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 309));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 308));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 313));
 // [z-paging]虚拟列表模块
 var _default = {
   props: {
@@ -29214,7 +26580,2610 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 466:
+/***/ 34:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    if(typeof renderjs.beforeCreate === 'function'){
+			renderjs.beforeCreate = [renderjs.beforeCreate]
+		}
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 35:
+/*!****************************************************!*\
+  !*** ./node_modules/vue-i18n/dist/vue-i18n.esm.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*!
+ * vue-i18n v8.28.2 
+ * (c) 2022 kazuya kawaguchi
+ * Released under the MIT License.
+ */
+/*  */
+
+/**
+ * constants
+ */
+
+var numberFormatKeys = [
+  'compactDisplay',
+  'currency',
+  'currencyDisplay',
+  'currencySign',
+  'localeMatcher',
+  'notation',
+  'numberingSystem',
+  'signDisplay',
+  'style',
+  'unit',
+  'unitDisplay',
+  'useGrouping',
+  'minimumIntegerDigits',
+  'minimumFractionDigits',
+  'maximumFractionDigits',
+  'minimumSignificantDigits',
+  'maximumSignificantDigits'
+];
+
+var dateTimeFormatKeys = [
+  'dateStyle',
+  'timeStyle',
+  'calendar',
+  'localeMatcher',
+  "hour12",
+  "hourCycle",
+  "timeZone",
+  "formatMatcher",
+  'weekday',
+  'era',
+  'year',
+  'month',
+  'day',
+  'hour',
+  'minute',
+  'second',
+  'timeZoneName' ];
+
+/**
+ * utilities
+ */
+
+function warn (msg, err) {
+  if (typeof console !== 'undefined') {
+    console.warn('[vue-i18n] ' + msg);
+    /* istanbul ignore if */
+    if (err) {
+      console.warn(err.stack);
+    }
+  }
+}
+
+function error (msg, err) {
+  if (typeof console !== 'undefined') {
+    console.error('[vue-i18n] ' + msg);
+    /* istanbul ignore if */
+    if (err) {
+      console.error(err.stack);
+    }
+  }
+}
+
+var isArray = Array.isArray;
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isBoolean (val) {
+  return typeof val === 'boolean'
+}
+
+function isString (val) {
+  return typeof val === 'string'
+}
+
+var toString = Object.prototype.toString;
+var OBJECT_STRING = '[object Object]';
+function isPlainObject (obj) {
+  return toString.call(obj) === OBJECT_STRING
+}
+
+function isNull (val) {
+  return val === null || val === undefined
+}
+
+function isFunction (val) {
+  return typeof val === 'function'
+}
+
+function parseArgs () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  var locale = null;
+  var params = null;
+  if (args.length === 1) {
+    if (isObject(args[0]) || isArray(args[0])) {
+      params = args[0];
+    } else if (typeof args[0] === 'string') {
+      locale = args[0];
+    }
+  } else if (args.length === 2) {
+    if (typeof args[0] === 'string') {
+      locale = args[0];
+    }
+    /* istanbul ignore if */
+    if (isObject(args[1]) || isArray(args[1])) {
+      params = args[1];
+    }
+  }
+
+  return { locale: locale, params: params }
+}
+
+function looseClone (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+function remove (arr, item) {
+  if (arr.delete(item)) {
+    return arr
+  }
+}
+
+function arrayFrom (arr) {
+  var ret = [];
+  arr.forEach(function (a) { return ret.push(a); });
+  return ret
+}
+
+function includes (arr, item) {
+  return !!~arr.indexOf(item)
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
+
+function merge (target) {
+  var arguments$1 = arguments;
+
+  var output = Object(target);
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments$1[i];
+    if (source !== undefined && source !== null) {
+      var key = (void 0);
+      for (key in source) {
+        if (hasOwn(source, key)) {
+          if (isObject(source[key])) {
+            output[key] = merge(output[key], source[key]);
+          } else {
+            output[key] = source[key];
+          }
+        }
+      }
+    }
+  }
+  return output
+}
+
+function looseEqual (a, b) {
+  if (a === b) { return true }
+  var isObjectA = isObject(a);
+  var isObjectB = isObject(b);
+  if (isObjectA && isObjectB) {
+    try {
+      var isArrayA = isArray(a);
+      var isArrayB = isArray(b);
+      if (isArrayA && isArrayB) {
+        return a.length === b.length && a.every(function (e, i) {
+          return looseEqual(e, b[i])
+        })
+      } else if (!isArrayA && !isArrayB) {
+        var keysA = Object.keys(a);
+        var keysB = Object.keys(b);
+        return keysA.length === keysB.length && keysA.every(function (key) {
+          return looseEqual(a[key], b[key])
+        })
+      } else {
+        /* istanbul ignore next */
+        return false
+      }
+    } catch (e) {
+      /* istanbul ignore next */
+      return false
+    }
+  } else if (!isObjectA && !isObjectB) {
+    return String(a) === String(b)
+  } else {
+    return false
+  }
+}
+
+/**
+ * Sanitizes html special characters from input strings. For mitigating risk of XSS attacks.
+ * @param rawText The raw input from the user that should be escaped.
+ */
+function escapeHtml(rawText) {
+  return rawText
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+/**
+ * Escapes html tags and special symbols from all provided params which were returned from parseArgs().params.
+ * This method performs an in-place operation on the params object.
+ *
+ * @param {any} params Parameters as provided from `parseArgs().params`.
+ *                     May be either an array of strings or a string->any map.
+ *
+ * @returns The manipulated `params` object.
+ */
+function escapeParams(params) {
+  if(params != null) {
+    Object.keys(params).forEach(function (key) {
+      if(typeof(params[key]) == 'string') {
+        params[key] = escapeHtml(params[key]);
+      }
+    });
+  }
+  return params
+}
+
+/*  */
+
+function extend (Vue) {
+  if (!Vue.prototype.hasOwnProperty('$i18n')) {
+    // $FlowFixMe
+    Object.defineProperty(Vue.prototype, '$i18n', {
+      get: function get () { return this._i18n }
+    });
+  }
+
+  Vue.prototype.$t = function (key) {
+    var values = [], len = arguments.length - 1;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
+
+    var i18n = this.$i18n;
+    return i18n._t.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this ].concat( values ))
+  };
+
+  Vue.prototype.$tc = function (key, choice) {
+    var values = [], len = arguments.length - 2;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
+
+    var i18n = this.$i18n;
+    return i18n._tc.apply(i18n, [ key, i18n.locale, i18n._getMessages(), this, choice ].concat( values ))
+  };
+
+  Vue.prototype.$te = function (key, locale) {
+    var i18n = this.$i18n;
+    return i18n._te(key, i18n.locale, i18n._getMessages(), locale)
+  };
+
+  Vue.prototype.$d = function (value) {
+    var ref;
+
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+    return (ref = this.$i18n).d.apply(ref, [ value ].concat( args ))
+  };
+
+  Vue.prototype.$n = function (value) {
+    var ref;
+
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+    return (ref = this.$i18n).n.apply(ref, [ value ].concat( args ))
+  };
+}
+
+/*  */
+
+/**
+ * Mixin
+ * 
+ * If `bridge` mode, empty mixin is returned,
+ * else regulary mixin implementation is returned.
+ */
+function defineMixin (bridge) {
+  if ( bridge === void 0 ) bridge = false;
+
+  function mounted () {
+    if (this !== this.$root && this.$options.__INTLIFY_META__ && this.$el) {
+      this.$el.setAttribute('data-intlify', this.$options.__INTLIFY_META__);
+    }
+  }
+
+  return bridge
+    ? { mounted: mounted } // delegate `vue-i18n-bridge` mixin implementation
+    : { // regulary 
+    beforeCreate: function beforeCreate () {
+      var options = this.$options;
+      options.i18n = options.i18n || ((options.__i18nBridge || options.__i18n) ? {} : null);
+
+      if (options.i18n) {
+        if (options.i18n instanceof VueI18n) {
+          // init locale messages via custom blocks
+          if ((options.__i18nBridge || options.__i18n)) {
+            try {
+              var localeMessages = options.i18n && options.i18n.messages ? options.i18n.messages : {};
+              var _i18n = options.__i18nBridge || options.__i18n;
+              _i18n.forEach(function (resource) {
+                localeMessages = merge(localeMessages, JSON.parse(resource));
+              });
+              Object.keys(localeMessages).forEach(function (locale) {
+                options.i18n.mergeLocaleMessage(locale, localeMessages[locale]);
+              });
+            } catch (e) {
+              if (true) {
+                error("Cannot parse locale messages via custom blocks.", e);
+              }
+            }
+          }
+          this._i18n = options.i18n;
+          this._i18nWatcher = this._i18n.watchI18nData();
+        } else if (isPlainObject(options.i18n)) {
+          var rootI18n = this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n
+            ? this.$root.$i18n
+            : null;
+          // component local i18n
+          if (rootI18n) {
+            options.i18n.root = this.$root;
+            options.i18n.formatter = rootI18n.formatter;
+            options.i18n.fallbackLocale = rootI18n.fallbackLocale;
+            options.i18n.formatFallbackMessages = rootI18n.formatFallbackMessages;
+            options.i18n.silentTranslationWarn = rootI18n.silentTranslationWarn;
+            options.i18n.silentFallbackWarn = rootI18n.silentFallbackWarn;
+            options.i18n.pluralizationRules = rootI18n.pluralizationRules;
+            options.i18n.preserveDirectiveContent = rootI18n.preserveDirectiveContent;
+          }
+
+          // init locale messages via custom blocks
+          if ((options.__i18nBridge || options.__i18n)) {
+            try {
+              var localeMessages$1 = options.i18n && options.i18n.messages ? options.i18n.messages : {};
+              var _i18n$1 = options.__i18nBridge || options.__i18n;
+              _i18n$1.forEach(function (resource) {
+                localeMessages$1 = merge(localeMessages$1, JSON.parse(resource));
+              });
+              options.i18n.messages = localeMessages$1;
+            } catch (e) {
+              if (true) {
+                warn("Cannot parse locale messages via custom blocks.", e);
+              }
+            }
+          }
+
+          var ref = options.i18n;
+          var sharedMessages = ref.sharedMessages;
+          if (sharedMessages && isPlainObject(sharedMessages)) {
+            options.i18n.messages = merge(options.i18n.messages, sharedMessages);
+          }
+
+          this._i18n = new VueI18n(options.i18n);
+          this._i18nWatcher = this._i18n.watchI18nData();
+
+          if (options.i18n.sync === undefined || !!options.i18n.sync) {
+            this._localeWatcher = this.$i18n.watchLocale();
+          }
+
+          if (rootI18n) {
+            rootI18n.onComponentInstanceCreated(this._i18n);
+          }
+        } else {
+          if (true) {
+            warn("Cannot be interpreted 'i18n' option.");
+          }
+        }
+      } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
+        // root i18n
+        this._i18n = this.$root.$i18n;
+      } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
+        // parent i18n
+        this._i18n = options.parent.$i18n;
+      }
+    },
+
+    beforeMount: function beforeMount () {
+      var options = this.$options;
+      options.i18n = options.i18n || ((options.__i18nBridge || options.__i18n) ? {} : null);
+
+      if (options.i18n) {
+        if (options.i18n instanceof VueI18n) {
+          // init locale messages via custom blocks
+          this._i18n.subscribeDataChanging(this);
+          this._subscribing = true;
+        } else if (isPlainObject(options.i18n)) {
+          this._i18n.subscribeDataChanging(this);
+          this._subscribing = true;
+        } else {
+          if (true) {
+            warn("Cannot be interpreted 'i18n' option.");
+          }
+        }
+      } else if (this.$root && this.$root.$i18n && this.$root.$i18n instanceof VueI18n) {
+        this._i18n.subscribeDataChanging(this);
+        this._subscribing = true;
+      } else if (options.parent && options.parent.$i18n && options.parent.$i18n instanceof VueI18n) {
+        this._i18n.subscribeDataChanging(this);
+        this._subscribing = true;
+      }
+    },
+
+    mounted: mounted,
+
+    beforeDestroy: function beforeDestroy () {
+      if (!this._i18n) { return }
+
+      var self = this;
+      this.$nextTick(function () {
+        if (self._subscribing) {
+          self._i18n.unsubscribeDataChanging(self);
+          delete self._subscribing;
+        }
+
+        if (self._i18nWatcher) {
+          self._i18nWatcher();
+          self._i18n.destroyVM();
+          delete self._i18nWatcher;
+        }
+
+        if (self._localeWatcher) {
+          self._localeWatcher();
+          delete self._localeWatcher;
+        }
+      });
+    }
+  }
+}
+
+/*  */
+
+var interpolationComponent = {
+  name: 'i18n',
+  functional: true,
+  props: {
+    tag: {
+      type: [String, Boolean, Object],
+      default: 'span'
+    },
+    path: {
+      type: String,
+      required: true
+    },
+    locale: {
+      type: String
+    },
+    places: {
+      type: [Array, Object]
+    }
+  },
+  render: function render (h, ref) {
+    var data = ref.data;
+    var parent = ref.parent;
+    var props = ref.props;
+    var slots = ref.slots;
+
+    var $i18n = parent.$i18n;
+    if (!$i18n) {
+      if (true) {
+        warn('Cannot find VueI18n instance!');
+      }
+      return
+    }
+
+    var path = props.path;
+    var locale = props.locale;
+    var places = props.places;
+    var params = slots();
+    var children = $i18n.i(
+      path,
+      locale,
+      onlyHasDefaultPlace(params) || places
+        ? useLegacyPlaces(params.default, places)
+        : params
+    );
+
+    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    return tag ? h(tag, data, children) : children
+  }
+};
+
+function onlyHasDefaultPlace (params) {
+  var prop;
+  for (prop in params) {
+    if (prop !== 'default') { return false }
+  }
+  return Boolean(prop)
+}
+
+function useLegacyPlaces (children, places) {
+  var params = places ? createParamsFromPlaces(places) : {};
+
+  if (!children) { return params }
+
+  // Filter empty text nodes
+  children = children.filter(function (child) {
+    return child.tag || child.text.trim() !== ''
+  });
+
+  var everyPlace = children.every(vnodeHasPlaceAttribute);
+  if ( true && everyPlace) {
+    warn('`place` attribute is deprecated in next major version. Please switch to Vue slots.');
+  }
+
+  return children.reduce(
+    everyPlace ? assignChildPlace : assignChildIndex,
+    params
+  )
+}
+
+function createParamsFromPlaces (places) {
+  if (true) {
+    warn('`places` prop is deprecated in next major version. Please switch to Vue slots.');
+  }
+
+  return Array.isArray(places)
+    ? places.reduce(assignChildIndex, {})
+    : Object.assign({}, places)
+}
+
+function assignChildPlace (params, child) {
+  if (child.data && child.data.attrs && child.data.attrs.place) {
+    params[child.data.attrs.place] = child;
+  }
+  return params
+}
+
+function assignChildIndex (params, child, index) {
+  params[index] = child;
+  return params
+}
+
+function vnodeHasPlaceAttribute (vnode) {
+  return Boolean(vnode.data && vnode.data.attrs && vnode.data.attrs.place)
+}
+
+/*  */
+
+var numberComponent = {
+  name: 'i18n-n',
+  functional: true,
+  props: {
+    tag: {
+      type: [String, Boolean, Object],
+      default: 'span'
+    },
+    value: {
+      type: Number,
+      required: true
+    },
+    format: {
+      type: [String, Object]
+    },
+    locale: {
+      type: String
+    }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+    var data = ref.data;
+
+    var i18n = parent.$i18n;
+
+    if (!i18n) {
+      if (true) {
+        warn('Cannot find VueI18n instance!');
+      }
+      return null
+    }
+
+    var key = null;
+    var options = null;
+
+    if (isString(props.format)) {
+      key = props.format;
+    } else if (isObject(props.format)) {
+      if (props.format.key) {
+        key = props.format.key;
+      }
+
+      // Filter out number format options only
+      options = Object.keys(props.format).reduce(function (acc, prop) {
+        var obj;
+
+        if (includes(numberFormatKeys, prop)) {
+          return Object.assign({}, acc, ( obj = {}, obj[prop] = props.format[prop], obj ))
+        }
+        return acc
+      }, null);
+    }
+
+    var locale = props.locale || i18n.locale;
+    var parts = i18n._ntp(props.value, locale, key, options);
+
+    var values = parts.map(function (part, index) {
+      var obj;
+
+      var slot = data.scopedSlots && data.scopedSlots[part.type];
+      return slot ? slot(( obj = {}, obj[part.type] = part.value, obj.index = index, obj.parts = parts, obj )) : part.value
+    });
+
+    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    return tag
+      ? h(tag, {
+        attrs: data.attrs,
+        'class': data['class'],
+        staticClass: data.staticClass
+      }, values)
+      : values
+  }
+};
+
+/*  */
+
+function bind (el, binding, vnode) {
+  if (!assert(el, vnode)) { return }
+
+  t(el, binding, vnode);
+}
+
+function update (el, binding, vnode, oldVNode) {
+  if (!assert(el, vnode)) { return }
+
+  var i18n = vnode.context.$i18n;
+  if (localeEqual(el, vnode) &&
+    (looseEqual(binding.value, binding.oldValue) &&
+     looseEqual(el._localeMessage, i18n.getLocaleMessage(i18n.locale)))) { return }
+
+  t(el, binding, vnode);
+}
+
+function unbind (el, binding, vnode, oldVNode) {
+  var vm = vnode.context;
+  if (!vm) {
+    warn('Vue instance does not exists in VNode context');
+    return
+  }
+
+  var i18n = vnode.context.$i18n || {};
+  if (!binding.modifiers.preserve && !i18n.preserveDirectiveContent) {
+    el.textContent = '';
+  }
+  el._vt = undefined;
+  delete el['_vt'];
+  el._locale = undefined;
+  delete el['_locale'];
+  el._localeMessage = undefined;
+  delete el['_localeMessage'];
+}
+
+function assert (el, vnode) {
+  var vm = vnode.context;
+  if (!vm) {
+    warn('Vue instance does not exists in VNode context');
+    return false
+  }
+
+  if (!vm.$i18n) {
+    warn('VueI18n instance does not exists in Vue instance');
+    return false
+  }
+
+  return true
+}
+
+function localeEqual (el, vnode) {
+  var vm = vnode.context;
+  return el._locale === vm.$i18n.locale
+}
+
+function t (el, binding, vnode) {
+  var ref$1, ref$2;
+
+  var value = binding.value;
+
+  var ref = parseValue(value);
+  var path = ref.path;
+  var locale = ref.locale;
+  var args = ref.args;
+  var choice = ref.choice;
+  if (!path && !locale && !args) {
+    warn('value type not supported');
+    return
+  }
+
+  if (!path) {
+    warn('`path` is required in v-t directive');
+    return
+  }
+
+  var vm = vnode.context;
+  if (choice != null) {
+    el._vt = el.textContent = (ref$1 = vm.$i18n).tc.apply(ref$1, [ path, choice ].concat( makeParams(locale, args) ));
+  } else {
+    el._vt = el.textContent = (ref$2 = vm.$i18n).t.apply(ref$2, [ path ].concat( makeParams(locale, args) ));
+  }
+  el._locale = vm.$i18n.locale;
+  el._localeMessage = vm.$i18n.getLocaleMessage(vm.$i18n.locale);
+}
+
+function parseValue (value) {
+  var path;
+  var locale;
+  var args;
+  var choice;
+
+  if (isString(value)) {
+    path = value;
+  } else if (isPlainObject(value)) {
+    path = value.path;
+    locale = value.locale;
+    args = value.args;
+    choice = value.choice;
+  }
+
+  return { path: path, locale: locale, args: args, choice: choice }
+}
+
+function makeParams (locale, args) {
+  var params = [];
+
+  locale && params.push(locale);
+  if (args && (Array.isArray(args) || isPlainObject(args))) {
+    params.push(args);
+  }
+
+  return params
+}
+
+var Vue;
+
+function install (_Vue, options) {
+  if ( options === void 0 ) options = { bridge: false };
+
+  /* istanbul ignore if */
+  if ( true && install.installed && _Vue === Vue) {
+    warn('already installed.');
+    return
+  }
+  install.installed = true;
+
+  Vue = _Vue;
+
+  var version = (Vue.version && Number(Vue.version.split('.')[0])) || -1;
+  /* istanbul ignore if */
+  if ( true && version < 2) {
+    warn(("vue-i18n (" + (install.version) + ") need to use Vue 2.0 or later (Vue: " + (Vue.version) + ")."));
+    return
+  }
+
+  extend(Vue);
+  Vue.mixin(defineMixin(options.bridge));
+  Vue.directive('t', { bind: bind, update: update, unbind: unbind });
+  Vue.component(interpolationComponent.name, interpolationComponent);
+  Vue.component(numberComponent.name, numberComponent);
+
+  // use simple mergeStrategies to prevent i18n instance lose '__proto__'
+  var strats = Vue.config.optionMergeStrategies;
+  strats.i18n = function (parentVal, childVal) {
+    return childVal === undefined
+      ? parentVal
+      : childVal
+  };
+}
+
+/*  */
+
+var BaseFormatter = function BaseFormatter () {
+  this._caches = Object.create(null);
+};
+
+BaseFormatter.prototype.interpolate = function interpolate (message, values) {
+  if (!values) {
+    return [message]
+  }
+  var tokens = this._caches[message];
+  if (!tokens) {
+    tokens = parse(message);
+    this._caches[message] = tokens;
+  }
+  return compile(tokens, values)
+};
+
+
+
+var RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
+var RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
+
+function parse (format) {
+  var tokens = [];
+  var position = 0;
+
+  var text = '';
+  while (position < format.length) {
+    var char = format[position++];
+    if (char === '{') {
+      if (text) {
+        tokens.push({ type: 'text', value: text });
+      }
+
+      text = '';
+      var sub = '';
+      char = format[position++];
+      while (char !== undefined && char !== '}') {
+        sub += char;
+        char = format[position++];
+      }
+      var isClosed = char === '}';
+
+      var type = RE_TOKEN_LIST_VALUE.test(sub)
+        ? 'list'
+        : isClosed && RE_TOKEN_NAMED_VALUE.test(sub)
+          ? 'named'
+          : 'unknown';
+      tokens.push({ value: sub, type: type });
+    } else if (char === '%') {
+      // when found rails i18n syntax, skip text capture
+      if (format[(position)] !== '{') {
+        text += char;
+      }
+    } else {
+      text += char;
+    }
+  }
+
+  text && tokens.push({ type: 'text', value: text });
+
+  return tokens
+}
+
+function compile (tokens, values) {
+  var compiled = [];
+  var index = 0;
+
+  var mode = Array.isArray(values)
+    ? 'list'
+    : isObject(values)
+      ? 'named'
+      : 'unknown';
+  if (mode === 'unknown') { return compiled }
+
+  while (index < tokens.length) {
+    var token = tokens[index];
+    switch (token.type) {
+      case 'text':
+        compiled.push(token.value);
+        break
+      case 'list':
+        compiled.push(values[parseInt(token.value, 10)]);
+        break
+      case 'named':
+        if (mode === 'named') {
+          compiled.push((values)[token.value]);
+        } else {
+          if (true) {
+            warn(("Type of token '" + (token.type) + "' and format of value '" + mode + "' don't match!"));
+          }
+        }
+        break
+      case 'unknown':
+        if (true) {
+          warn("Detect 'unknown' type of token!");
+        }
+        break
+    }
+    index++;
+  }
+
+  return compiled
+}
+
+/*  */
+
+/**
+ *  Path parser
+ *  - Inspired:
+ *    Vue.js Path parser
+ */
+
+// actions
+var APPEND = 0;
+var PUSH = 1;
+var INC_SUB_PATH_DEPTH = 2;
+var PUSH_SUB_PATH = 3;
+
+// states
+var BEFORE_PATH = 0;
+var IN_PATH = 1;
+var BEFORE_IDENT = 2;
+var IN_IDENT = 3;
+var IN_SUB_PATH = 4;
+var IN_SINGLE_QUOTE = 5;
+var IN_DOUBLE_QUOTE = 6;
+var AFTER_PATH = 7;
+var ERROR = 8;
+
+var pathStateMachine = [];
+
+pathStateMachine[BEFORE_PATH] = {
+  'ws': [BEFORE_PATH],
+  'ident': [IN_IDENT, APPEND],
+  '[': [IN_SUB_PATH],
+  'eof': [AFTER_PATH]
+};
+
+pathStateMachine[IN_PATH] = {
+  'ws': [IN_PATH],
+  '.': [BEFORE_IDENT],
+  '[': [IN_SUB_PATH],
+  'eof': [AFTER_PATH]
+};
+
+pathStateMachine[BEFORE_IDENT] = {
+  'ws': [BEFORE_IDENT],
+  'ident': [IN_IDENT, APPEND],
+  '0': [IN_IDENT, APPEND],
+  'number': [IN_IDENT, APPEND]
+};
+
+pathStateMachine[IN_IDENT] = {
+  'ident': [IN_IDENT, APPEND],
+  '0': [IN_IDENT, APPEND],
+  'number': [IN_IDENT, APPEND],
+  'ws': [IN_PATH, PUSH],
+  '.': [BEFORE_IDENT, PUSH],
+  '[': [IN_SUB_PATH, PUSH],
+  'eof': [AFTER_PATH, PUSH]
+};
+
+pathStateMachine[IN_SUB_PATH] = {
+  "'": [IN_SINGLE_QUOTE, APPEND],
+  '"': [IN_DOUBLE_QUOTE, APPEND],
+  '[': [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
+  ']': [IN_PATH, PUSH_SUB_PATH],
+  'eof': ERROR,
+  'else': [IN_SUB_PATH, APPEND]
+};
+
+pathStateMachine[IN_SINGLE_QUOTE] = {
+  "'": [IN_SUB_PATH, APPEND],
+  'eof': ERROR,
+  'else': [IN_SINGLE_QUOTE, APPEND]
+};
+
+pathStateMachine[IN_DOUBLE_QUOTE] = {
+  '"': [IN_SUB_PATH, APPEND],
+  'eof': ERROR,
+  'else': [IN_DOUBLE_QUOTE, APPEND]
+};
+
+/**
+ * Check if an expression is a literal value.
+ */
+
+var literalValueRE = /^\s?(?:true|false|-?[\d.]+|'[^']*'|"[^"]*")\s?$/;
+function isLiteral (exp) {
+  return literalValueRE.test(exp)
+}
+
+/**
+ * Strip quotes from a string
+ */
+
+function stripQuotes (str) {
+  var a = str.charCodeAt(0);
+  var b = str.charCodeAt(str.length - 1);
+  return a === b && (a === 0x22 || a === 0x27)
+    ? str.slice(1, -1)
+    : str
+}
+
+/**
+ * Determine the type of a character in a keypath.
+ */
+
+function getPathCharType (ch) {
+  if (ch === undefined || ch === null) { return 'eof' }
+
+  var code = ch.charCodeAt(0);
+
+  switch (code) {
+    case 0x5B: // [
+    case 0x5D: // ]
+    case 0x2E: // .
+    case 0x22: // "
+    case 0x27: // '
+      return ch
+
+    case 0x5F: // _
+    case 0x24: // $
+    case 0x2D: // -
+      return 'ident'
+
+    case 0x09: // Tab
+    case 0x0A: // Newline
+    case 0x0D: // Return
+    case 0xA0:  // No-break space
+    case 0xFEFF:  // Byte Order Mark
+    case 0x2028:  // Line Separator
+    case 0x2029:  // Paragraph Separator
+      return 'ws'
+  }
+
+  return 'ident'
+}
+
+/**
+ * Format a subPath, return its plain form if it is
+ * a literal string or number. Otherwise prepend the
+ * dynamic indicator (*).
+ */
+
+function formatSubPath (path) {
+  var trimmed = path.trim();
+  // invalid leading 0
+  if (path.charAt(0) === '0' && isNaN(path)) { return false }
+
+  return isLiteral(trimmed) ? stripQuotes(trimmed) : '*' + trimmed
+}
+
+/**
+ * Parse a string path into an array of segments
+ */
+
+function parse$1 (path) {
+  var keys = [];
+  var index = -1;
+  var mode = BEFORE_PATH;
+  var subPathDepth = 0;
+  var c;
+  var key;
+  var newChar;
+  var type;
+  var transition;
+  var action;
+  var typeMap;
+  var actions = [];
+
+  actions[PUSH] = function () {
+    if (key !== undefined) {
+      keys.push(key);
+      key = undefined;
+    }
+  };
+
+  actions[APPEND] = function () {
+    if (key === undefined) {
+      key = newChar;
+    } else {
+      key += newChar;
+    }
+  };
+
+  actions[INC_SUB_PATH_DEPTH] = function () {
+    actions[APPEND]();
+    subPathDepth++;
+  };
+
+  actions[PUSH_SUB_PATH] = function () {
+    if (subPathDepth > 0) {
+      subPathDepth--;
+      mode = IN_SUB_PATH;
+      actions[APPEND]();
+    } else {
+      subPathDepth = 0;
+      if (key === undefined) { return false }
+      key = formatSubPath(key);
+      if (key === false) {
+        return false
+      } else {
+        actions[PUSH]();
+      }
+    }
+  };
+
+  function maybeUnescapeQuote () {
+    var nextChar = path[index + 1];
+    if ((mode === IN_SINGLE_QUOTE && nextChar === "'") ||
+      (mode === IN_DOUBLE_QUOTE && nextChar === '"')) {
+      index++;
+      newChar = '\\' + nextChar;
+      actions[APPEND]();
+      return true
+    }
+  }
+
+  while (mode !== null) {
+    index++;
+    c = path[index];
+
+    if (c === '\\' && maybeUnescapeQuote()) {
+      continue
+    }
+
+    type = getPathCharType(c);
+    typeMap = pathStateMachine[mode];
+    transition = typeMap[type] || typeMap['else'] || ERROR;
+
+    if (transition === ERROR) {
+      return // parse error
+    }
+
+    mode = transition[0];
+    action = actions[transition[1]];
+    if (action) {
+      newChar = transition[2];
+      newChar = newChar === undefined
+        ? c
+        : newChar;
+      if (action() === false) {
+        return
+      }
+    }
+
+    if (mode === AFTER_PATH) {
+      return keys
+    }
+  }
+}
+
+
+
+
+
+var I18nPath = function I18nPath () {
+  this._cache = Object.create(null);
+};
+
+/**
+ * External parse that check for a cache hit first
+ */
+I18nPath.prototype.parsePath = function parsePath (path) {
+  var hit = this._cache[path];
+  if (!hit) {
+    hit = parse$1(path);
+    if (hit) {
+      this._cache[path] = hit;
+    }
+  }
+  return hit || []
+};
+
+/**
+ * Get path value from path string
+ */
+I18nPath.prototype.getPathValue = function getPathValue (obj, path) {
+  if (!isObject(obj)) { return null }
+
+  var paths = this.parsePath(path);
+  if (paths.length === 0) {
+    return null
+  } else {
+    var length = paths.length;
+    var last = obj;
+    var i = 0;
+    while (i < length) {
+      var value = last[paths[i]];
+      if (value === undefined || value === null) {
+        return null
+      }
+      last = value;
+      i++;
+    }
+
+    return last
+  }
+};
+
+/*  */
+
+
+
+var htmlTagMatcher = /<\/?[\w\s="/.':;#-\/]+>/;
+var linkKeyMatcher = /(?:@(?:\.[a-zA-Z]+)?:(?:[\w\-_|./]+|\([\w\-_:|./]+\)))/g;
+var linkKeyPrefixMatcher = /^@(?:\.([a-zA-Z]+))?:/;
+var bracketsMatcher = /[()]/g;
+var defaultModifiers = {
+  'upper': function (str) { return str.toLocaleUpperCase(); },
+  'lower': function (str) { return str.toLocaleLowerCase(); },
+  'capitalize': function (str) { return ("" + (str.charAt(0).toLocaleUpperCase()) + (str.substr(1))); }
+};
+
+var defaultFormatter = new BaseFormatter();
+
+var VueI18n = function VueI18n (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #290
+  /* istanbul ignore if */
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  var locale = options.locale || 'en-US';
+  var fallbackLocale = options.fallbackLocale === false
+    ? false
+    : options.fallbackLocale || 'en-US';
+  var messages = options.messages || {};
+  var dateTimeFormats = options.dateTimeFormats || options.datetimeFormats || {};
+  var numberFormats = options.numberFormats || {};
+
+  this._vm = null;
+  this._formatter = options.formatter || defaultFormatter;
+  this._modifiers = options.modifiers || {};
+  this._missing = options.missing || null;
+  this._root = options.root || null;
+  this._sync = options.sync === undefined ? true : !!options.sync;
+  this._fallbackRoot = options.fallbackRoot === undefined
+    ? true
+    : !!options.fallbackRoot;
+  this._fallbackRootWithEmptyString = options.fallbackRootWithEmptyString === undefined
+    ? true
+    : !!options.fallbackRootWithEmptyString;
+  this._formatFallbackMessages = options.formatFallbackMessages === undefined
+    ? false
+    : !!options.formatFallbackMessages;
+  this._silentTranslationWarn = options.silentTranslationWarn === undefined
+    ? false
+    : options.silentTranslationWarn;
+  this._silentFallbackWarn = options.silentFallbackWarn === undefined
+    ? false
+    : !!options.silentFallbackWarn;
+  this._dateTimeFormatters = {};
+  this._numberFormatters = {};
+  this._path = new I18nPath();
+  this._dataListeners = new Set();
+  this._componentInstanceCreatedListener = options.componentInstanceCreatedListener || null;
+  this._preserveDirectiveContent = options.preserveDirectiveContent === undefined
+    ? false
+    : !!options.preserveDirectiveContent;
+  this.pluralizationRules = options.pluralizationRules || {};
+  this._warnHtmlInMessage = options.warnHtmlInMessage || 'off';
+  this._postTranslation = options.postTranslation || null;
+  this._escapeParameterHtml = options.escapeParameterHtml || false;
+
+  if ('__VUE_I18N_BRIDGE__' in options) {
+    this.__VUE_I18N_BRIDGE__ = options.__VUE_I18N_BRIDGE__;
+  }
+
+  /**
+   * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+   * @param choicesLength {number} an overall amount of available choices
+   * @returns a final choice index
+  */
+  this.getChoiceIndex = function (choice, choicesLength) {
+    var thisPrototype = Object.getPrototypeOf(this$1);
+    if (thisPrototype && thisPrototype.getChoiceIndex) {
+      var prototypeGetChoiceIndex = (thisPrototype.getChoiceIndex);
+      return (prototypeGetChoiceIndex).call(this$1, choice, choicesLength)
+    }
+
+    // Default (old) getChoiceIndex implementation - english-compatible
+    var defaultImpl = function (_choice, _choicesLength) {
+      _choice = Math.abs(_choice);
+
+      if (_choicesLength === 2) {
+        return _choice
+          ? _choice > 1
+            ? 1
+            : 0
+          : 1
+      }
+
+      return _choice ? Math.min(_choice, 2) : 0
+    };
+
+    if (this$1.locale in this$1.pluralizationRules) {
+      return this$1.pluralizationRules[this$1.locale].apply(this$1, [choice, choicesLength])
+    } else {
+      return defaultImpl(choice, choicesLength)
+    }
+  };
+
+
+  this._exist = function (message, key) {
+    if (!message || !key) { return false }
+    if (!isNull(this$1._path.getPathValue(message, key))) { return true }
+    // fallback for flat key
+    if (message[key]) { return true }
+    return false
+  };
+
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    Object.keys(messages).forEach(function (locale) {
+      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
+    });
+  }
+
+  this._initVM({
+    locale: locale,
+    fallbackLocale: fallbackLocale,
+    messages: messages,
+    dateTimeFormats: dateTimeFormats,
+    numberFormats: numberFormats
+  });
+};
+
+var prototypeAccessors = { vm: { configurable: true },messages: { configurable: true },dateTimeFormats: { configurable: true },numberFormats: { configurable: true },availableLocales: { configurable: true },locale: { configurable: true },fallbackLocale: { configurable: true },formatFallbackMessages: { configurable: true },missing: { configurable: true },formatter: { configurable: true },silentTranslationWarn: { configurable: true },silentFallbackWarn: { configurable: true },preserveDirectiveContent: { configurable: true },warnHtmlInMessage: { configurable: true },postTranslation: { configurable: true },sync: { configurable: true } };
+
+VueI18n.prototype._checkLocaleMessage = function _checkLocaleMessage (locale, level, message) {
+  var paths = [];
+
+  var fn = function (level, locale, message, paths) {
+    if (isPlainObject(message)) {
+      Object.keys(message).forEach(function (key) {
+        var val = message[key];
+        if (isPlainObject(val)) {
+          paths.push(key);
+          paths.push('.');
+          fn(level, locale, val, paths);
+          paths.pop();
+          paths.pop();
+        } else {
+          paths.push(key);
+          fn(level, locale, val, paths);
+          paths.pop();
+        }
+      });
+    } else if (isArray(message)) {
+      message.forEach(function (item, index) {
+        if (isPlainObject(item)) {
+          paths.push(("[" + index + "]"));
+          paths.push('.');
+          fn(level, locale, item, paths);
+          paths.pop();
+          paths.pop();
+        } else {
+          paths.push(("[" + index + "]"));
+          fn(level, locale, item, paths);
+          paths.pop();
+        }
+      });
+    } else if (isString(message)) {
+      var ret = htmlTagMatcher.test(message);
+      if (ret) {
+        var msg = "Detected HTML in message '" + message + "' of keypath '" + (paths.join('')) + "' at '" + locale + "'. Consider component interpolation with '<i18n>' to avoid XSS. See https://bit.ly/2ZqJzkp";
+        if (level === 'warn') {
+          warn(msg);
+        } else if (level === 'error') {
+          error(msg);
+        }
+      }
+    }
+  };
+
+  fn(level, locale, message, paths);
+};
+
+VueI18n.prototype._initVM = function _initVM (data) {
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  this._vm = new Vue({ data: data, __VUE18N__INSTANCE__: true });
+  Vue.config.silent = silent;
+};
+
+VueI18n.prototype.destroyVM = function destroyVM () {
+  this._vm.$destroy();
+};
+
+VueI18n.prototype.subscribeDataChanging = function subscribeDataChanging (vm) {
+  this._dataListeners.add(vm);
+};
+
+VueI18n.prototype.unsubscribeDataChanging = function unsubscribeDataChanging (vm) {
+  remove(this._dataListeners, vm);
+};
+
+VueI18n.prototype.watchI18nData = function watchI18nData () {
+    var this$1 = this;
+  return this._vm.$watch('$data', function () {
+    var listeners = arrayFrom(this$1._dataListeners);
+    var i = listeners.length;
+    while(i--) {
+      Vue.nextTick(function () {
+        listeners[i] && listeners[i].$forceUpdate();
+      });
+    }
+  }, { deep: true })
+};
+
+VueI18n.prototype.watchLocale = function watchLocale (composer) {
+  if (!composer) {
+    /* istanbul ignore if */
+    if (!this._sync || !this._root) { return null }
+    var target = this._vm;
+    return this._root.$i18n.vm.$watch('locale', function (val) {
+      target.$set(target, 'locale', val);
+      target.$forceUpdate();
+    }, { immediate: true })
+  } else {
+    // deal with vue-i18n-bridge
+    if (!this.__VUE_I18N_BRIDGE__) { return null }
+    var self = this;
+    var target$1 = this._vm;
+    return this.vm.$watch('locale', function (val) {
+      target$1.$set(target$1, 'locale', val);
+      if (self.__VUE_I18N_BRIDGE__ && composer) {
+        composer.locale.value = val;
+      }
+      target$1.$forceUpdate();
+    }, { immediate: true })
+  }
+};
+
+VueI18n.prototype.onComponentInstanceCreated = function onComponentInstanceCreated (newI18n) {
+  if (this._componentInstanceCreatedListener) {
+    this._componentInstanceCreatedListener(newI18n, this);
+  }
+};
+
+prototypeAccessors.vm.get = function () { return this._vm };
+
+prototypeAccessors.messages.get = function () { return looseClone(this._getMessages()) };
+prototypeAccessors.dateTimeFormats.get = function () { return looseClone(this._getDateTimeFormats()) };
+prototypeAccessors.numberFormats.get = function () { return looseClone(this._getNumberFormats()) };
+prototypeAccessors.availableLocales.get = function () { return Object.keys(this.messages).sort() };
+
+prototypeAccessors.locale.get = function () { return this._vm.locale };
+prototypeAccessors.locale.set = function (locale) {
+  this._vm.$set(this._vm, 'locale', locale);
+};
+
+prototypeAccessors.fallbackLocale.get = function () { return this._vm.fallbackLocale };
+prototypeAccessors.fallbackLocale.set = function (locale) {
+  this._localeChainCache = {};
+  this._vm.$set(this._vm, 'fallbackLocale', locale);
+};
+
+prototypeAccessors.formatFallbackMessages.get = function () { return this._formatFallbackMessages };
+prototypeAccessors.formatFallbackMessages.set = function (fallback) { this._formatFallbackMessages = fallback; };
+
+prototypeAccessors.missing.get = function () { return this._missing };
+prototypeAccessors.missing.set = function (handler) { this._missing = handler; };
+
+prototypeAccessors.formatter.get = function () { return this._formatter };
+prototypeAccessors.formatter.set = function (formatter) { this._formatter = formatter; };
+
+prototypeAccessors.silentTranslationWarn.get = function () { return this._silentTranslationWarn };
+prototypeAccessors.silentTranslationWarn.set = function (silent) { this._silentTranslationWarn = silent; };
+
+prototypeAccessors.silentFallbackWarn.get = function () { return this._silentFallbackWarn };
+prototypeAccessors.silentFallbackWarn.set = function (silent) { this._silentFallbackWarn = silent; };
+
+prototypeAccessors.preserveDirectiveContent.get = function () { return this._preserveDirectiveContent };
+prototypeAccessors.preserveDirectiveContent.set = function (preserve) { this._preserveDirectiveContent = preserve; };
+
+prototypeAccessors.warnHtmlInMessage.get = function () { return this._warnHtmlInMessage };
+prototypeAccessors.warnHtmlInMessage.set = function (level) {
+    var this$1 = this;
+
+  var orgLevel = this._warnHtmlInMessage;
+  this._warnHtmlInMessage = level;
+  if (orgLevel !== level && (level === 'warn' || level === 'error')) {
+    var messages = this._getMessages();
+    Object.keys(messages).forEach(function (locale) {
+      this$1._checkLocaleMessage(locale, this$1._warnHtmlInMessage, messages[locale]);
+    });
+  }
+};
+
+prototypeAccessors.postTranslation.get = function () { return this._postTranslation };
+prototypeAccessors.postTranslation.set = function (handler) { this._postTranslation = handler; };
+
+prototypeAccessors.sync.get = function () { return this._sync };
+prototypeAccessors.sync.set = function (val) { this._sync = val; };
+
+VueI18n.prototype._getMessages = function _getMessages () { return this._vm.messages };
+VueI18n.prototype._getDateTimeFormats = function _getDateTimeFormats () { return this._vm.dateTimeFormats };
+VueI18n.prototype._getNumberFormats = function _getNumberFormats () { return this._vm.numberFormats };
+
+VueI18n.prototype._warnDefault = function _warnDefault (locale, key, result, vm, values, interpolateMode) {
+  if (!isNull(result)) { return result }
+  if (this._missing) {
+    var missingRet = this._missing.apply(null, [locale, key, vm, values]);
+    if (isString(missingRet)) {
+      return missingRet
+    }
+  } else {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(
+        "Cannot translate the value of keypath '" + key + "'. " +
+        'Use the value of keypath as default.'
+      );
+    }
+  }
+
+  if (this._formatFallbackMessages) {
+    var parsedArgs = parseArgs.apply(void 0, values);
+    return this._render(key, interpolateMode, parsedArgs.params, key)
+  } else {
+    return key
+  }
+};
+
+VueI18n.prototype._isFallbackRoot = function _isFallbackRoot (val) {
+  return (this._fallbackRootWithEmptyString? !val : isNull(val)) && !isNull(this._root) && this._fallbackRoot
+};
+
+VueI18n.prototype._isSilentFallbackWarn = function _isSilentFallbackWarn (key) {
+  return this._silentFallbackWarn instanceof RegExp
+    ? this._silentFallbackWarn.test(key)
+    : this._silentFallbackWarn
+};
+
+VueI18n.prototype._isSilentFallback = function _isSilentFallback (locale, key) {
+  return this._isSilentFallbackWarn(key) && (this._isFallbackRoot() || locale !== this.fallbackLocale)
+};
+
+VueI18n.prototype._isSilentTranslationWarn = function _isSilentTranslationWarn (key) {
+  return this._silentTranslationWarn instanceof RegExp
+    ? this._silentTranslationWarn.test(key)
+    : this._silentTranslationWarn
+};
+
+VueI18n.prototype._interpolate = function _interpolate (
+  locale,
+  message,
+  key,
+  host,
+  interpolateMode,
+  values,
+  visitedLinkStack
+) {
+  if (!message) { return null }
+
+  var pathRet = this._path.getPathValue(message, key);
+  if (isArray(pathRet) || isPlainObject(pathRet)) { return pathRet }
+
+  var ret;
+  if (isNull(pathRet)) {
+    /* istanbul ignore else */
+    if (isPlainObject(message)) {
+      ret = message[key];
+      if (!(isString(ret) || isFunction(ret))) {
+        if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
+          warn(("Value of key '" + key + "' is not a string or function !"));
+        }
+        return null
+      }
+    } else {
+      return null
+    }
+  } else {
+    /* istanbul ignore else */
+    if (isString(pathRet) || isFunction(pathRet)) {
+      ret = pathRet;
+    } else {
+      if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallback(locale, key)) {
+        warn(("Value of key '" + key + "' is not a string or function!"));
+      }
+      return null
+    }
+  }
+
+  // Check for the existence of links within the translated string
+  if (isString(ret) && (ret.indexOf('@:') >= 0 || ret.indexOf('@.') >= 0)) {
+    ret = this._link(locale, message, ret, host, 'raw', values, visitedLinkStack);
+  }
+
+  return this._render(ret, interpolateMode, values, key)
+};
+
+VueI18n.prototype._link = function _link (
+  locale,
+  message,
+  str,
+  host,
+  interpolateMode,
+  values,
+  visitedLinkStack
+) {
+  var ret = str;
+
+  // Match all the links within the local
+  // We are going to replace each of
+  // them with its translation
+  var matches = ret.match(linkKeyMatcher);
+
+  // eslint-disable-next-line no-autofix/prefer-const
+  for (var idx in matches) {
+    // ie compatible: filter custom array
+    // prototype method
+    if (!matches.hasOwnProperty(idx)) {
+      continue
+    }
+    var link = matches[idx];
+    var linkKeyPrefixMatches = link.match(linkKeyPrefixMatcher);
+    var linkPrefix = linkKeyPrefixMatches[0];
+      var formatterName = linkKeyPrefixMatches[1];
+
+    // Remove the leading @:, @.case: and the brackets
+    var linkPlaceholder = link.replace(linkPrefix, '').replace(bracketsMatcher, '');
+
+    if (includes(visitedLinkStack, linkPlaceholder)) {
+      if (true) {
+        warn(("Circular reference found. \"" + link + "\" is already visited in the chain of " + (visitedLinkStack.reverse().join(' <- '))));
+      }
+      return ret
+    }
+    visitedLinkStack.push(linkPlaceholder);
+
+    // Translate the link
+    var translated = this._interpolate(
+      locale, message, linkPlaceholder, host,
+      interpolateMode === 'raw' ? 'string' : interpolateMode,
+      interpolateMode === 'raw' ? undefined : values,
+      visitedLinkStack
+    );
+
+    if (this._isFallbackRoot(translated)) {
+      if ( true && !this._isSilentTranslationWarn(linkPlaceholder)) {
+        warn(("Fall back to translate the link placeholder '" + linkPlaceholder + "' with root locale."));
+      }
+      /* istanbul ignore if */
+      if (!this._root) { throw Error('unexpected error') }
+      var root = this._root.$i18n;
+      translated = root._translate(
+        root._getMessages(), root.locale, root.fallbackLocale,
+        linkPlaceholder, host, interpolateMode, values
+      );
+    }
+    translated = this._warnDefault(
+      locale, linkPlaceholder, translated, host,
+      isArray(values) ? values : [values],
+      interpolateMode
+    );
+
+    if (this._modifiers.hasOwnProperty(formatterName)) {
+      translated = this._modifiers[formatterName](translated);
+    } else if (defaultModifiers.hasOwnProperty(formatterName)) {
+      translated = defaultModifiers[formatterName](translated);
+    }
+
+    visitedLinkStack.pop();
+
+    // Replace the link with the translated
+    ret = !translated ? ret : ret.replace(link, translated);
+  }
+
+  return ret
+};
+
+VueI18n.prototype._createMessageContext = function _createMessageContext (values, formatter, path, interpolateMode) {
+    var this$1 = this;
+
+  var _list = isArray(values) ? values : [];
+  var _named = isObject(values) ? values : {};
+  var list = function (index) { return _list[index]; };
+  var named = function (key) { return _named[key]; };
+  var messages = this._getMessages();
+  var locale = this.locale;
+
+  return {
+    list: list,
+    named: named,
+    values: values,
+    formatter: formatter,
+    path: path,
+    messages: messages,
+    locale: locale,
+    linked: function (linkedKey) { return this$1._interpolate(locale, messages[locale] || {}, linkedKey, null, interpolateMode, undefined, [linkedKey]); }
+  }
+};
+
+VueI18n.prototype._render = function _render (message, interpolateMode, values, path) {
+  if (isFunction(message)) {
+    return message(
+      this._createMessageContext(values, this._formatter || defaultFormatter, path, interpolateMode)
+    )
+  }
+
+  var ret = this._formatter.interpolate(message, values, path);
+
+  // If the custom formatter refuses to work - apply the default one
+  if (!ret) {
+    ret = defaultFormatter.interpolate(message, values, path);
+  }
+
+  // if interpolateMode is **not** 'string' ('row'),
+  // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
+  return interpolateMode === 'string' && !isString(ret) ? ret.join('') : ret
+};
+
+VueI18n.prototype._appendItemToChain = function _appendItemToChain (chain, item, blocks) {
+  var follow = false;
+  if (!includes(chain, item)) {
+    follow = true;
+    if (item) {
+      follow = item[item.length - 1] !== '!';
+      item = item.replace(/!/g, '');
+      chain.push(item);
+      if (blocks && blocks[item]) {
+        follow = blocks[item];
+      }
+    }
+  }
+  return follow
+};
+
+VueI18n.prototype._appendLocaleToChain = function _appendLocaleToChain (chain, locale, blocks) {
+  var follow;
+  var tokens = locale.split('-');
+  do {
+    var item = tokens.join('-');
+    follow = this._appendItemToChain(chain, item, blocks);
+    tokens.splice(-1, 1);
+  } while (tokens.length && (follow === true))
+  return follow
+};
+
+VueI18n.prototype._appendBlockToChain = function _appendBlockToChain (chain, block, blocks) {
+  var follow = true;
+  for (var i = 0; (i < block.length) && (isBoolean(follow)); i++) {
+    var locale = block[i];
+    if (isString(locale)) {
+      follow = this._appendLocaleToChain(chain, locale, blocks);
+    }
+  }
+  return follow
+};
+
+VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLocale) {
+  if (start === '') { return [] }
+
+  if (!this._localeChainCache) {
+    this._localeChainCache = {};
+  }
+
+  var chain = this._localeChainCache[start];
+  if (!chain) {
+    if (!fallbackLocale) {
+      fallbackLocale = this.fallbackLocale;
+    }
+    chain = [];
+
+    // first block defined by start
+    var block = [start];
+
+    // while any intervening block found
+    while (isArray(block)) {
+      block = this._appendBlockToChain(
+        chain,
+        block,
+        fallbackLocale
+      );
+    }
+
+    // last block defined by default
+    var defaults;
+    if (isArray(fallbackLocale)) {
+      defaults = fallbackLocale;
+    } else if (isObject(fallbackLocale)) {
+      /* $FlowFixMe */
+      if (fallbackLocale['default']) {
+        defaults = fallbackLocale['default'];
+      } else {
+        defaults = null;
+      }
+    } else {
+      defaults = fallbackLocale;
+    }
+
+    // convert defaults to array
+    if (isString(defaults)) {
+      block = [defaults];
+    } else {
+      block = defaults;
+    }
+    if (block) {
+      this._appendBlockToChain(
+        chain,
+        block,
+        null
+      );
+    }
+    this._localeChainCache[start] = chain;
+  }
+  return chain
+};
+
+VueI18n.prototype._translate = function _translate (
+  messages,
+  locale,
+  fallback,
+  key,
+  host,
+  interpolateMode,
+  args
+) {
+  var chain = this._getLocaleChain(locale, fallback);
+  var res;
+  for (var i = 0; i < chain.length; i++) {
+    var step = chain[i];
+    res =
+      this._interpolate(step, messages[step], key, host, interpolateMode, args, [key]);
+    if (!isNull(res)) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to translate the keypath '" + key + "' with '" + step + "' locale."));
+      }
+      return res
+    }
+  }
+  return null
+};
+
+VueI18n.prototype._t = function _t (key, _locale, messages, host) {
+    var ref;
+
+    var values = [], len = arguments.length - 4;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 4 ];
+  if (!key) { return '' }
+
+  var parsedArgs = parseArgs.apply(void 0, values);
+  if(this._escapeParameterHtml) {
+    parsedArgs.params = escapeParams(parsedArgs.params);
+  }
+
+  var locale = parsedArgs.locale || _locale;
+
+  var ret = this._translate(
+    messages, locale, this.fallbackLocale, key,
+    host, 'string', parsedArgs.params
+  );
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to translate the keypath '" + key + "' with root locale."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return (ref = this._root).$t.apply(ref, [ key ].concat( values ))
+  } else {
+    ret = this._warnDefault(locale, key, ret, host, values, 'string');
+    if (this._postTranslation && ret !== null && ret !== undefined) {
+      ret = this._postTranslation(ret, key);
+    }
+    return ret
+  }
+};
+
+VueI18n.prototype.t = function t (key) {
+    var ref;
+
+    var values = [], len = arguments.length - 1;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
+  return (ref = this)._t.apply(ref, [ key, this.locale, this._getMessages(), null ].concat( values ))
+};
+
+VueI18n.prototype._i = function _i (key, locale, messages, host, values) {
+  var ret =
+    this._translate(messages, locale, this.fallbackLocale, key, host, 'raw', values);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(("Fall back to interpolate the keypath '" + key + "' with root locale."));
+    }
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.i(key, locale, values)
+  } else {
+    return this._warnDefault(locale, key, ret, host, [values], 'raw')
+  }
+};
+
+VueI18n.prototype.i = function i (key, locale, values) {
+  /* istanbul ignore if */
+  if (!key) { return '' }
+
+  if (!isString(locale)) {
+    locale = this.locale;
+  }
+
+  return this._i(key, locale, this._getMessages(), null, values)
+};
+
+VueI18n.prototype._tc = function _tc (
+  key,
+  _locale,
+  messages,
+  host,
+  choice
+) {
+    var ref;
+
+    var values = [], len = arguments.length - 5;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 5 ];
+  if (!key) { return '' }
+  if (choice === undefined) {
+    choice = 1;
+  }
+
+  var predefined = { 'count': choice, 'n': choice };
+  var parsedArgs = parseArgs.apply(void 0, values);
+  parsedArgs.params = Object.assign(predefined, parsedArgs.params);
+  values = parsedArgs.locale === null ? [parsedArgs.params] : [parsedArgs.locale, parsedArgs.params];
+  return this.fetchChoice((ref = this)._t.apply(ref, [ key, _locale, messages, host ].concat( values )), choice)
+};
+
+VueI18n.prototype.fetchChoice = function fetchChoice (message, choice) {
+  /* istanbul ignore if */
+  if (!message || !isString(message)) { return null }
+  var choices = message.split('|');
+
+  choice = this.getChoiceIndex(choice, choices.length);
+  if (!choices[choice]) { return message }
+  return choices[choice].trim()
+};
+
+VueI18n.prototype.tc = function tc (key, choice) {
+    var ref;
+
+    var values = [], len = arguments.length - 2;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 2 ];
+  return (ref = this)._tc.apply(ref, [ key, this.locale, this._getMessages(), null, choice ].concat( values ))
+};
+
+VueI18n.prototype._te = function _te (key, locale, messages) {
+    var args = [], len = arguments.length - 3;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 3 ];
+
+  var _locale = parseArgs.apply(void 0, args).locale || locale;
+  return this._exist(messages[_locale], key)
+};
+
+VueI18n.prototype.te = function te (key, locale) {
+  return this._te(key, this.locale, this._getMessages(), locale)
+};
+
+VueI18n.prototype.getLocaleMessage = function getLocaleMessage (locale) {
+  return looseClone(this._vm.messages[locale] || {})
+};
+
+VueI18n.prototype.setLocaleMessage = function setLocaleMessage (locale, message) {
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
+  }
+  this._vm.$set(this._vm.messages, locale, message);
+};
+
+VueI18n.prototype.mergeLocaleMessage = function mergeLocaleMessage (locale, message) {
+  if (this._warnHtmlInMessage === 'warn' || this._warnHtmlInMessage === 'error') {
+    this._checkLocaleMessage(locale, this._warnHtmlInMessage, message);
+  }
+  this._vm.$set(this._vm.messages, locale, merge(
+    typeof this._vm.messages[locale] !== 'undefined' && Object.keys(this._vm.messages[locale]).length
+      ? Object.assign({}, this._vm.messages[locale])
+      : {},
+    message
+  ));
+};
+
+VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat (locale) {
+  return looseClone(this._vm.dateTimeFormats[locale] || {})
+};
+
+VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat (locale, format) {
+  this._vm.$set(this._vm.dateTimeFormats, locale, format);
+  this._clearDateTimeFormat(locale, format);
+};
+
+VueI18n.prototype.mergeDateTimeFormat = function mergeDateTimeFormat (locale, format) {
+  this._vm.$set(this._vm.dateTimeFormats, locale, merge(this._vm.dateTimeFormats[locale] || {}, format));
+  this._clearDateTimeFormat(locale, format);
+};
+
+VueI18n.prototype._clearDateTimeFormat = function _clearDateTimeFormat (locale, format) {
+  // eslint-disable-next-line no-autofix/prefer-const
+  for (var key in format) {
+    var id = locale + "__" + key;
+
+    if (!this._dateTimeFormatters.hasOwnProperty(id)) {
+      continue
+    }
+
+    delete this._dateTimeFormatters[id];
+  }
+};
+
+VueI18n.prototype._localizeDateTime = function _localizeDateTime (
+  value,
+  locale,
+  fallback,
+  dateTimeFormats,
+  key,
+  options
+) {
+  var _locale = locale;
+  var formats = dateTimeFormats[_locale];
+
+  var chain = this._getLocaleChain(locale, fallback);
+  for (var i = 0; i < chain.length; i++) {
+    var current = _locale;
+    var step = chain[i];
+    formats = dateTimeFormats[step];
+    _locale = step;
+    // fallback locale
+    if (isNull(formats) || isNull(formats[key])) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to '" + step + "' datetime formats from '" + current + "' datetime formats."));
+      }
+    } else {
+      break
+    }
+  }
+
+  if (isNull(formats) || isNull(formats[key])) {
+    return null
+  } else {
+    var format = formats[key];
+
+    var formatter;
+    if (options) {
+      formatter = new Intl.DateTimeFormat(_locale, Object.assign({}, format, options));
+    } else {
+      var id = _locale + "__" + key;
+      formatter = this._dateTimeFormatters[id];
+      if (!formatter) {
+        formatter = this._dateTimeFormatters[id] = new Intl.DateTimeFormat(_locale, format);
+      }
+    }
+
+    return formatter.format(value)
+  }
+};
+
+VueI18n.prototype._d = function _d (value, locale, key, options) {
+  /* istanbul ignore if */
+  if ( true && !VueI18n.availabilities.dateTimeFormat) {
+    warn('Cannot format a Date value due to not supported Intl.DateTimeFormat.');
+    return ''
+  }
+
+  if (!key) {
+    var dtf = !options ? new Intl.DateTimeFormat(locale) : new Intl.DateTimeFormat(locale, options);
+    return dtf.format(value)
+  }
+
+  var ret =
+    this._localizeDateTime(value, locale, this.fallbackLocale, this._getDateTimeFormats(), key, options);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to datetime localization of root: key '" + key + "'."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.d(value, key, locale)
+  } else {
+    return ret || ''
+  }
+};
+
+VueI18n.prototype.d = function d (value) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+  var locale = this.locale;
+  var key = null;
+  var options = null;
+
+  if (args.length === 1) {
+    if (isString(args[0])) {
+      key = args[0];
+    } else if (isObject(args[0])) {
+      if (args[0].locale) {
+        locale = args[0].locale;
+      }
+      if (args[0].key) {
+        key = args[0].key;
+      }
+    }
+
+    options = Object.keys(args[0]).reduce(function (acc, key) {
+        var obj;
+
+      if (includes(dateTimeFormatKeys, key)) {
+        return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
+      }
+      return acc
+    }, null);
+
+  } else if (args.length === 2) {
+    if (isString(args[0])) {
+      key = args[0];
+    }
+    if (isString(args[1])) {
+      locale = args[1];
+    }
+  }
+
+  return this._d(value, locale, key, options)
+};
+
+VueI18n.prototype.getNumberFormat = function getNumberFormat (locale) {
+  return looseClone(this._vm.numberFormats[locale] || {})
+};
+
+VueI18n.prototype.setNumberFormat = function setNumberFormat (locale, format) {
+  this._vm.$set(this._vm.numberFormats, locale, format);
+  this._clearNumberFormat(locale, format);
+};
+
+VueI18n.prototype.mergeNumberFormat = function mergeNumberFormat (locale, format) {
+  this._vm.$set(this._vm.numberFormats, locale, merge(this._vm.numberFormats[locale] || {}, format));
+  this._clearNumberFormat(locale, format);
+};
+
+VueI18n.prototype._clearNumberFormat = function _clearNumberFormat (locale, format) {
+  // eslint-disable-next-line no-autofix/prefer-const
+  for (var key in format) {
+    var id = locale + "__" + key;
+
+    if (!this._numberFormatters.hasOwnProperty(id)) {
+      continue
+    }
+
+    delete this._numberFormatters[id];
+  }
+};
+
+VueI18n.prototype._getNumberFormatter = function _getNumberFormatter (
+  value,
+  locale,
+  fallback,
+  numberFormats,
+  key,
+  options
+) {
+  var _locale = locale;
+  var formats = numberFormats[_locale];
+
+  var chain = this._getLocaleChain(locale, fallback);
+  for (var i = 0; i < chain.length; i++) {
+    var current = _locale;
+    var step = chain[i];
+    formats = numberFormats[step];
+    _locale = step;
+    // fallback locale
+    if (isNull(formats) || isNull(formats[key])) {
+      if (step !== locale && "development" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+        warn(("Fall back to '" + step + "' number formats from '" + current + "' number formats."));
+      }
+    } else {
+      break
+    }
+  }
+
+  if (isNull(formats) || isNull(formats[key])) {
+    return null
+  } else {
+    var format = formats[key];
+
+    var formatter;
+    if (options) {
+      // If options specified - create one time number formatter
+      formatter = new Intl.NumberFormat(_locale, Object.assign({}, format, options));
+    } else {
+      var id = _locale + "__" + key;
+      formatter = this._numberFormatters[id];
+      if (!formatter) {
+        formatter = this._numberFormatters[id] = new Intl.NumberFormat(_locale, format);
+      }
+    }
+    return formatter
+  }
+};
+
+VueI18n.prototype._n = function _n (value, locale, key, options) {
+  /* istanbul ignore if */
+  if (!VueI18n.availabilities.numberFormat) {
+    if (true) {
+      warn('Cannot format a Number value due to not supported Intl.NumberFormat.');
+    }
+    return ''
+  }
+
+  if (!key) {
+    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
+    return nf.format(value)
+  }
+
+  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
+  var ret = formatter && formatter.format(value);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
+      warn(("Fall back to number localization of root: key '" + key + "'."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n.n(value, Object.assign({}, { key: key, locale: locale }, options))
+  } else {
+    return ret || ''
+  }
+};
+
+VueI18n.prototype.n = function n (value) {
+    var args = [], len = arguments.length - 1;
+    while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+  var locale = this.locale;
+  var key = null;
+  var options = null;
+
+  if (args.length === 1) {
+    if (isString(args[0])) {
+      key = args[0];
+    } else if (isObject(args[0])) {
+      if (args[0].locale) {
+        locale = args[0].locale;
+      }
+      if (args[0].key) {
+        key = args[0].key;
+      }
+
+      // Filter out number format options only
+      options = Object.keys(args[0]).reduce(function (acc, key) {
+          var obj;
+
+        if (includes(numberFormatKeys, key)) {
+          return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
+        }
+        return acc
+      }, null);
+    }
+  } else if (args.length === 2) {
+    if (isString(args[0])) {
+      key = args[0];
+    }
+    if (isString(args[1])) {
+      locale = args[1];
+    }
+  }
+
+  return this._n(value, locale, key, options)
+};
+
+VueI18n.prototype._ntp = function _ntp (value, locale, key, options) {
+  /* istanbul ignore if */
+  if (!VueI18n.availabilities.numberFormat) {
+    if (true) {
+      warn('Cannot format to parts a Number value due to not supported Intl.NumberFormat.');
+    }
+    return []
+  }
+
+  if (!key) {
+    var nf = !options ? new Intl.NumberFormat(locale) : new Intl.NumberFormat(locale, options);
+    return nf.formatToParts(value)
+  }
+
+  var formatter = this._getNumberFormatter(value, locale, this.fallbackLocale, this._getNumberFormats(), key, options);
+  var ret = formatter && formatter.formatToParts(value);
+  if (this._isFallbackRoot(ret)) {
+    if ( true && !this._isSilentTranslationWarn(key)) {
+      warn(("Fall back to format number to parts of root: key '" + key + "' ."));
+    }
+    /* istanbul ignore if */
+    if (!this._root) { throw Error('unexpected error') }
+    return this._root.$i18n._ntp(value, locale, key, options)
+  } else {
+    return ret || []
+  }
+};
+
+Object.defineProperties( VueI18n.prototype, prototypeAccessors );
+
+var availabilities;
+// $FlowFixMe
+Object.defineProperty(VueI18n, 'availabilities', {
+  get: function get () {
+    if (!availabilities) {
+      var intlDefined = typeof Intl !== 'undefined';
+      availabilities = {
+        dateTimeFormat: intlDefined && typeof Intl.DateTimeFormat !== 'undefined',
+        numberFormat: intlDefined && typeof Intl.NumberFormat !== 'undefined'
+      };
+    }
+
+    return availabilities
+  }
+});
+
+VueI18n.install = install;
+VueI18n.version = '8.28.2';
+
+/* harmony default export */ __webpack_exports__["default"] = (VueI18n);
+
+
+/***/ }),
+
+/***/ 36:
+/*!*************************************!*\
+  !*** D:/mywork/BPM/guqi/lang/zh.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  lang: '中文',
+  //按钮
+  buttons: {
+    confirmOrder: '确认订单',
+    paySuccess: '支付成功',
+    payFailed: '支付失败',
+    payCancel: '支付取消',
+    payRefund: '支付退款',
+    submit: '提交'
+  },
+  //页面标题
+  pageTitles: {
+    Guqi: '古奇',
+    Customize: '定制',
+    My: '我的'
+  },
+  //tabbar 底部的tabbar
+  tabbar: {
+    Guqi: '古奇',
+    Customize: '定制',
+    My: '我的'
+  },
+  //古奇 Guqi------开始---------------
+  Guqi: {
+    orderStatus: {} //订单状态
+  },
+
+  //古奇 Guqi------结束---------------
+
+  //定制页 Customize------开始---------------
+  Customize: {
+    'Project Introduction': '项目介绍',
+    'Product Introduction': '产品介绍',
+    'Sign Up': '报名',
+    'Reservation': '预订',
+    'Guqi Whiskey Purchase Agreement': '古奇威士忌购买协议',
+    'Agreement': '我已阅读并同意《古奇威士忌购买协议》'
+  },
+  //报名页
+  SignUp: {
+    title: '报名',
+    submit: '提交',
+    topTitle: '报名须知',
+    bottomTitle: '报名须知'
+  },
+  //定制页 Customize------结束---------------
+
+  //我的 My------开始---------------
+  My: {},
+  //我的 My------结束---------------
+
+  //隐私协议 privacy------开始---------------
+  privacy: {
+    title: '用户隐私保护提示',
+    predicate: '使用前请仔细阅读',
+    subdesc: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。',
+    agree: '同意',
+    disagree: '拒绝'
+  }
+  //隐私协议 privacy------结束---------------
+};
+exports.default = _default;
+
+/***/ }),
+
+/***/ 37:
+/*!*************************************!*\
+  !*** D:/mywork/BPM/guqi/lang/en.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  lang: 'EN',
+  //按钮先关
+  buttons: {
+    confirmOrder: 'Confirm Order',
+    paySuccess: 'Pay Success',
+    payFailed: 'Pay Failed',
+    payCancel: 'Pay Cancel',
+    payRefund: 'Pay Refund',
+    submit: 'Submit' //提交
+  },
+
+  //页面标题
+  pageTitles: {
+    Guqi: 'Guqi',
+    Customize: 'Customization',
+    My: 'My'
+  },
+  tabbar: {
+    Guqi: 'Guqi',
+    Customize: 'Customization',
+    My: 'My'
+  },
+  //古奇 Guqi------开始---------------
+  Guqi: {
+    orderStatus: {} //订单状态
+  },
+
+  //古奇 Guqi------结束---------------
+
+  //定制页 Customize------开始---------------
+  Customize: {
+    'Project Introduction': 'Project Introduction',
+    'Product Introduction': 'Product Introduction',
+    'Sign Up': 'Sign Up',
+    'Reservation': 'Reservation',
+    'Guqi Whiskey Purchase Agreement': 'Guqi Whiskey Purchase Agreement',
+    'Agreement': 'I have read and agree《Guqi Whiskey Purchase Agreement》' //'Agree':'我已阅读并同意《古奇威士忌购买协议》',
+  },
+
+  //定制页 Customize------结束---------------
+
+  //我的 My------开始---------------
+  My: {},
+  //我的 My------结束---------------
+
+  //隐私协议 privacy------开始---------------
+  privacy: {
+    title: 'User Privacy Protection Prompt',
+    predicate: 'Before using, please read carefully',
+    subdesc: 'When you click "agree", it means you have understood and agreed to the terms of this agreement, which will have legal effect on you. If you refuse, you will not be able to use this service.',
+    agree: 'Agree',
+    disagree: 'Refuse'
+  }
+  //隐私协议 privacy------结束---------------
+};
+exports.default = _default;
+
+/***/ }),
+
+/***/ 380:
 /*!**************************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
   \**************************************************************************************************/
@@ -29349,7 +29318,7 @@ function createAnimation(option, _this) {
 
 /***/ }),
 
-/***/ 472:
+/***/ 386:
 /*!*******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-load-more/components/uni-load-more/i18n/index.js ***!
   \*******************************************************************************************/
@@ -29364,9 +29333,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 473));
-var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 474));
-var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 475));
+var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 387));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 388));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 389));
 var _default = {
   en: _en.default,
   'zh-Hans': _zhHans.default,
@@ -29376,7 +29345,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 473:
+/***/ 387:
 /*!******************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-load-more/components/uni-load-more/i18n/en.json ***!
   \******************************************************************************************/
@@ -29387,7 +29356,7 @@ module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"Pull up to show mo
 
 /***/ }),
 
-/***/ 474:
+/***/ 388:
 /*!***********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-load-more/components/uni-load-more/i18n/zh-Hans.json ***!
   \***********************************************************************************************/
@@ -29398,7 +29367,7 @@ module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"上拉显示更多
 
 /***/ }),
 
-/***/ 475:
+/***/ 389:
 /*!***********************************************************************************************!*\
   !*** D:/mywork/BPM/guqi/uni_modules/uni-load-more/components/uni-load-more/i18n/zh-Hant.json ***!
   \***********************************************************************************************/
@@ -29406,6 +29375,22 @@ module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"上拉显示更多
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"uni-load-more.contentdown\":\"上拉顯示更多\",\"uni-load-more.contentrefresh\":\"正在加載...\",\"uni-load-more.contentnomore\":\"沒有更多數據了\"}");
+
+/***/ }),
+
+/***/ 4:
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 

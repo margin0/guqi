@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/Customize/Customize",
-    "pages/my/my",
     "pages/Login/Login",
     "pages/Customize/ProductIntroduce",
     "pages/Customize/ProjectDetails",
@@ -9,6 +8,8 @@
     "pages/Customize/SignUp/SignSucess",
     "pages/Customize/Book/Book",
     "pages/Customize/Book/BuyAgreement",
+    "pages/CashierDesk/CashierDesk",
+    "pages/PayResult/PayResult",
     "pages/Guqi/Guqi",
     "pages/Guqi/GuqiDetails/GuqiDetails",
     "pages/Mine/Mine",
@@ -16,18 +17,7 @@
     "pages/Mine/MyYt/MyYt",
     "pages/Mine/MyOrderList/MyOrderList",
     "pages/Mine/MyOrderList/MyOrderListDetails",
-    "pages/Mine/MyOrderList/PayList",
-    "pages/OrderDetails/OrderDetails",
-    "pages/ConfirmOrder/ConfirmOrder",
-    "pages/CashierDesk/CashierDesk",
-    "pages/PayResult/PayResult",
-    "pages/MyOrderList/MyOrderList",
-    "pages/AddressList/AddressList",
-    "pages/AddressEdit/AddressEdit",
-    "pages/InvoiceList/InvoiceList",
-    "pages/InvoiceEdit/InvoiceEdit",
-    "pages/InvoiceList/InvoiceDetails/InvoiceDetails",
-    "pages/GoodsDetails/GoodsDetails"
+    "pages/Mine/MyOrderList/PayList"
   ],
   "subPackages": [],
   "window": {

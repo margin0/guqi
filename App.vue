@@ -88,7 +88,7 @@
 	}
 	/* 全局使用 iconfont 字体库 */
 	body {
-	  font-family: 'iconfont';
+	  font-family: 'my-font';
 	}
 	
 	

@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "编辑地址",
-  "navigationBarBackgroundColor": "#0e252d",
-  "usingComponents": {
-    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
-    "zero-privacy": "/uni_modules/zero-privacy/components/zero-privacy/zero-privacy",
-    "city-picker": "/uni_modules/piaoyi-cityPicker/components/piaoyi-cityPicker/piaoyi-cityPicker"
-  }
-}

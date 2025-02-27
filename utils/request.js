@@ -61,15 +61,20 @@ const request = function(option){
 				uni.hideLoading()
 				// 失败返回失败结果
 				console.error(err);
-				 uni.showModal({
-				   title: '提示',
-				   content: '系统异常,请稍后再试',
-				   showCancel: false
+				let title_ = '';
+				let content_ = '';
+				if(uni.getLocale()=='en'){
+					title_ = 'Tips',
+					content_ = 'System exception, please try again later'
+				}else{
+					title_ = '提示'
+					content_ = '系统异常,请稍后再试'
+				}
+				uni.showToast({
+					title:title_,
+					title:content_,
+					icon:'none'
 				});
-				// uni.showToast({
-				// 	title:"系统异常,请稍后再试",
-				// 	icon:'none'
-				// })
 			},
 			complete(){
 				// 完成 关闭loading

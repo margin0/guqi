@@ -1,5 +1,14 @@
 export default {
 	lang:'EN',
+	//按钮先关
+	buttons:{
+		confirmOrder:'Confirm Order',
+		paySuccess:'Pay Success',
+		payFailed:'Pay Failed',
+		payCancel:'Pay Cancel',
+		payRefund:'Pay Refund',
+		submit:'Submit',//提交
+	},
 	//页面标题
 	pageTitles: {
 	  Guqi:'Guqi',
@@ -11,11 +20,13 @@ export default {
 		Customize:'Customization',
 		My:'My'
 	},
-	//古奇 Guqi
+	//古奇 Guqi------开始---------------
 	Guqi:{
 		orderStatus:{},//订单状态
 	},
-	//定制页 Customize
+	//古奇 Guqi------结束---------------
+
+	//定制页 Customize------开始---------------
 	Customize:{
 		'Project Introduction': 'Project Introduction',
 		'Product Introduction':'Product Introduction',
@@ -24,10 +35,15 @@ export default {
 		'Guqi Whiskey Purchase Agreement':'Guqi Whiskey Purchase Agreement',
 		'Agreement':'I have read and agree《Guqi Whiskey Purchase Agreement》',//'Agree':'我已阅读并同意《古奇威士忌购买协议》',
 	},
+	//定制页 Customize------结束---------------
+
+	//我的 My------开始---------------
 	My:{
 
 	},
-	//隐私协议 privacy
+	//我的 My------结束---------------
+
+	//隐私协议 privacy------开始---------------
     privacy: {
 		title: 'User Privacy Protection Prompt',
 		predicate: 'Before using, please read carefully',
@@ -35,4 +51,5 @@ export default {
 		agree: 'Agree',
 		disagree: 'Refuse'
 	}
+	//隐私协议 privacy------结束---------------
 }

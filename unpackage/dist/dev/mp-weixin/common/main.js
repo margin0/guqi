@@ -24,7 +24,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;
 var DialogBox = function DialogBox() {
   __webpack_require__.e(/*! require.ensure | components/DialogBox/DialogBox */ "components/DialogBox/DialogBox").then((function () {
-    return resolve(__webpack_require__(/*! ./components/DialogBox/DialogBox */ 261));
+    return resolve(__webpack_require__(/*! ./components/DialogBox/DialogBox */ 189));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 // 获取环境变量
@@ -63,12 +63,12 @@ var i18n = new _vueI18n.default({
 //mescroll
 var MescrollBody = function MescrollBody() {
   Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-body */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-body")]).then((function () {
-    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 268));
+    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-body.vue */ 196));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 var MescrollUni = function MescrollUni() {
   Promise.all(/*! require.ensure | components/mescroll-uni/mescroll-uni */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mescroll-uni/mescroll-uni")]).then((function () {
-    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-uni.vue */ 280));
+    return resolve(__webpack_require__(/*! @/components/mescroll-uni/mescroll-uni.vue */ 208));
   }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
 };
 _vue.default.component('mescroll-body', MescrollBody);
