@@ -135,6 +135,13 @@
 				"navigationBarBackgroundColor": "#0e252d"
 			}
 		},
+		{
+			"path": "pages/Mine/MyOrderList/PayList",
+			"style": {
+				"navigationBarTitleText": "",//支付记录
+				"navigationBarBackgroundColor": "#0e252d"
+			}
+		},
 		//-----------我的----------结束
 		
 		

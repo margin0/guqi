@@ -357,7 +357,7 @@ var _default = (_components$data$comp = {
   },
   SignUp: function SignUp() {
     uni.navigateTo({
-      url: '/pages/Customize/SignUp/SignUp'
+      url: '/pages/Customize/SignUp/SignUp?status=报名'
     });
   }
 }), _components$data$comp);

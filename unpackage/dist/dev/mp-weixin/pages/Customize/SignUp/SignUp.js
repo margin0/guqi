@@ -228,6 +228,11 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
     return {
@@ -317,18 +322,27 @@ var _default = {
             }
           }]
         }
-      }
+      },
+      // 状态字段
+      status: '' // 新增状态字段
     };
   },
+
   computed: {
     // 处理表单排列切换
     alignment: function alignment() {
       if (this.current === 0) return 'left';
       if (this.current === 1) return 'top';
       return 'left';
+    },
+    // 新增计算属性，判断是否禁用
+    isDisabled: function isDisabled() {
+      return this.status === ''; // 如果状态是''，则禁用
     }
   },
-  onLoad: function onLoad() {},
+  onLoad: function onLoad(option) {
+    this.status = option.status;
+  },
   onShow: function onShow() {
     uni.setNavigationBarTitle({
       title: this.$t('Customize.Sign Up')

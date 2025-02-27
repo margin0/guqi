@@ -2,176 +2,145 @@
 	<view class="zero-privacy" :class="[{'zero-bottom':position=='bottom'}]" v-if="showPrivacy">
 		<view class="zero-privacy-container" :style="{'--color':color,'--bgcolor':bgcolor,'--contenth':contentHeight}">
 			<view class="title">
-				{{title}}
+				{{ title }}
 			</view>
-			<view class="content" >{{predesc}}<text @click.stop="handleOpenPrivacyContract">{{ privacyContractNameCustom||privacyContractName }}</text>。{{subdesc}}
+			<view class="content">{{ predesc }}<text @click.stop="handleOpenPrivacyContract">{{ privacyContractNameCustom || privacyContractName }}</text>。{{ subdesc }}
 			</view>
 			<view class="footer">
-				<view class="btn disagree-btn" @click="handleRefuse">{{disagreeBtnText}}
-				</view>
-				<button id="agree-btn" class="btn agree-btn" open-type="agreePrivacyAuthorization"
-					@agreeprivacyauthorization="handleAgree">
-					{{agreeBtnText}}
+				<view class="btn disagree-btn" @click="handleRefuse">{{ disagreeBtnText }}</view>
+				<button id="agree-btn" class="btn agree-btn" open-type="agreePrivacyAuthorization" @agreeprivacyauthorization="handleAgree">
+					{{ agreeBtnText }}
 				</button>
 			</view>
 		</view>
 	</view>
 </template>
+
 <script>
-	export default {
-		name: "zero-privacy",
-		emits: ['agree', 'disagree', 'needAuthorization'],
-		props: {
-			position: {
-				type: String,
-				default: 'center'
-			},
-			color: {
-				type: String,
-				default: '#0396FF'
-			},
-			bgcolor: {
-				type: String,
-				default: '#ffffff'
-			},
-			onNeed: {
-				type: Boolean,
-				default: true
-			},
-			hideTabBar: {
-				type: Boolean,
-				default: false
-			},
-			title: {
-				type: String,
-				default: '用户隐私保护提示'
-			},
-			predesc: {
-				type: String,
-				default: '使用前请仔细阅读'
-			},
-			subdesc: {
-				type: String,
-				default: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。'
-			},
-			privacyContractNameCustom: {
-				type: String,
-				default: ''
-			},
-			agreeBtnText: {
-				type: String,
-				default: '同意'
-			},
-			disagreeBtnText: {
-				type: String,
-				default: '拒绝'
-			},
-			tips: {
-				type: String,
-				default: '拒绝将无法使用该功能'
-			},
-			contentHeight:{
-				type: String,
-				default: '30vh'
+export default {
+	name: "zero-privacy",
+	emits: ['agree', 'disagree', 'needAuthorization'],
+	props: {
+		position: {
+			type: String,
+			default: 'center'
+		},
+		color: {
+			type: String,
+			default: '#0396FF'
+		},
+		bgcolor: {
+			type: String,
+			default: '#ffffff'
+		},
+		onNeed: {
+			type: Boolean,
+			default: true
+		},
+		hideTabBar: {
+			type: Boolean,
+			default: false
+		},
+		privacyContractNameCustom: {
+			type: String,
+			default: ''
+		},
+		contentHeight: {
+			type: String,
+			default: '30vh'
+		}
+	},
+	data() {
+		return {
+			resolvePrivacyAuthorization: null,
+			showPrivacy: false,
+			privacyContractName: "", // 小程序协议名称
+			title: this.$t('privacy.title'), // 使用国际化文本
+			predesc: this.$t('privacy.predicate'), // 使用国际化文本
+			subdesc: this.$t('privacy.subdesc'), // 使用国际化文本
+			agreeBtnText: this.$t('privacy.agree'), // 使用国际化文本
+			disagreeBtnText: this.$t('privacy.disagree') // 使用国际化文本
+		};
+	},
+	methods: {
+		open(name) {
+			if (this.hideTabBar) {
+				uni.hideTabBar({
+					success: (res) => {},
+					fail: (err) => {},
+				});
+			}
+			this.privacyContractName = name
+			this.showPrivacy = true;
+		},
+		close() {
+			this.showPrivacy = false;
+			if (this.hideTabBar) {
+				uni.showTabBar({
+					success: (res) => {},
+					fail: (err) => {},
+				});
 			}
 		},
-		data() {
-			return {
-				resolvePrivacyAuthorization: null,
-				showPrivacy: false,
-				privacyContractName: "", // 小程序协议名称
-			};
-		},
-		methods: {
-			open(name) {
-				if (this.hideTabBar) {
-					uni.hideTabBar({
-						success: (res) => {
-							// console.log("hideTabBar", res);
-						},
-						fail: (err) => {
-							// console.error("hideTabBar", err);
-						},
-					});
-				}
-				this.privacyContractName = name
-				this.showPrivacy = true;
-			},
-			close() {
-				this.showPrivacy = false;
-				if (this.hideTabBar) {
-					uni.showTabBar({
-						success: (res) => {
-							// console.log("showTabBar", res);
-						},
-						fail: (err) => {
-							// console.error("showTabBar", err);
-						},
-					});
-				}
-			},
-			// 点击同意
-			handleAgree() {
-				// 需要用户同意隐私授权时
-				if (this.onNeed) {
-					this.resolvePrivacyAuthorization({
-						buttonId: "agree-btn",
-						event: "agree",
-					});
-				}
-				this.close();
-				this.$emit('agree')
-			},
-			// 点击取消
-			handleRefuse() {
-				if (this.onNeed) {
-					this.resolvePrivacyAuthorization({
-						event: "disagree",
-					});
-				}
-				this.close();
-				this.$emit('disagree')
-			},
-			// 查看隐私协议内容
-			handleOpenPrivacyContract() {
-				uni.openPrivacyContract({
-					success: (res) => {
-						// console.log("openPrivacyContract success", res);
-					},
-					fail: (err) => {
-						// console.error("openPrivacyContract fail", err);
-					},
+		handleAgree() {
+			if (this.onNeed) {
+				this.resolvePrivacyAuthorization({
+					buttonId: "agree-btn",
+					event: "agree",
 				});
-			},
-			// 进入时获取隐私是否需要弹出隐私协议
-			checkPrivacySetting() {
-				uni.getPrivacySetting({
-					success: (res) => {
-						// console.log('getPrivacySetting', res);
-						// 如果是needAuthorization为false，无需弹出隐私协议
-						if (res.needAuthorization === false) {
-							this.$emit('needAuthorization', false)
-							return;
-						}
-						this.$emit('needAuthorization', true)
-						if (this.onNeed) {
-							uni.onNeedPrivacyAuthorization((resolve) => {
-								this.open(res.privacyContractName)
-								this.resolvePrivacyAuthorization = resolve;
-							});
-						} else {
+			}
+			this.close();
+			this.$emit('agree')
+		},
+		handleRefuse() {
+			if (this.onNeed) {
+				this.resolvePrivacyAuthorization({
+					event: "disagree",
+				});
+			}
+			this.close();
+			this.$emit('disagree')
+		},
+		handleOpenPrivacyContract() {
+			uni.openPrivacyContract({
+				success: (res) => {},
+				fail: (err) => {},
+			});
+		},
+		checkPrivacySetting() {
+			uni.getPrivacySetting({
+				success: (res) => {
+					if (res.needAuthorization === false) {
+						this.$emit('needAuthorization', false)
+						return;
+					}
+					this.$emit('needAuthorization', true)
+					if (this.onNeed) {
+						uni.onNeedPrivacyAuthorization((resolve) => {
 							this.open(res.privacyContractName)
-						}
-					},
-					fail: () => {},
-					complete: () => {},
-				});
-			},
+							this.resolvePrivacyAuthorization = resolve;
+						});
+					} else {
+						this.open(res.privacyContractName)
+					}
+				},
+				fail: () => {},
+				complete: () => {},
+			});
 		},
-		created() {
-			this.checkPrivacySetting();
-		},
-	};
+		updateText() {
+			// 更新国际化文本
+			this.title = this.$t('privacy.title');
+			this.predesc = this.$t('privacy.predicate');
+			this.subdesc = this.$t('privacy.subdesc');
+			this.agreeBtnText = this.$t('privacy.agree');
+			this.disagreeBtnText = this.$t('privacy.disagree');
+		}
+	},
+	created() {
+		this.checkPrivacySetting();
+	},
+};
 </script>
 
 <style lang="scss">
@@ -190,7 +159,6 @@
 		-webkit-justify-content: center;
 		animation: fadeIn 0.2s linear both;
 	}
-
 
 	.zero-privacy-container {
 		width: 580rpx;
@@ -214,7 +182,7 @@
 			margin-bottom: 36rpx;
 			line-height: 50rpx;
 			white-space: pre-wrap;
-			max-height: var(--contenth);
+			// max-height: var(--contenth);
 			overflow: auto;
 			text {
 				color: var(--color);
@@ -244,7 +212,7 @@
 			}
 
 			.disagree-btn {
-				background-color: $baseBackgroundColor;
+				background-color: #ccc;
 				color: #666666;
 			}
 

@@ -16,6 +16,7 @@
     "pages/Mine/MyYt/MyYt",
     "pages/Mine/MyOrderList/MyOrderList",
     "pages/Mine/MyOrderList/MyOrderListDetails",
+    "pages/Mine/MyOrderList/PayList",
     "pages/OrderDetails/OrderDetails",
     "pages/ConfirmOrder/ConfirmOrder",
     "pages/CashierDesk/CashierDesk",

@@ -102,7 +102,6 @@
   margin-bottom: 36rpx;
   line-height: 50rpx;
   white-space: pre-wrap;
-  max-height: var(--contenth);
   overflow: auto;
 }
 .zero-privacy-container .content text {
@@ -128,7 +127,7 @@
   text-overflow: ellipsis;
 }
 .zero-privacy-container .footer .disagree-btn {
-  background-color: #0e252d;
+  background-color: #ccc;
   color: #666666;
 }
 .zero-privacy-container .footer .agree-btn {

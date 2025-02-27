@@ -188,10 +188,16 @@ var _default = {
       orderType: '威士忌知识',
       // 当前选中的订单状态
       orderStatusList: ['威士忌知识', '投资分析', '存储方案', '品牌故事'],
-      dataList: []
+      orderStatusList_zh: [],
+      // 中文订单状态列表
+      orderStatusList_en: [],
+      // 英文订单状态列表
+      dataList: [],
+      language: 'zh'
     };
   },
   onLoad: function onLoad() {
+    this.updateLanguage();
     console.log(1);
     //orderType 全部	 0 待付款 1	 待发货	2 待收货	3	 已完成	4 已取消   5	
     this.orderType = '威士忌知识';
@@ -206,8 +212,25 @@ var _default = {
     });
   },
   methods: {
-    queryList: function queryList(pageNo, pageSize) {
+    updateLanguage: function updateLanguage() {
       var _this = this;
+      if (uni.getLocale() == 'en') {
+        this.language = 'en';
+        this.orderStatusList_en = ['whiskeyKnowledge', 'investmentAnalysis', 'storagePlan', 'brandStory'];
+        this.orderStatusList = this.orderStatusList_en.map(function (key) {
+          return _this.$t("orderStatus.".concat(key));
+        });
+      } else {
+        this.language = 'zh';
+        this.orderStatusList_zh = ['威士忌知识', '投资分析', '存储方案', '品牌故事'];
+        this.orderStatusList = this.orderStatusList_zh.map(function (key) {
+          return _this.$t("orderStatus.".concat(key));
+        });
+      }
+      this.$forceUpdate();
+    },
+    queryList: function queryList(pageNo, pageSize) {
+      var _this2 = this;
       // 组件加载时会自动触发此方法，因此默认页面加载时会自动触发，无需手动调用
       // 这里的pageNo和pageSize会自动计算好，直接传给服务器即可
       // 模拟请求服务器获取分页数据，请替换成自己的网络请求
@@ -225,9 +248,9 @@ var _default = {
       (0, _api.queryOrderListForUser)(params).then(function (res) {
         //debugger
         //console.log('成功 ', res);
-        _this.$refs.paging.complete(res.resultList);
+        _this2.$refs.paging.complete(res.resultList);
       }).catch(function (err) {
-        _this.$refs.paging.complete(false);
+        _this2.$refs.paging.complete(false);
         uni.showToast({
           title: err.data.msg || 'queryOrderListForUser接口异常,请稍后再试',
           icon: 'none'

@@ -1,6 +1,6 @@
 <template>
 	<view class="page pages">
-		<LanguageSwitcher />
+		<LanguageSwitcher @languageChanged="updateLanguage" />
 		<z-paging ref="paging" v-model="dataList" @query="queryList">
 			<!-- 需要固定在顶部不滚动的view放在slot="top"的view中，如果需要跟着滚动，则不要设置slot="top" -->
 			<!-- 注意！此处的z-tabs为独立的组件，可替换为第三方的tabs -->
@@ -19,15 +19,6 @@
 				</view>
 			</template>
 			<!-- 如果希望其他view跟着页面滚动，可以放在z-paging标签内 -->
-			<!-- 
-			"isAddress": "否",
-			"orderNo": "20241209-016",
-			"orderAmount": "2000.00",
-			"quantity": "2",
-			"productImage": "",
-			"productName": "65°5L*1特级15年原酒",
-			"status": "待付款" 
-			 -->
 			<!-- 订单列表 -->
 			<view class="order-list" style="">
 				<view class="list" v-for="(item,index) in dataList" :key="index">
@@ -60,15 +51,20 @@
 			return {
 				orderType: '威士忌知识', // 当前选中的订单状态
 				orderStatusList: ['威士忌知识', '投资分析', '存储方案','品牌故事'],
+				orderStatusList_zh: [], // 中文订单状态列表
+				orderStatusList_en: [], // 英文订单状态列表
 				dataList: [],
+				language: 'zh',
 			};
 		},
 		onLoad() {
+			this.updateLanguage();
 			console.log(1)
 			//orderType 全部	 0 待付款 1	 待发货	2 待收货	3	 已完成	4 已取消   5	
 			this.orderType = '威士忌知识';
 			this.pageNum = 1;
 			//this.queryList(this.pageSize,this.pageNum,this.orderType);
+			
 		},
 		onShow(){
 			// this.queryList(1,10)
@@ -79,7 +75,18 @@
 			
 		},
 		methods: {
-		
+			updateLanguage() {
+				if (uni.getLocale() == 'en') {
+					this.language = 'en';
+					this.orderStatusList_en = ['whiskeyKnowledge', 'investmentAnalysis', 'storagePlan', 'brandStory'];
+					this.orderStatusList = this.orderStatusList_en.map(key => this.$t(`orderStatus.${key}`));
+				} else {
+					this.language = 'zh';
+					this.orderStatusList_zh = ['威士忌知识', '投资分析', '存储方案', '品牌故事'];
+					this.orderStatusList = this.orderStatusList_zh.map(key => this.$t(`orderStatus.${key}`));
+				}
+				this.$forceUpdate();
+			},
 			queryList(pageNo, pageSize) {
 				// 组件加载时会自动触发此方法，因此默认页面加载时会自动触发，无需手动调用
 				// 这里的pageNo和pageSize会自动计算好，直接传给服务器即可

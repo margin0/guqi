@@ -278,12 +278,12 @@
 				})
 			},
 			//付款记录
-			goPayList() {
+			goPayList(orderNo) {
 			   let that = this;
-				uni.showToast({
-					title:'付款记录',
-					icon:'none'
+			   uni.navigateTo({
+					url:"/pages/Mine/MyOrderList/PayList?orderNo="+that.orderNo
 				})
+			  
 			}
 			,
 			goIndex(){

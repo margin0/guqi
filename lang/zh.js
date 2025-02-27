@@ -14,7 +14,7 @@ export default {
 	},
 	//古奇 Guqi
 	Guqi:{
-		Details:'详情'
+		orderStatus:{},//订单状态
 	},
 	//定制页 Customize
 	Customize:{
@@ -27,7 +27,13 @@ export default {
 	},
 	My:{
 		
-	}
-	
-  // 其他中文文本...
+	},
+	//隐私协议 privacy
+    privacy: {
+		title: '用户隐私保护提示',
+		predicate: '使用前请仔细阅读',
+		subdesc: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。',
+		agree: '同意',
+		disagree: '拒绝'
+	},
 }

@@ -11343,7 +11343,7 @@ var request = function request(option) {
   // header.channel="h5";
 
   // 加载提示
-  console.log('uni.getLocale()====>' + uni.getLocale());
+  //console.log('uni.getLocale()====>'+uni.getLocale());
   var title = '';
   if (uni.getLocale() == 'en') {
     title = 'Loading...';
@@ -23936,6 +23936,12 @@ var _default = {
       "navigationBarBackgroundColor": "#0e252d"
     }
   }, {
+    "path": "pages/Mine/MyOrderList/PayList",
+    "style": {
+      "navigationBarTitleText": "",
+      "navigationBarBackgroundColor": "#0e252d"
+    }
+  }, {
     "path": "pages/OrderDetails/OrderDetails",
     "style": {
       "navigationBarTitleText": "订单详情",
@@ -24090,8 +24096,9 @@ var _default = {
   },
   //古奇 Guqi
   Guqi: {
-    Details: '详情'
+    orderStatus: {} //订单状态
   },
+
   //定制页 Customize
   Customize: {
     'Project Introduction': '项目介绍',
@@ -24101,9 +24108,15 @@ var _default = {
     'Guqi Whiskey Purchase Agreement': '古奇威士忌购买协议',
     'Agreement': '我已阅读并同意《古奇威士忌购买协议》'
   },
-  My: {}
-
-  // 其他中文文本...
+  My: {},
+  //隐私协议 privacy
+  privacy: {
+    title: '用户隐私保护提示',
+    predicate: '使用前请仔细阅读',
+    subdesc: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。',
+    agree: '同意',
+    disagree: '拒绝'
+  }
 };
 exports.default = _default;
 
@@ -24138,8 +24151,9 @@ var _default = {
   },
   //古奇 Guqi
   Guqi: {
-    Details: 'Details'
+    orderStatus: {} //订单状态
   },
+
   //定制页 Customize
   Customize: {
     'Project Introduction': 'Project Introduction',
@@ -24148,9 +24162,17 @@ var _default = {
     'Reservation': 'Reservation',
     'Guqi Whiskey Purchase Agreement': 'Guqi Whiskey Purchase Agreement',
     'Agreement': 'I have read and agree《Guqi Whiskey Purchase Agreement》' //'Agree':'我已阅读并同意《古奇威士忌购买协议》',
-  }
+  },
 
-  // 其他中文文本...
+  My: {},
+  //隐私协议 privacy
+  privacy: {
+    title: 'User Privacy Protection Prompt',
+    predicate: 'Before using, please read carefully',
+    subdesc: 'When you click "agree", it means you have understood and agreed to the terms of this agreement, which will have legal effect on you. If you refuse, you will not be able to use this service.',
+    agree: 'Agree',
+    disagree: 'Refuse'
+  }
 };
 exports.default = _default;
 

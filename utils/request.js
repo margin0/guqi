@@ -28,7 +28,7 @@ const request = function(option){
 	// header.channel="h5";
 	
 	// 加载提示
-	console.log('uni.getLocale()====>'+uni.getLocale());
+	//console.log('uni.getLocale()====>'+uni.getLocale());
 	let title = '';
 	if(uni.getLocale()=='en'){
 		title = 'Loading...'

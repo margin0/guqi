@@ -138,7 +138,6 @@ exports.default = void 0;
 //
 //
 //
-//
 var _default = {
   name: "zero-privacy",
   emits: ['agree', 'disagree', 'needAuthorization'],
@@ -163,33 +162,9 @@ var _default = {
       type: Boolean,
       default: false
     },
-    title: {
-      type: String,
-      default: '用户隐私保护提示'
-    },
-    predesc: {
-      type: String,
-      default: '使用前请仔细阅读'
-    },
-    subdesc: {
-      type: String,
-      default: '当您点击同意后，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用该服务。'
-    },
     privacyContractNameCustom: {
       type: String,
       default: ''
-    },
-    agreeBtnText: {
-      type: String,
-      default: '同意'
-    },
-    disagreeBtnText: {
-      type: String,
-      default: '拒绝'
-    },
-    tips: {
-      type: String,
-      default: '拒绝将无法使用该功能'
     },
     contentHeight: {
       type: String,
@@ -200,7 +175,17 @@ var _default = {
     return {
       resolvePrivacyAuthorization: null,
       showPrivacy: false,
-      privacyContractName: "" // 小程序协议名称
+      privacyContractName: "",
+      // 小程序协议名称
+      title: this.$t('privacy.title'),
+      // 使用国际化文本
+      predesc: this.$t('privacy.predicate'),
+      // 使用国际化文本
+      subdesc: this.$t('privacy.subdesc'),
+      // 使用国际化文本
+      agreeBtnText: this.$t('privacy.agree'),
+      // 使用国际化文本
+      disagreeBtnText: this.$t('privacy.disagree') // 使用国际化文本
     };
   },
 
@@ -208,12 +193,8 @@ var _default = {
     open: function open(name) {
       if (this.hideTabBar) {
         uni.hideTabBar({
-          success: function success(res) {
-            // console.log("hideTabBar", res);
-          },
-          fail: function fail(err) {
-            // console.error("hideTabBar", err);
-          }
+          success: function success(res) {},
+          fail: function fail(err) {}
         });
       }
       this.privacyContractName = name;
@@ -223,18 +204,12 @@ var _default = {
       this.showPrivacy = false;
       if (this.hideTabBar) {
         uni.showTabBar({
-          success: function success(res) {
-            // console.log("showTabBar", res);
-          },
-          fail: function fail(err) {
-            // console.error("showTabBar", err);
-          }
+          success: function success(res) {},
+          fail: function fail(err) {}
         });
       }
     },
-    // 点击同意
     handleAgree: function handleAgree() {
-      // 需要用户同意隐私授权时
       if (this.onNeed) {
         this.resolvePrivacyAuthorization({
           buttonId: "agree-btn",
@@ -244,7 +219,6 @@ var _default = {
       this.close();
       this.$emit('agree');
     },
-    // 点击取消
     handleRefuse: function handleRefuse() {
       if (this.onNeed) {
         this.resolvePrivacyAuthorization({
@@ -254,24 +228,16 @@ var _default = {
       this.close();
       this.$emit('disagree');
     },
-    // 查看隐私协议内容
     handleOpenPrivacyContract: function handleOpenPrivacyContract() {
       uni.openPrivacyContract({
-        success: function success(res) {
-          // console.log("openPrivacyContract success", res);
-        },
-        fail: function fail(err) {
-          // console.error("openPrivacyContract fail", err);
-        }
+        success: function success(res) {},
+        fail: function fail(err) {}
       });
     },
-    // 进入时获取隐私是否需要弹出隐私协议
     checkPrivacySetting: function checkPrivacySetting() {
       var _this = this;
       uni.getPrivacySetting({
         success: function success(res) {
-          // console.log('getPrivacySetting', res);
-          // 如果是needAuthorization为false，无需弹出隐私协议
           if (res.needAuthorization === false) {
             _this.$emit('needAuthorization', false);
             return;
@@ -289,6 +255,14 @@ var _default = {
         fail: function fail() {},
         complete: function complete() {}
       });
+    },
+    updateText: function updateText() {
+      // 更新国际化文本
+      this.title = this.$t('privacy.title');
+      this.predesc = this.$t('privacy.predicate');
+      this.subdesc = this.$t('privacy.subdesc');
+      this.agreeBtnText = this.$t('privacy.agree');
+      this.disagreeBtnText = this.$t('privacy.disagree');
     }
   },
   created: function created() {

@@ -465,11 +465,10 @@ var _default = {
       });
     },
     //付款记录
-    goPayList: function goPayList() {
+    goPayList: function goPayList(orderNo) {
       var that = this;
-      uni.showToast({
-        title: '付款记录',
-        icon: 'none'
+      uni.navigateTo({
+        url: "/pages/Mine/MyOrderList/PayList?orderNo=" + that.orderNo
       });
     },
     goIndex: function goIndex() {

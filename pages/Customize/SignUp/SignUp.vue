@@ -1,50 +1,55 @@
 <template>
 	<view class="container page">
-		<view class="top">
+		<view class="top" v-if="status=='报名'">
 			<text>立即报名，开启您的威士忌之旅！</text>
 			<text>报名审核通过后，将解锁威士忌收藏新境界</text>
+		</view>
+		<view class="top" v-if="status!='报名'">
+			<text>报名通过</text>
+			<text>将解锁威士忌收藏新境界</text>
 		</view>
 		<view class="example">
 			<!-- 基础用法，不包含校验规则 -->
 			<uni-forms ref="baseForm" :modelValue="baseFormData">
 				<uni-forms-item label="您的姓名" required name="name">
-					<uni-easyinput v-model="baseFormData.name" placeholder="请输入姓名" />
+					<uni-easyinput v-model="baseFormData.name" placeholder="请输入姓名" :disabled="isDisabled" />
 				</uni-forms-item>
-				<uni-forms-item label="证件类型" required  name="certificate">
+				<uni-forms-item label="证件类型" required name="certificate">
 					<uni-data-select
 					      v-model="baseFormData.certificate"
 					      :localdata="range"
 					      @change="Zjchange"
 						  :clear="false"
+						  :disabled="isDisabled"
 					    >
 					</uni-data-select>
 				</uni-forms-item>
 				<uni-forms-item label="证件号码" required name="certificateNo">
-					<uni-easyinput v-model="baseFormData.certificateNo" placeholder="请输入证件号码" />
+					<uni-easyinput v-model="baseFormData.certificateNo" placeholder="请输入证件号码" :disabled="isDisabled" />
 				</uni-forms-item>
 				<uni-forms-item label="联系电话" required name="phoneNo">
-					<uni-easyinput v-model="baseFormData.phoneNo" placeholder="请输入联系电话" />
+					<uni-easyinput v-model="baseFormData.phoneNo" placeholder="请输入联系电话" :disabled="isDisabled" />
 				</uni-forms-item>
 				<uni-forms-item label="企业名称" name="company">
-					<uni-easyinput v-model="baseFormData.company" placeholder="请输入企业名称" />
+					<uni-easyinput v-model="baseFormData.company" placeholder="请输入企业名称" :disabled="isDisabled" />
 				</uni-forms-item>
 				<uni-forms-item label="您的职业" name="career">
-					<uni-easyinput v-model="baseFormData.career" placeholder="请输入您的职业" />
+					<uni-easyinput v-model="baseFormData.career" placeholder="请输入您的职业" :disabled="isDisabled" />
 				</uni-forms-item>
 				<uni-forms-item label="电子邮箱" name="email">
-					<uni-easyinput v-model="baseFormData.email" placeholder="请输入电子邮箱" />
+					<uni-easyinput v-model="baseFormData.email" placeholder="请输入电子邮箱" :disabled="isDisabled" />
 				</uni-forms-item>
 			
 				<uni-forms-item class="oth" name="reason">
 					<text>您购买威士忌是为了？</text>
-					<uni-data-checkbox v-model="baseFormData.reason" multiple :localdata="reasons" />
+					<uni-data-checkbox v-model="baseFormData.reason" multiple :localdata="reasons" :disabled="isDisabled" />
 				</uni-forms-item>
 				<uni-forms-item class="oth" name="reference">
 					<text>您的推荐人是？</text>
-					<uni-data-checkbox v-model="baseFormData.reference" :localdata="references" />
+					<uni-data-checkbox v-model="baseFormData.reference" :localdata="references" :disabled="isDisabled" />
 				</uni-forms-item>
 			</uni-forms>
-			<view type="primary" class="button" @click="submit()">提交</view>
+			<view type="primary" class="button" @click="submit()" v-if="status=='报名'">提交</view>
 		</view>
 		
 	</view>
@@ -137,6 +142,8 @@
 					},
 					
 				},
+				// 状态字段
+				status: '', // 新增状态字段
 			}
 		},
 		computed: {
@@ -145,9 +152,15 @@
 				if (this.current === 0) return 'left'
 				if (this.current === 1) return 'top'
 				return 'left'
+			},
+			// 新增计算属性，判断是否禁用
+			isDisabled() {
+				return this.status === ''; // 如果状态是''，则禁用
 			}
 		},
-		onLoad() {},
+		onLoad(option){
+			this.status = option.status;
+		},
 		onShow(){
 			uni.setNavigationBarTitle({
 				title: this.$t('Customize.Sign Up')
@@ -205,7 +218,7 @@
 		text:last-child{
 			font-size: 26rpx;
 			padding:0 0 20rpx 0 ;
-			display: inline-block;
+			display: block;
 		}
 	}
 	.example {

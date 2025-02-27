@@ -271,11 +271,15 @@ var _default = {
         url: '/pages/Mine/MyYt/MyYt'
       });
     },
-    //goBm我的报名
-    goBm: function goBm() {
+    //go报名我的报名
+    SignUp: function SignUp() {
       uni.navigateTo({
-        url: '/pages/Mine/Help/Help'
+        url: '/pages/Customize/SignUp/SignUp?status='
       });
+    },
+    updateI18n: function updateI18n() {
+      // 更新隐私协议的文本
+      this.$refs.privacy.updateText();
     }
   }
 };

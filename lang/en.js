@@ -13,7 +13,7 @@ export default {
 	},
 	//古奇 Guqi
 	Guqi:{
-		Details:'Details'
+		orderStatus:{},//订单状态
 	},
 	//定制页 Customize
 	Customize:{
@@ -23,7 +23,16 @@ export default {
 		'Reservation':'Reservation',
 		'Guqi Whiskey Purchase Agreement':'Guqi Whiskey Purchase Agreement',
 		'Agreement':'I have read and agree《Guqi Whiskey Purchase Agreement》',//'Agree':'我已阅读并同意《古奇威士忌购买协议》',
+	},
+	My:{
+
+	},
+	//隐私协议 privacy
+    privacy: {
+		title: 'User Privacy Protection Prompt',
+		predicate: 'Before using, please read carefully',
+		subdesc: 'When you click "agree", it means you have understood and agreed to the terms of this agreement, which will have legal effect on you. If you refuse, you will not be able to use this service.',
+		agree: 'Agree',
+		disagree: 'Refuse'
 	}
- 
-  // 其他中文文本...
 }
