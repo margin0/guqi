@@ -1,1 +1,0 @@
-<view class="page data-v-11a476b5"><image src="../../static/bg.png" mode class="data-v-11a476b5"></image><block wx:if="{{status=='报名'||status=='预订'||status=='购买'}}"><view class="pay-submit data-v-11a476b5"><view class="submit data-v-11a476b5">{{status}}</view></view></block></view>

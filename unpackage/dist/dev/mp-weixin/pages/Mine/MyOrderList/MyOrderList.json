@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "",
-  "navigationBarBackgroundColor": "#0e252d",
-  "usingComponents": {
-    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
-    "skeleton": "/pages/Mine/MyOrderList/components/skeleton"
-  }
-}

@@ -1,21 +1,23 @@
 .DS_Store
 node_modules/
-/dist/
+dist/
+
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.history
-.static
-/history/
-/static/
-.unpackage
-/unpackage/
-unpackage/
-static/
+
+# History
+.history/
 history/
+
+# Unpackage directory - ignore all contents
+unpackage/**
+unapckage/**
+
 # Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
