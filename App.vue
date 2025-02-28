@@ -55,8 +55,19 @@
 	@import 'colorui/icon.css';
 	@import 'style/FontStyle.css';
 	@import 'static/font/stylesheet.css';
+	
+	@font-face {
+		font-family: 'my-font';
+		src: url('/static/font/SourceHanSansCN-Normal-Alphabetic.woff2') format('woff2'),
+			url('/static/font/SourceHanSansCN-Normal-Alphabetic.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+	
 	body {
 		-webkit-text-size-adjust: none;
+		font-family: 'my-font';
 	}
 
 	/* 超出一行省略号 */
@@ -86,10 +97,4 @@
 		// padding-bottom: constant(safe-area-inset-bottom);//兼容 iOS < 11.2
 		// padding-bottom: env(safe-area-inset-bottom); //兼容 iOS >= 11.2 
 	}
-	/* 全局使用 iconfont 字体库 */
-	body {
-	  font-family: 'my-font';
-	}
-	
-	
 </style>
